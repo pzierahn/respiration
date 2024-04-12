@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unisens xmlns="http://www.unisens.org/unisens2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         comment="Merged dataset" measurementId="101_natural_lighting" timestampStart="2017-03-16T11:11:57.151"
+         version="2.0"
+         xsi:schemaLocation="http://www.unisens.org/unisens2.0 http://www.unisens.org/unisens2.0/unisens.xsd">
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="camera LED raw.bin" lsbValue="1"
+                 sampleRate="30" unit="Intensity">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Cam_01"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="camera LED interpreted.bin"
+                 lsbValue="1" sampleRate="30" unit="bool">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Cam_02"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="IMU_Euler_Yaw.bin" lsbValue="1"
+                 sampleRate="10" unit="degree">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="IMU_11"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="IMU_Euler_Roll.bin" lsbValue="1"
+                 sampleRate="10" unit="degree">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="IMU_12"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="IMU_Euler_Pitch.bin" lsbValue="1"
+                 sampleRate="10" unit="degree">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="IMU_13"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="IMU_linear_Acc_X.bin" lsbValue="1"
+                 sampleRate="10" unit="acceleration">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="IMU_21"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="IMU_linear_Acc_Y.bin" lsbValue="1"
+                 sampleRate="10" unit="acceleration">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="IMU_22"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="IMU_linear_Acc_Z.bin" lsbValue="1"
+                 sampleRate="10" unit="acceleration">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="IMU_23"/>
+    </signalEntry>
+    <signalEntry adcResolution="16" comment="" contentClass="" dataType="double" id="Lux-Meter.bin" lsbValue="1"
+                 sampleRate="1" unit="Lux">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Lux_01"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="1_EKG-AUX.bin" lsbValue="1" sampleRate="512">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="EKG-AUX"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="2_Abdomen.bin" lsbValue="1" sampleRate="64">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Abdomen"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="3_Thorax.bin" lsbValue="1" sampleRate="64">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Thorax"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="4_Licht.bin" lsbValue="1" sampleRate="64">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Licht"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="5_Pleth.bin" lsbValue="1" sampleRate="256">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Pleth"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="6_Pulse.bin" lsbValue="1" sampleRate="16">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Pulse"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="7_SPO2.bin" lsbValue="1" sampleRate="16">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="SPO2"/>
+    </signalEntry>
+    <signalEntry dataType="double" id="8_Thorax_Abdomen.bin" lsbValue="1" sampleRate="64">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Thorax_Abdomen"/>
+    </signalEntry>
+    <signalEntry comment="interpreted ligth signal" dataType="double" id="9_Licht_interpretiert.bin" lsbValue="1"
+                 sampleRate="64">
+        <binFileFormat endianess="LITTLE"/>
+        <channel name="Licht"/>
+    </signalEntry>
+</unisens>
