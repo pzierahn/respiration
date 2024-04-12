@@ -1,0 +1,7 @@
+git+https://github.com/Unisens/pyunisens
+plotly
+pandas
+numpy
+scikit-learn
+jupyter
+opencv-python
