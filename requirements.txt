@@ -6,3 +6,4 @@ scikit-learn
 jupyter
 opencv-python
 matplotlib
+tqdm
