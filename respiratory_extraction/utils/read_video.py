@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from tqdm.auto import tqdm
 
 
 def read_video_bgr(path: str) -> np.array:
@@ -13,7 +14,7 @@ def read_video_bgr(path: str) -> np.array:
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     frames = []
-    for _ in range(frame_count):
+    for _ in tqdm(range(frame_count), desc='Reading video'):
         ret, frame = cap.read()
         if not ret:
             break
