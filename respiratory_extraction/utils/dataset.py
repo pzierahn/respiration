@@ -1,6 +1,10 @@
 import os
 import re
+import numpy as np
+
 from typing import List
+from . import read_video_gray, VideoParams
+from .unisens import read_unisens_entry
 
 
 class Dataset:
@@ -23,20 +27,6 @@ class Dataset:
 
         return subjects
 
-    def get_video_path(self, subject: str, scenario) -> str:
-        """
-        Get the path to the video file for a given subject and scenario
-        :param subject: subject name
-        :param scenario: scenario name
-        :return: path to the video file
-        """
-
-        subject_path = os.path.join(self.data_path, subject)
-        scenario_path = os.path.join(subject_path, scenario)
-        video_path = os.path.join(scenario_path, 'Logitech HD Pro Webcam C920.avi')
-
-        return video_path
-
     @staticmethod
     def get_scenarios():
         return [
@@ -51,3 +41,45 @@ class Dataset:
             '203_translation_movement',
             '204_writing'
         ]
+
+    def get_video_path(self, subject: str, scenario) -> str:
+        """
+        Get the path to the video file for a given subject and scenario
+        :param subject: subject name
+        :param scenario: scenario name
+        :return: path to the video file
+        """
+
+        subject_path = os.path.join(self.data_path, subject)
+        scenario_path = os.path.join(subject_path, scenario)
+        video_path = os.path.join(scenario_path, 'Logitech HD Pro Webcam C920.avi')
+
+        return video_path
+
+    def read_video_gray(self, subject: str, scenario: str) -> tuple[np.array, VideoParams]:
+        """
+        Read a video file and return a numpy array of frames
+        :param subject: subject name
+        :param scenario: scenario name
+        :return: numpy array of frames and video parameters
+        """
+
+        video_path = self.get_video_path(subject, scenario)
+        return read_video_gray(video_path)
+
+    def read_unisens_entry(self, subject: str, scenario: str, entry: str) -> tuple[np.ndarray, int]:
+        """
+        Read an entry from an unisens dataset
+        :param subject: subject
+        :param scenario: scenario
+        :param entry: vital signal
+        :return: numpy array of the signal and the sampling rate
+        """
+
+        subject_path = os.path.join(
+            self.data_path,
+            subject,
+            scenario,
+            'synced_Logitech HD Pro Webcam C920')
+
+        return read_unisens_entry(subject_path, entry)
