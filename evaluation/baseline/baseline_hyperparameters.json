@@ -1,0 +1,41 @@
+{
+  "end_time": "2024-04-14 14:56:10.496720",
+  "hyperparameters": {
+    "max_freq": 0.6,
+    "min_freq": 0.1
+  },
+  "model": "baseline",
+  "scenarios": [
+    "101_natural_lighting",
+    "102_artificial_lighting"
+  ],
+  "start_time": "2024-04-14 14:08:18.062272",
+  "subjects": [
+    "Proband01",
+    "Proband02",
+    "Proband03",
+    "Proband04",
+    "Proband05",
+    "Proband06",
+    "Proband07",
+    "Proband08",
+    "Proband09",
+    "Proband10",
+    "Proband11",
+    "Proband12",
+    "Proband13",
+    "Proband14",
+    "Proband15",
+    "Proband16",
+    "Proband17",
+    "Proband18",
+    "Proband19",
+    "Proband20",
+    "Proband21",
+    "Proband22",
+    "Proband23",
+    "Proband24",
+    "Proband25",
+    "Proband26"
+  ]
+}
