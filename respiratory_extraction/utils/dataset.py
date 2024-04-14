@@ -28,7 +28,7 @@ class Dataset:
         return subjects
 
     @staticmethod
-    def get_scenarios():
+    def get_scenarios() -> List[str]:
         return [
             '101_natural_lighting',
             '102_artificial_lighting',
