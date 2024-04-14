@@ -4,7 +4,7 @@ import numpy as np
 
 def read_video_bgr(path: str) -> np.array:
     """
-    Read a video file in BGR format and return a numpy array of frames
+    Read a video file and return a numpy array of frames in BGR format
     :param path: path to the video file
     :return: numpy array of frames
     """
@@ -27,7 +27,7 @@ def read_video_bgr(path: str) -> np.array:
 
 def read_video_gray(path: str) -> np.array:
     """
-    Read a video file in grayscale format and return a numpy array of frames
+    Read a video file and return a numpy array of frames in grayscale
     :param path: path to the video file
     :return: numpy array of frames
     """
