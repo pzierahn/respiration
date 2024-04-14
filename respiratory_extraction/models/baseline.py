@@ -13,7 +13,7 @@ def face_detection(frame) -> Sequence[Sequence[int]]:
     """
 
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    return face_cascade.detectMultiScale(frame, 2.0, 4)
+    return face_cascade.detectMultiScale(frame, 1.3, 5)
 
 
 def calculate_roi_from_face(x: int, y: int, w: int, h: int) -> tuple[int, int, int, int]:
