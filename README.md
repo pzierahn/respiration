@@ -78,6 +78,11 @@ respiratory signals from videos.
 # Connect to the remote machine with port forwarding
 ssh -L 8888:localhost:8888 zierahn@ess-barclay.fzi.de
 
+# Set the data directory
+cd data;
+ln -s /media/hdd2/07_Datenbank_Smarthome/Testaufnahmen/ subjects;
+
 # Start jupyter notebook
+cd notebooks;
 jupyter notebook --no-browser --port=8888
 ```
