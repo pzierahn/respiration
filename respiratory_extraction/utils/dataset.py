@@ -42,7 +42,7 @@ class Dataset:
             '204_writing'
         ]
 
-    def get_video_path(self, subject: str, scenario) -> str:
+    def get_video_path(self, subject: str, scenario: str) -> str:
         """
         Get the path to the video file for a given subject and scenario
         :param subject: subject name
