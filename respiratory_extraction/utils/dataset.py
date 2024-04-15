@@ -3,7 +3,7 @@ import re
 import numpy as np
 
 from typing import List
-from . import read_video_gray, VideoParams
+from . import read_video_gray, read_video_bgr, VideoParams
 from .unisens import read_unisens_entry
 
 
@@ -58,7 +58,7 @@ class Dataset:
 
     def read_video_gray(self, subject: str, scenario: str) -> tuple[np.array, VideoParams]:
         """
-        Read a video file and return a numpy array of frames
+        Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
         :param scenario: scenario name
         :return: numpy array of frames and video parameters
@@ -66,6 +66,17 @@ class Dataset:
 
         video_path = self.get_video_path(subject, scenario)
         return read_video_gray(video_path)
+
+    def read_video_bgr(self, subject: str, scenario: str) -> tuple[np.array, VideoParams]:
+        """
+        Get the frames of a given subject and scenario in BGR
+        :param subject: subject name
+        :param scenario: scenario name
+        :return: numpy array of frames and video parameters
+        """
+
+        video_path = self.get_video_path(subject, scenario)
+        return read_video_bgr(video_path)
 
     def read_unisens_entry(self, subject: str, scenario: str, entry: str) -> tuple[np.ndarray, int]:
         """
