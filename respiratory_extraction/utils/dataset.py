@@ -6,6 +6,8 @@ from typing import List
 from . import read_video_gray, read_video_bgr, VideoParams
 from .unisens import read_unisens_entry
 
+import respiratory_extraction.models.baseline as baseline
+
 
 class Dataset:
     data_path: str
@@ -94,3 +96,16 @@ class Dataset:
             'synced_Logitech HD Pro Webcam C920')
 
         return read_unisens_entry(subject_path, entry)
+
+    def get_grund_truth_rr(self, subject: str, scenario: str) -> float:
+        """
+        Get the ground truth respiratory rate for a given subject and scenario
+        :param subject: subject name
+        :param scenario: scenario name
+        :return: ground truth respiratory rate in Hz
+        """
+
+        gt_signal, gt_sample_rate = self.read_unisens_entry(subject, scenario, '3_Thorax')
+        gt_fft, gt_freq = baseline.calculate_fft(gt_signal.tolist(), gt_sample_rate)
+        gt_max_freq, _ = baseline.calculate_respiratory_rate(gt_fft, gt_freq)
+        return gt_max_freq
