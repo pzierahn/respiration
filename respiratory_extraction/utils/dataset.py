@@ -97,7 +97,7 @@ class Dataset:
 
         return read_unisens_entry(subject_path, entry)
 
-    def get_grund_truth_rr(self, subject: str, scenario: str) -> float:
+    def get_ground_truth_rr(self, subject: str, scenario: str) -> float:
         """
         Get the ground truth respiratory rate for a given subject and scenario
         :param subject: subject name
