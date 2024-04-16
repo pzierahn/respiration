@@ -5,8 +5,8 @@ import numpy as np
 def extract_feature_point_movement(
         frames: np.ndarray,
         feature_points: np.ndarray,
-        win_size: (15, 15) | tuple[int, int],
-        max_level=int(2)) -> np.ndarray:
+        win_size: tuple[int, int] = (15, 15),
+        max_level: int = 2) -> np.ndarray:
     """
     Extract the movement of the feature points in the frames using the Lucas-Kanade optical flow method.
     :param frames:
