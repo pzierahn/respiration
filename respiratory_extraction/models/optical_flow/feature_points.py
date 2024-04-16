@@ -6,7 +6,7 @@ def feature_point_selection(
         frame: np.ndarray,
         quality_level=float(0.3),
         quality_level_rv=float(0.05),
-        mask=None,
+        mask=np.ndarray | None,
         max_corners=int(100),
         min_distance=int(7),
 ) -> np.ndarray:
@@ -41,7 +41,7 @@ def special_feature_point_selection(
         frame: np.ndarray,
         quality_level=float(0.3),
         quality_level_rv=float(0.05),
-        mask=None,
+        mask=np.ndarray | None,
         max_corners=int(100),
         min_distance=int(7),
         fpn=int(5),
