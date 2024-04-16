@@ -119,15 +119,24 @@ class Dataset:
 
         return utils.read_unisens_entry(subject_path, entry)
 
+    def get_ground_truth_rr_signal(self, subject: str, scenario: str) -> tuple[np.ndarray, int]:
+        """
+        Get the ground truth respiratory rate signal for a given subject and scenario
+        :param subject:
+        :param scenario:
+        :return:
+        """
+        return self.read_unisens_entry(subject, scenario, '3_Thorax')
+
     def get_ground_truth_rr(self, subject: str, scenario: str) -> float:
         """
-        Get the ground truth respiratory rate for a given subject and scenario
+        Get the ground truth respiratory rate in Hz for a given subject and scenario
         :param subject: subject name
         :param scenario: scenario name
         :return: ground truth respiratory rate in Hz
         """
 
-        gt_signal, gt_sample_rate = self.read_unisens_entry(subject, scenario, '3_Thorax')
+        gt_signal, gt_sample_rate = self.get_ground_truth_rr_signal(subject, scenario)
         gt_fft, gt_freq = baseline.calculate_fft(gt_signal.tolist(), gt_sample_rate)
         gt_max_freq, _ = baseline.calculate_respiratory_rate(gt_fft, gt_freq)
         return gt_max_freq
