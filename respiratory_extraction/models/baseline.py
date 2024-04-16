@@ -56,7 +56,8 @@ def calculate_fft(pixel_values: list[int],
 
 def calculate_respiratory_rate(pixels_fft: np.array, freq: np.array) -> tuple[float, float]:
     """
-    Calculate the respiratory rate from the fast fourier transform of the pixel values
+    Calculate the respiratory rate from the fast fourier transform of the pixel values. The respiratory rate is the peak
+    frequency of the fast fourier transform.
     :param pixels_fft: fast fourier transform of the pixel values
     :param freq: frequency of the fast fourier transform
     :return: peak frequency and respiratory rate
