@@ -2,11 +2,11 @@ import numpy as np
 import cv2
 
 
-def feature_point_selection(
+def _default_feature_point_selection(
         frame: np.ndarray,
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
-        mask=None | np.ndarray,
+        mask: np.ndarray = None,
         max_corners: int = 100,
         min_distance: int = 7,
 ) -> np.ndarray:
@@ -37,16 +37,16 @@ def feature_point_selection(
     return points
 
 
-def special_feature_point_selection(
+def _special_feature_point_selection(
         frame: np.ndarray,
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
-        mask=None | np.ndarray,
+        mask: np.ndarray = None,
         max_corners: int = 100,
         min_distance: int = 7,
         fpn: int = 5,
 ) -> np.ndarray:
-    points = feature_point_selection(
+    points = _default_feature_point_selection(
         frame=frame,
         quality_level=quality_level,
         quality_level_rv=quality_level_rv,
@@ -76,3 +76,39 @@ def special_feature_point_selection(
         fp_map[inx, :, :] = points[p1_5[inx], :, :]
 
     return fp_map
+
+
+def get_feature_points(
+        frame: np.ndarray,
+        quality_level: float = 0.3,
+        quality_level_rv: float = 0.05,
+        fpn: int = None,
+        roi: np.ndarray = None,
+) -> np.ndarray:
+    """
+    Get feature points from the given frame
+    :param frame: The frame to extract feature points from
+    :param quality_level: The quality level of the feature points
+    :param quality_level_rv:
+    :param fpn: The number of feature points to extract (if None, extract all feature points)
+    :param roi: The region of interest to extract feature points from
+    :return: The extracted feature points
+    """
+
+    if fpn is not None:
+        feature_points = _special_feature_point_selection(
+            frame,
+            fpn=fpn,
+            mask=roi,
+            quality_level=quality_level,
+            quality_level_rv=quality_level_rv,
+        )
+    else:
+        feature_points = _default_feature_point_selection(
+            frame,
+            mask=roi,
+            quality_level=quality_level,
+            quality_level_rv=quality_level_rv,
+        )
+
+    return feature_points
