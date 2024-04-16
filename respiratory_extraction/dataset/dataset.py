@@ -1,15 +1,37 @@
 import os
 import re
 import numpy as np
+import respiratory_extraction.utils as utils
+import respiratory_extraction.models.baseline as baseline
 
 from typing import List
-from . import read_video_gray, read_video_bgr, VideoParams
-from .unisens import read_unisens_entry
 
-import respiratory_extraction.models.baseline as baseline
+
+def from_path(data_path: str) -> 'Dataset':
+    """
+    Create a new Dataset object from a given path
+    :param data_path: to the dataset
+    :return: Dataset object
+    """
+
+    return Dataset(data_path)
+
+
+def from_default() -> 'Dataset':
+    """
+    Create a new Dataset object from ../data/subjects
+    :return: Dataset object
+    """
+
+    data_path = os.path.join(os.getcwd(), '..', 'data', 'subjects')
+    return from_path(data_path)
 
 
 class Dataset:
+    """
+    Class to handle the VitalCamSet dataset
+    """
+
     data_path: str
 
     def __init__(self, data_path: str):
@@ -58,7 +80,7 @@ class Dataset:
 
         return video_path
 
-    def read_video_gray(self, subject: str, scenario: str) -> tuple[np.array, VideoParams]:
+    def read_video_gray(self, subject: str, scenario: str) -> tuple[np.array, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
@@ -67,9 +89,9 @@ class Dataset:
         """
 
         video_path = self.get_video_path(subject, scenario)
-        return read_video_gray(video_path)
+        return utils.read_video_gray(video_path)
 
-    def read_video_bgr(self, subject: str, scenario: str) -> tuple[np.array, VideoParams]:
+    def read_video_bgr(self, subject: str, scenario: str) -> tuple[np.array, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in BGR
         :param subject: subject name
@@ -78,7 +100,7 @@ class Dataset:
         """
 
         video_path = self.get_video_path(subject, scenario)
-        return read_video_bgr(video_path)
+        return utils.read_video_bgr(video_path)
 
     def read_unisens_entry(self, subject: str, scenario: str, entry: str) -> tuple[np.ndarray, int]:
         """
@@ -95,7 +117,7 @@ class Dataset:
             scenario,
             'synced_Logitech HD Pro Webcam C920')
 
-        return read_unisens_entry(subject_path, entry)
+        return utils.read_unisens_entry(subject_path, entry)
 
     def get_ground_truth_rr(self, subject: str, scenario: str) -> float:
         """
