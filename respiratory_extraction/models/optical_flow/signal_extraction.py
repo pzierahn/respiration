@@ -16,6 +16,7 @@ def extract_respiratory_signal(
         use_filter: bool = False,
         use_normalization: bool = False,
 ) -> np.ndarray:
+    # 1. Extract the feature points
     feature_points = get_feature_points(
         frames[0],
         fpn=fpn,
@@ -24,13 +25,11 @@ def extract_respiratory_signal(
         roi_mask=roi_mask,
     )
 
-    # Extract the movement of the feature points for each frame
+    # 2. Extract movements of the feature points across the frames
     feature_point_movements = extract_feature_point_movement(frames, feature_points)
 
-    # Calculate the amplitude of the feature points for each frame
+    # 3. Calculate the respiratory signal based on the feature point movements
     point_amplitudes = np.sqrt(feature_point_movements[:, :, 0] ** 2 + feature_point_movements[:, :, 1] ** 2)
-
-    # Calculate the amplitude of the feature points for each frame
     respiratory_signal = np.sum(point_amplitudes, 1) / point_amplitudes.shape[1]
 
     # Correlation-Guided Optical Flow Method
