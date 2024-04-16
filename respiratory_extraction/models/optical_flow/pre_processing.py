@@ -33,7 +33,7 @@ def correlation_guided_optical_flow_method(
     return np.sum(cgof_matrix, 1) / quality_num
 
 
-def butter_filter(
+def butterworth_filter(
         respiratory_signal: np.ndarray,
         fps: float,
         lowpass: float,
