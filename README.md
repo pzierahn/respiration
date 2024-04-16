@@ -76,7 +76,7 @@ respiratory signals from videos.
 
 ```shell
 # Connect to the remote machine with port forwarding
-ssh -L 8888:localhost:8888 zierahn@ess-barclay.fzi.de
+ssh -L 8888:localhost:8888 user@remote-machine
 
 # Set the data directory
 cd data;
