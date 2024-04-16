@@ -4,11 +4,11 @@ import cv2
 
 def feature_point_selection(
         frame: np.ndarray,
-        quality_level=float(0.3),
-        quality_level_rv=float(0.05),
+        quality_level: float = 0.3,
+        quality_level_rv: float = 0.05,
         mask=None | np.ndarray,
-        max_corners=int(100),
-        min_distance=int(7),
+        max_corners: int = 100,
+        min_distance: int = 7,
 ) -> np.ndarray:
     """
     Extract feature points from the given frame
@@ -39,12 +39,12 @@ def feature_point_selection(
 
 def special_feature_point_selection(
         frame: np.ndarray,
-        quality_level=float(0.3),
-        quality_level_rv=float(0.05),
+        quality_level: float = 0.3,
+        quality_level_rv: float = 0.05,
         mask=None | np.ndarray,
-        max_corners=int(100),
-        min_distance=int(7),
-        fpn=int(5),
+        max_corners: int = 100,
+        min_distance: int = 7,
+        fpn: int = 5,
 ) -> np.ndarray:
     points = feature_point_selection(
         frame=frame,
