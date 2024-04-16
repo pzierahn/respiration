@@ -2,7 +2,7 @@ import numpy as np
 from scipy.fft import fft, fftfreq
 
 
-def average_pixel_intensity(frames, roi=None) -> list[int]:
+def average_pixel_intensity(frames: np.ndarray, roi=None) -> list[int]:
     """
     Calculate the average pixel intensity in a region of interest (ROI) for each frame
     :param frames: numpy array of frames
