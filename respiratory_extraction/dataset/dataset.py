@@ -80,7 +80,7 @@ class Dataset:
 
         return video_path
 
-    def read_video_gray(self, subject: str, scenario: str) -> tuple[np.array, utils.VideoParams]:
+    def read_video_gray(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
@@ -91,7 +91,7 @@ class Dataset:
         video_path = self.get_video_path(subject, scenario)
         return utils.read_video_gray(video_path)
 
-    def read_video_bgr(self, subject: str, scenario: str) -> tuple[np.array, utils.VideoParams]:
+    def read_video_bgr(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in BGR
         :param subject: subject name

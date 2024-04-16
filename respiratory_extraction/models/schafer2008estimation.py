@@ -4,8 +4,8 @@ from numpy.fft import fft, fftfreq
 
 def acf_adv(pixel_values: list[int],
             fps: int,
-            min_freq=float(0),
-            max_freq=float('inf')) -> float:
+            min_freq: float = 0,
+            max_freq: float = float('inf')) -> float:
     """
     Estimates breathing rate from pixel_values intervals using the Autocorrelation Advanced Method. This method is from
     the paper "Estimation of breathing rate from respiratory sinus arrhythmia: comparison of various methods" by Axel

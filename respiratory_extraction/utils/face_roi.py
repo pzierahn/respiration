@@ -4,7 +4,7 @@ import numpy as np
 from typing import Sequence
 
 
-def detect_faces(frame, scale_factor=float(1.3), min_neighbors=int(5)) -> Sequence[Sequence[int]]:
+def detect_faces(frame, scale_factor: float = 1.3, min_neighbors: int = 5) -> Sequence[Sequence[int]]:
     """
     Detect faces in a frame using a Haar cascade classifier
     :param frame:

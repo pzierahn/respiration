@@ -4,6 +4,7 @@ from scipy.fftpack import fft
 from scipy.signal import find_peaks
 
 
+# TODO: Clean up
 class FrequencyExtraction:
     def __init__(self, respiratory_signal: np.ndarray, fs: float):
         """

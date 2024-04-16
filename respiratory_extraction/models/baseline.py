@@ -1,8 +1,8 @@
 import numpy as np
-from scipy.fft import fft, fftfreq
+from scipy.fft import fft
 
 
-def average_pixel_intensity(frames: np.ndarray, roi=None) -> list[int]:
+def average_pixel_intensity(frames: np.ndarray, roi: np.ndarray = None) -> list[int]:
     """
     Calculate the average pixel intensity in a region of interest (ROI) for each frame
     :param frames: numpy array of frames
@@ -24,8 +24,8 @@ def average_pixel_intensity(frames: np.ndarray, roi=None) -> list[int]:
 
 def calculate_fft(pixel_values: list[int],
                   fps: int,
-                  min_freq=float(0),
-                  max_freq=float('inf')) -> tuple[np.array, np.array]:
+                  min_freq: float = 0.0,
+                  max_freq: float = float('inf')) -> tuple[np.ndarray, np.ndarray]:
     """
     Calculate the frequency of the fast fourier transform of the pixel values. The negative frequencies are removed. The
     frequency is also limited to the range between minFreq and maxFreq.
