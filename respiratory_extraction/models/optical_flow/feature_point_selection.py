@@ -83,7 +83,7 @@ def get_feature_points(
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
         fpn: int = None,
-        roi: np.ndarray = None,
+        roi_mask: np.ndarray = None,
 ) -> np.ndarray:
     """
     Get feature points from the given frame
@@ -91,7 +91,7 @@ def get_feature_points(
     :param quality_level: The quality level of the feature points
     :param quality_level_rv:
     :param fpn: The number of feature points to extract (if None, extract all feature points)
-    :param roi: The region of interest to extract feature points from
+    :param roi_mask: The region of interest to extract feature points from
     :return: The extracted feature points
     """
 
@@ -99,14 +99,14 @@ def get_feature_points(
         feature_points = _special_feature_point_selection(
             frame,
             fpn=fpn,
-            mask=roi,
+            mask=roi_mask,
             quality_level=quality_level,
             quality_level_rv=quality_level_rv,
         )
     else:
         feature_points = _default_feature_point_selection(
             frame,
-            mask=roi,
+            mask=roi_mask,
             quality_level=quality_level,
             quality_level_rv=quality_level_rv,
         )

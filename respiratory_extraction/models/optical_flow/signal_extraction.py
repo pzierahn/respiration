@@ -7,6 +7,7 @@ def extract_respiratory_signal(
         frames: np.ndarray,
         fps: int,
         fpn: None | int,
+        roi_mask: None | np.ndarray = None,
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
         lowpass: float = 0.1,
@@ -20,6 +21,7 @@ def extract_respiratory_signal(
         fpn=fpn,
         quality_level=quality_level,
         quality_level_rv=quality_level_rv,
+        roi_mask=roi_mask,
     )
 
     # Extract the movement of the feature points for each frame
