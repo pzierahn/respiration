@@ -17,21 +17,27 @@ def detect_faces(frame, scale_factor: float = 1.3, min_neighbors: int = 5) -> Se
     return face_cascade.detectMultiScale(frame, scale_factor, min_neighbors)
 
 
-def roi_from_face(x: int, y: int, w: int, h: int) -> tuple[int, int, int, int]:
+def roi_from_face(face: tuple[int, int, int, int],
+                  scale_w: float = 1,
+                  scale_h: float = 1) -> tuple[int, int, int, int]:
     """
     Calculate the region of interest (ROI) in the chest area based on the face
-    :param x: x-coordinate of the face
-    :param y: y-coordinate of the face
-    :param w: width of the face
-    :param h: height of the face
+    :param face: coordinates of the face (x, y, w, h)
+    :param scale_w: scale factor for the ROI width
+    :param scale_h: scale factor for the ROI height
     :return: tuple of the chest region (x, y, w, h)
     """
 
-    # This calculation is based on Cheng_Liu_2023
-    chest_x = x
-    chest_y = int(y + h + h * 0.7)
-    chest_w = w
-    chest_h = int(h * 0.5)
+    x, y, w, h = face
+
+    delta_x = int(w * scale_w)
+    delta_y = int(h * scale_h)
+
+    # Calculate the region of interest (ROI) based on the face
+    chest_x = x - delta_x
+    chest_y = int(y + h + h * 0.7) - delta_y
+    chest_w = w + delta_x * 2
+    chest_h = int(h * 0.5) + delta_y
 
     return chest_x, chest_y, chest_w, chest_h
 
