@@ -18,8 +18,8 @@ def detect_faces(frame, scale_factor: float = 1.3, min_neighbors: int = 5) -> Se
 
 
 def roi_from_face(face: tuple[int, int, int, int],
-                  scale_w: float = 1,
-                  scale_h: float = 1) -> tuple[int, int, int, int]:
+                  scale_w: float = 0,
+                  scale_h: float = 0) -> tuple[int, int, int, int]:
     """
     Calculate the region of interest (ROI) in the chest area based on the face
     :param face: coordinates of the face (x, y, w, h)
