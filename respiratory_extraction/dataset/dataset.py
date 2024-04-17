@@ -2,7 +2,7 @@ import os
 import re
 import numpy as np
 import respiratory_extraction.utils as utils
-import respiratory_extraction.models.baseline as baseline
+import respiratory_extraction.models.frequency_extraction.baseline_fft as baseline_fft
 
 from typing import List
 
@@ -137,6 +137,4 @@ class Dataset:
         """
 
         gt_signal, gt_sample_rate = self.get_ground_truth_rr_signal(subject, scenario)
-        gt_fft, gt_freq = baseline.calculate_fft(gt_signal.tolist(), gt_sample_rate)
-        gt_max_freq, _ = baseline.calculate_respiratory_rate(gt_fft, gt_freq)
-        return gt_max_freq
+        return baseline_fft.peak_frequency(gt_signal.tolist(), gt_sample_rate, 0.1, 0.6)

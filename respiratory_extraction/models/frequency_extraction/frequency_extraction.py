@@ -1,6 +1,5 @@
 import numpy as np
 
-from scipy.fftpack import fft
 from scipy.signal import find_peaks
 
 
@@ -17,21 +16,36 @@ class FrequencyExtraction:
         self.N = len(respiratory_signal)
         self.Time = self.N / fs
 
-    def fft(self) -> float:
+    def fft(self, min_freq: float = 0, max_freq: float = float('inf')) -> float:
         """
         Calculate the respiratory frequency using the Fast Fourier Transform (FFT)
         :return:
         """
 
-        fft_y = fft(self.signal)
-        abs_y = np.abs(fft_y)
-        normalization_y = abs_y / self.N
-        normalization_half_y = normalization_y[range(int(self.N / 2))]
-        sorted_indices = np.argsort(normalization_half_y)
+        """
+        Extract the predominant frequency from the data using the Fast Fourier Transform.
+        :param data: list of
+        :param sampling_rate: frames per second
+        :param min_freq: minimum frequency
+        :param max_freq: maximum frequency
+        :return: tuple of the fast fourier transform and frequency
+        """
 
-        max_frequency = self.fs
-        f = np.linspace(0, max_frequency, self.N)
-        return f[sorted_indices[-2]]
+        # Perform Fast Fourier Transform
+        fft_result = np.fft.fft(self.signal)
+
+        # Calculate the frequencies corresponding to each FFT bin
+        frequencies = np.fft.fftfreq(len(self.signal), d=1 / self.fs)
+
+        # Filter frequencies in the range [min_freq, max_freq]
+        frequency_filter = (frequencies >= min_freq) & (frequencies <= max_freq)
+        frequencies = frequencies[frequency_filter]
+        fft_result = fft_result[frequency_filter]
+
+        # Find the frequency corresponding to the maximum magnitude
+        peak_freq = frequencies[np.argmax(np.abs(fft_result))]
+
+        return float(peak_freq)
 
     def peak_counting(self, height=None, threshold=None, max_rr=45) -> float:
         """

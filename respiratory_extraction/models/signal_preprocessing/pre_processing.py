@@ -65,3 +65,34 @@ def normalize_signal(respiratory_signal: np.ndarray) -> np.ndarray:
     max_ampl = max(respiratory_signal)
     min_ampl = min(respiratory_signal)
     return (respiratory_signal - min_ampl) / (max_ampl - min_ampl) - 0.5
+
+
+def preprocess_signal(
+        point_amplitudes: np.ndarray,
+        fps: int,
+        lowpass: float = 0.1,
+        highpass: float = 0.6,
+        use_cgof: bool = False,
+        use_filter: bool = False,
+        use_normalization: bool = False,
+) -> np.ndarray:
+    respiratory_signal = np.sum(point_amplitudes, 1) / point_amplitudes.shape[1]
+
+    # Correlation-Guided Optical Flow Method
+    if use_cgof:
+        respiratory_signal = correlation_guided_optical_flow_method(point_amplitudes, respiratory_signal)
+
+    # Butterworth Filter
+    if use_filter:
+        respiratory_signal = butterworth_filter(
+            respiratory_signal,
+            fps,
+            lowpass=lowpass,
+            highpass=highpass,
+        )
+
+    # Normalization
+    if use_normalization:
+        respiratory_signal = normalize_signal(respiratory_signal)
+
+    return respiratory_signal

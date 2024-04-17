@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-def extract_feature_point_movement(
+def track_feature_point_movement(
         frames: np.ndarray,
         feature_points: np.ndarray,
         win_size: tuple[int, int] = (15, 15),
@@ -46,3 +46,21 @@ def extract_feature_point_movement(
         feature_point_matrix[inx, :, 1] = feature_points[:, 0, 1].T
 
     return feature_point_matrix
+
+
+def point_amplitudes(
+        frames: np.ndarray,
+        feature_points: np.ndarray,
+) -> np.ndarray:
+    """
+    Extract the amplitudes of the feature points.
+    :param frames:
+    :param feature_points:
+    :return:
+    """
+
+    # Extract movements of the feature points across the frames
+    feature_point_movements = track_feature_point_movement(frames, feature_points)
+
+    # Calculate the amplitudes of the feature points
+    return np.sqrt(feature_point_movements[:, :, 0] ** 2 + feature_point_movements[:, :, 1] ** 2)

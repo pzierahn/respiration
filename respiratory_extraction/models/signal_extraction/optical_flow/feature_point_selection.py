@@ -1,5 +1,5 @@
-import numpy as np
 import cv2
+import numpy as np
 
 
 def _default_feature_point_selection(
@@ -78,7 +78,7 @@ def _special_feature_point_selection(
     return fp_map
 
 
-def get_feature_points(
+def select_feature_points(
         frame: np.ndarray,
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
