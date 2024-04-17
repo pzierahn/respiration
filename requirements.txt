@@ -7,4 +7,3 @@ jupyter
 opencv-python
 matplotlib
 tqdm
-cv2
