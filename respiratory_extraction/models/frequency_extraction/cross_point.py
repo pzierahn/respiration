@@ -13,7 +13,7 @@ def build_cross_curve(data: np.ndarray, sample_rate: int) -> np.ndarray:
     return data - data_shift
 
 
-def crossing_points(data: np.ndarray) -> list[int]:
+def find_crossing_points(data: np.ndarray) -> list[int]:
     """
     Find the crossing points
     :return:
@@ -29,22 +29,11 @@ def crossing_points(data: np.ndarray) -> list[int]:
     return cross_points
 
 
-def frequency_from_crossing_point(data: np.ndarray, sample_rate: int) -> float:
-    """
-    Calculate the frequency from the crossing points
-    :return:
-    """
-
-    cross_curve = build_cross_curve(data, sample_rate)
-    points = crossing_points(cross_curve)
-    return (len(points) / 2) / (len(data) / sample_rate)
-
-
-def frequency_from_nfcp(
+def find_crossing_points_nfcp(
         data: np.ndarray,
         sample_rate: int,
         quality_level: float = 0.6
-) -> float:
+) -> list[int]:
     """
     Calculate the frequency from the negative feedback crossover point method
     :param data:
@@ -54,13 +43,13 @@ def frequency_from_nfcp(
     """
 
     cross_curve = build_cross_curve(data, sample_rate)
-    points = crossing_points(cross_curve)
+    points = find_crossing_points(cross_curve)
     point_count = len(points)
 
     rr_tmp = ((point_count / 2) / (len(data) / sample_rate))
 
     if point_count <= 1:
-        return rr_tmp
+        return points
 
     time_span = rr_tmp / 2 * sample_rate * quality_level
 
@@ -80,4 +69,33 @@ def frequency_from_nfcp(
         for inx in range(len(points) - 1):
             zero_span.append(points[inx + 1] - points[inx])
 
+    return points
+
+
+def frequency_from_crossing_point(data: np.ndarray, sample_rate: int) -> float:
+    """
+    Calculate the frequency from the crossing points
+    :return:
+    """
+
+    cross_curve = build_cross_curve(data, sample_rate)
+    points = find_crossing_points(cross_curve)
+    return (len(points) / 2) / (len(data) / sample_rate)
+
+
+def frequency_from_nfcp(
+        data: np.ndarray,
+        sample_rate: int,
+        quality_level: float = 0.6
+) -> float:
+    """
+    Calculate the frequency from the negative feedback crossover point method
+    :param data:
+    :param sample_rate:
+    :param quality_level:
+    :return:
+    """
+
+    cross_curve = build_cross_curve(data, sample_rate)
+    points = find_crossing_points_nfcp(cross_curve, sample_rate, quality_level)
     return (len(points) / 2) / (len(data) / sample_rate)
