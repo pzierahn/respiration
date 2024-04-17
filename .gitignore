@@ -162,3 +162,5 @@ cython_debug/
 *.avi
 
 data/subjects
+
+notes.txt
