@@ -43,7 +43,7 @@ def frequency_from_crossing_point(data: np.ndarray, sample_rate: int) -> float:
 def frequency_from_nfcp(
         data: np.ndarray,
         sample_rate: int,
-        quality_level=float(0.6)
+        quality_level: float = 0.6
 ) -> float:
     """
     Calculate the frequency from the negative feedback crossover point method

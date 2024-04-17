@@ -44,7 +44,7 @@ class FrequencyExtractor:
 
     def negative_feedback_crossover_point_method(
             self,
-            quality_level=float(0.6)
+            quality_level: float = 0.6
     ) -> float:
         """
         Negative Feedback Crossover Point Method
