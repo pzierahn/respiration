@@ -3,7 +3,7 @@ from .cross_point import *
 from .peak_counting import *
 
 
-class FrequencyExtraction:
+class FrequencyExtractor:
     def __init__(self, data: np.ndarray, sample_rate: int):
         """
         Frequency Extraction Class
