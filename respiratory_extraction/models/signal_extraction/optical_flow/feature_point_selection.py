@@ -1,30 +1,38 @@
 import cv2
 import numpy as np
 
+import respiratory_extraction.utils as utils
 
-def _default_feature_point_selection(
+
+def find_feature_points(
         frame: np.ndarray,
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
-        mask: np.ndarray = None,
+        roi: tuple[int, int, int, int] = None,
         max_corners: int = 100,
         min_distance: int = 7,
 ) -> np.ndarray:
     """
     Extract feature points from the given frame
-    :param frame:
-    :param quality_level:
-    :param quality_level_rv:
-    :param mask:
-    :param max_corners:
-    :param min_distance:
-    :return:
+    :param frame: The frame to extract feature points from
+    :param quality_level: The quality level of the feature points
+    :param quality_level_rv: The quality level of the feature points
+    :param roi: The region of interest to extract feature points from (if None, extract feature points from the entire frame)
+    :param max_corners: The maximum number of feature points to extract
+    :param min_distance: The minimum distance between feature points
+    :return: The extracted feature points
     """
+
     feature_params = {
         'maxCorners': max_corners,
         'qualityLevel': quality_level,
         'minDistance': min_distance
     }
+
+    mask = None
+    if roi is not None:
+        mask = utils.roi_to_mask(frame, roi)
+
     points = cv2.goodFeaturesToTrack(frame, mask=mask, **feature_params)
 
     while points is None:
@@ -37,78 +45,54 @@ def _default_feature_point_selection(
     return points
 
 
-def _special_feature_point_selection(
-        frame: np.ndarray,
-        quality_level: float = 0.3,
-        quality_level_rv: float = 0.05,
-        mask: np.ndarray = None,
-        max_corners: int = 100,
-        min_distance: int = 7,
-        fpn: int = 5,
-) -> np.ndarray:
-    points = _default_feature_point_selection(
-        frame=frame,
-        quality_level=quality_level,
-        quality_level_rv=quality_level_rv,
-        mask=mask,
-        max_corners=max_corners,
-        min_distance=min_distance,
-    )
-
-    if fpn > len(points):
-        fpn = len(points)
-
-    h = frame.shape[0] / 2
-    w = frame.shape[1] / 2
-
-    # TODO: Figure out how the top points are selected...
-    p1 = points.copy()
-    p1[:, :, 0] -= w
-    p1[:, :, 1] -= h
-    p1_1 = np.multiply(p1, p1)
-    p1_2 = np.sum(p1_1, 2)
-    p1_3 = np.sqrt(p1_2)
-    p1_4 = p1_3[:, 0]
-    p1_5 = np.argsort(p1_4)
-
-    fp_map = np.zeros((fpn, 1, 2), dtype=np.float32)
-    for inx in range(fpn):
-        fp_map[inx, :, :] = points[p1_5[inx], :, :]
-
-    return fp_map
-
-
 def select_feature_points(
         frame: np.ndarray,
         quality_level: float = 0.3,
         quality_level_rv: float = 0.05,
         fpn: int = None,
-        roi_mask: np.ndarray = None,
+        roi: tuple[int, int, int, int] = None,
+        max_corners: int = 100,
+        min_distance: int = 7,
 ) -> np.ndarray:
     """
-    Get feature points from the given frame
+    Extract feature points from the given frame
     :param frame: The frame to extract feature points from
     :param quality_level: The quality level of the feature points
     :param quality_level_rv:
     :param fpn: The number of feature points to extract (if None, extract all feature points)
-    :param roi_mask: The region of interest to extract feature points from
+    :param roi: The region of interest to extract feature points from
+    :param max_corners: The maximum number of feature points to extract
+    :param min_distance: The minimum distance between feature points
     :return: The extracted feature points
     """
 
-    if fpn is not None:
-        feature_points = _special_feature_point_selection(
-            frame,
-            fpn=fpn,
-            mask=roi_mask,
-            quality_level=quality_level,
-            quality_level_rv=quality_level_rv,
-        )
-    else:
-        feature_points = _default_feature_point_selection(
-            frame,
-            mask=roi_mask,
-            quality_level=quality_level,
-            quality_level_rv=quality_level_rv,
-        )
+    points = find_feature_points(
+        frame,
+        quality_level=quality_level,
+        quality_level_rv=quality_level_rv,
+        roi=roi,
+        max_corners=max_corners,
+        min_distance=min_distance
+    )
 
-    return feature_points
+    # If the number of feature points is less than the required number, return all the points
+    if fpn is None or len(points) < fpn:
+        return points
+
+    # Calculate the center of the roi or the frame
+    if roi is None:
+        w, h = frame.shape[1], frame.shape[0]
+        center_x, center_y = int(w / 2), int(h / 2)
+    else:
+        x, y, w, h = roi
+        center_x, center_y = int(x + w / 2), int(y + h / 2)
+
+    # Calculate the distance of each point from the center
+    points = points.reshape(-1, 2)
+    distances = np.linalg.norm(points - np.array([center_x, center_y]), axis=1)
+
+    # Sort the points based on the distance from the center
+    sorted_points = points[np.argsort(distances)]
+
+    # Return the first fpn points
+    return sorted_points[:fpn].reshape(-1, 1, 2)
