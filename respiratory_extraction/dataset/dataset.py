@@ -2,7 +2,6 @@ import os
 import re
 import numpy as np
 import respiratory_extraction.utils as utils
-import respiratory_extraction.models.frequency_extraction.fft as baseline_fft
 
 from typing import List
 
@@ -127,14 +126,3 @@ class Dataset:
         :return:
         """
         return self.read_unisens_entry(subject, scenario, '3_Thorax')
-
-    def get_ground_truth_rr(self, subject: str, scenario: str) -> float:
-        """
-        Get the ground truth respiratory rate in Hz for a given subject and scenario
-        :param subject: subject name
-        :param scenario: scenario name
-        :return: ground truth respiratory rate in Hz
-        """
-
-        gt_signal, gt_sample_rate = self.get_ground_truth_rr_signal(subject, scenario)
-        return baseline_fft.frequency_from_fft(gt_signal.tolist(), gt_sample_rate, 0.1, 0.6)
