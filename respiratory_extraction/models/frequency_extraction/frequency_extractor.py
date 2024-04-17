@@ -7,54 +7,47 @@ from .peak_counting import *
 import respiratory_extraction.models.signal_preprocessing as preprocessing
 
 
-def with_preprocessing(
-        data: np.ndarray,
-        sample_rate: int,
-        lowpass: Optional[float] = 0.0,
-        highpass: Optional[float] = float('inf'),
-        filter_signal: Optional[bool] = True,
-        normalize_signal: Optional[bool] = True,
-) -> 'FrequencyExtractor':
-    """
-    Preprocess the data before applying the frequency extraction methods.
-    :param data: Respiratory signal
-    :param sample_rate: Sampling rate
-    :param lowpass: Lowpass filter
-    :param highpass: Highpass filter
-    :param filter_signal: Apply filter
-    :param normalize_signal: Normalize signal
-    :return: Preprocessed data
-    """
-
-    if filter_signal:
-        data = preprocessing.butterworth_filter(data, sample_rate, lowpass, highpass)
-
-    if normalize_signal:
-        data = preprocessing.normalize_signal(data)
-
-    return FrequencyExtractor(data, sample_rate)
-
-
 class FrequencyExtractor:
-    def __init__(self, data: np.ndarray, sample_rate: int):
-        """
-        Frequency Extraction Class
-        :param data: Respiratory signal
-        :param sample_rate: Sampling rate
-        """
+    data: np.ndarray
+    sample_rate: int
+
+    lowpass: Optional[float]
+    highpass: Optional[float]
+
+    def __init__(
+            self,
+            data: np.ndarray,
+            sample_rate: int,
+            lowpass: Optional[float] = 0.0,
+            highpass: Optional[float] = float('inf'),
+            filter_signal: Optional[bool] = True,
+            normalize_signal: Optional[bool] = True,
+    ):
+        if filter_signal:
+            data = preprocessing.butterworth_filter(data, sample_rate, lowpass, highpass)
+
+        if normalize_signal:
+            data = preprocessing.normalize_signal(data)
 
         self.data = data
         self.sample_rate = sample_rate
-        self.N = len(data)
-        self.Time = self.N / sample_rate
+        self.lowpass = lowpass
+        self.highpass = highpass
 
-    def frequency_from_fft(self, min_freq: float = 0, max_freq: float = float('inf')) -> float:
+    def frequency_from_fft(self, min_freq: Optional[float], max_freq: Optional[float]) -> float:
         """
         Extract the predominant frequency from the data using the Fast Fourier Transform.
         :param min_freq: minimum frequency
         :param max_freq: maximum frequency
         :return: peak frequency
         """
+
+        if min_freq is None:
+            min_freq = self.lowpass
+
+        if max_freq is None:
+            max_freq = self.highpass
+
         return frequency_from_fft(self.data, self.sample_rate, min_freq, max_freq)
 
     def frequency_from_peaks(self, height=None, threshold=None, max_rr=45) -> float:
