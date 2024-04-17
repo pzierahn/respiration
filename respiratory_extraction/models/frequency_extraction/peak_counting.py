@@ -1,8 +1,29 @@
 import numpy as np
-from scipy.signal import find_peaks
+import scipy.signal as signal
 
 
-def peak_counting(data: np.ndarray, sample_rate: int, height=None, threshold=None, max_rr=45) -> float:
+def find_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, max_rr=45) -> np.ndarray:
+    """
+    Find peaks in the data.
+    :param data: Respiratory signal
+    :param sample_rate: Sampling rate
+    :param height: Required height of peaks
+    :param threshold: Required threshold of peaks
+    :param max_rr: Maximum respiratory rate
+    :return: Peaks
+    """
+    distance = 60 / max_rr * sample_rate
+
+    peaks, _ = signal.find_peaks(
+        data,
+        height=height,
+        threshold=threshold,
+        distance=distance)
+
+    return peaks
+
+
+def frequency_from_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, max_rr=45) -> float:
     """
     Peak Counting Method
     :param data:
@@ -13,12 +34,5 @@ def peak_counting(data: np.ndarray, sample_rate: int, height=None, threshold=Non
     :return:
     """
 
-    distance = 60 / max_rr * sample_rate
-
-    peaks, _ = find_peaks(
-        data,
-        height=height,
-        threshold=threshold,
-        distance=distance)
-
+    peaks = find_peaks(data, sample_rate, height, threshold, max_rr)
     return len(peaks) / (len(data) / sample_rate)

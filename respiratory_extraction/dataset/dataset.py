@@ -137,4 +137,4 @@ class Dataset:
         """
 
         gt_signal, gt_sample_rate = self.get_ground_truth_rr_signal(subject, scenario)
-        return baseline_fft.peak_frequency(gt_signal.tolist(), gt_sample_rate, 0.1, 0.6)
+        return baseline_fft.frequency_from_fft(gt_signal.tolist(), gt_sample_rate, 0.1, 0.6)

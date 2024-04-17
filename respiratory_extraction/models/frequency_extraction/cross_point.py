@@ -13,59 +13,71 @@ def build_cross_curve(data: np.ndarray, sample_rate: int) -> np.ndarray:
     return data - data_shift
 
 
-def crossing_point(data: np.ndarray, sample_rate: int) -> float:
+def crossing_points(data: np.ndarray) -> list[int]:
     """
-    Crossing Point Method
+    Find the crossing points
+    :return:
+    """
+
+    cross_points = []
+    for inx in range(len(data) - 1):
+        if data[inx] == 0:
+            cross_points.append(inx)
+        elif data[inx] * data[inx + 1] < 0:
+            cross_points.append(inx)
+
+    return cross_points
+
+
+def frequency_from_crossing_point(data: np.ndarray, sample_rate: int) -> float:
+    """
+    Calculate the frequency from the crossing points
     :return:
     """
 
     cross_curve = build_cross_curve(data, sample_rate)
-
-    zero_number = 0
-    for inx in range(len(cross_curve) - 1):
-        if cross_curve[inx] == 0:
-            zero_number += 1
-        elif cross_curve[inx] * cross_curve[inx + 1] < 0:
-            zero_number += 1
-
-    return (zero_number / 2) / (len(data) / sample_rate)
+    points = crossing_points(cross_curve)
+    return (len(points) / 2) / (len(data) / sample_rate)
 
 
-def negative_feedback_crossover_point_method(
+def frequency_from_nfcp(
         data: np.ndarray,
         sample_rate: int,
         quality_level=float(0.6)
 ) -> float:
+    """
+    Calculate the frequency from the negative feedback crossover point method
+    :param data:
+    :param sample_rate:
+    :param quality_level:
+    :return:
+    """
+
     cross_curve = build_cross_curve(data, sample_rate)
+    points = crossing_points(cross_curve)
+    point_count = len(points)
 
-    zero_number = 0
-    zero_index = []
-    for inx in range(len(cross_curve) - 1):
-        if cross_curve[inx] == 0:
-            zero_number += 1
-            zero_index.append(inx)
-        elif cross_curve[inx] * cross_curve[inx + 1] < 0:
-            zero_number += 1
-            zero_index.append(inx)
+    rr_tmp = ((point_count / 2) / (len(data) / sample_rate))
 
-    rr_tmp = ((zero_number / 2) / (len(data) / sample_rate))
-
-    if len(zero_index) <= 1:
+    if point_count <= 1:
         return rr_tmp
 
     time_span = 60 / rr_tmp / 2 * sample_rate * quality_level
+
     zero_span = []
-    for inx in range(len(zero_index) - 1):
-        zero_span.append(zero_index[inx + 1] - zero_index[inx])
+    for inx in range(point_count - 1):
+        zero_span.append(points[inx + 1] - points[inx])
 
     while min(zero_span) < time_span:
         doubt_point = np.argmin(zero_span)
-        zero_index.pop(doubt_point)
-        zero_index.pop(doubt_point)
-        if len(zero_index) <= 1:
-            break
-        zero_span = []
-        for inx in range(len(zero_index) - 1):
-            zero_span.append(zero_index[inx + 1] - zero_index[inx])
+        points.pop(doubt_point)
+        points.pop(doubt_point)
 
-    return (zero_number / 2) / (len(data) / sample_rate)
+        if len(points) <= 1:
+            break
+
+        zero_span = []
+        for inx in range(len(points) - 1):
+            zero_span.append(points[inx + 1] - points[inx])
+
+    return (len(points) / 2) / (len(data) / sample_rate)

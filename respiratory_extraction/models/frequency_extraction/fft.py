@@ -29,7 +29,10 @@ def fft_spectrum(
     return frequencies, fft_result
 
 
-def fft(data: np.ndarray, sample_rate: int, min_freq: float = 0, max_freq: float = float('inf')) -> float:
+def frequency_from_fft(data: np.ndarray,
+                       sample_rate: int,
+                       min_freq: float = 0,
+                       max_freq: float = float('inf')) -> float:
     """
     Extract the predominant frequency from the data using the Fast Fourier Transform.
     :param data: Respiratory signal

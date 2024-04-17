@@ -23,7 +23,7 @@ class FrequencyExtraction:
         :param max_freq: maximum frequency
         :return: peak frequency
         """
-        return fft(self.data, self.sample_rate, min_freq, max_freq)
+        return frequency_from_fft(self.data, self.sample_rate, min_freq, max_freq)
 
     def peak_counting(self, height=None, threshold=None, max_rr=45) -> float:
         """
@@ -33,14 +33,14 @@ class FrequencyExtraction:
         :param max_rr:
         :return:
         """
-        return peak_counting(self.data, self.sample_rate, height, threshold, max_rr)
+        return frequency_from_peaks(self.data, self.sample_rate, height, threshold, max_rr)
 
     def crossing_point(self) -> float:
         """
         Crossing Point Method
         :return:
         """
-        return crossing_point(self.data, self.sample_rate)
+        return frequency_from_crossing_point(self.data, self.sample_rate)
 
     def negative_feedback_crossover_point_method(
             self,
@@ -51,7 +51,7 @@ class FrequencyExtraction:
         :param quality_level:
         :return:
         """
-        return negative_feedback_crossover_point_method(
+        return frequency_from_nfcp(
             self.data,
             self.sample_rate,
             quality_level=quality_level,
