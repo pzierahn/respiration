@@ -2,7 +2,7 @@ import os
 import re
 import numpy as np
 import respiratory_extraction.utils as utils
-import respiratory_extraction.models.frequency_extraction.baseline_fft as baseline_fft
+import respiratory_extraction.models.frequency_extraction.fft as baseline_fft
 
 from typing import List
 
