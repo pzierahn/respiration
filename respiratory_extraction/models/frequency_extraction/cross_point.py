@@ -62,7 +62,7 @@ def frequency_from_nfcp(
     if point_count <= 1:
         return rr_tmp
 
-    time_span = 60 / rr_tmp / 2 * sample_rate * quality_level
+    time_span = rr_tmp / 2 * sample_rate * quality_level
 
     zero_span = []
     for inx in range(point_count - 1):
