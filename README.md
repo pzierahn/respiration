@@ -7,7 +7,7 @@ Learning"
 
 ```shell
 # Connect to the remote machine with port forwarding
-ssh -L 8888:localhost:8888 user@remote-machine
+ssh -L LOCAL_PORT:localhost:JUPYTER_PORT user@remote-machine
 
 # Set the data directory
 cd data;
@@ -23,6 +23,7 @@ docker build -t respiratory-rate-estimation .
 # Run the docker container
 docker run -it --rm \
   -v $(pwd):/app \
-  -p 8888:8888 \
+  -v $(DATASET):/app/data/subjects \
+  -p JUPYTER_PORT:8888 \
   respiratory-rate-estimation
 ```
