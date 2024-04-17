@@ -1,4 +1,3 @@
-import numpy as np
 from typing import Optional
 from .feature_point_selection import *
 from .feature_point_movement import *
