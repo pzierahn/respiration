@@ -1,66 +1,90 @@
-import cv2
 import numpy as np
+from typing import Optional
+from .feature_point_selection import *
+from .feature_point_movement import *
 
 
-def track_feature_point_movement(
-        frames: np.ndarray,
-        feature_points: np.ndarray,
-        win_size: tuple[int, int] = (15, 15),
-        max_level: int = 2) -> np.ndarray:
+# TODO: Figure out what this does...
+def correlation_guided_optical_flow_method(
+        point_amplitudes: np.ndarray,
+        respiratory_signal: np.ndarray) -> np.ndarray:
     """
-    Extract the movement of the feature points in the frames using the Lucas-Kanade optical flow method.
-    :param frames:
-    :param feature_points:
-    :param win_size:
-    :param max_level:
+    Apply the correlation-guided optical flow method to the point amplitudes.
+    :param point_amplitudes:
+    :param respiratory_signal:
+    :return:
+    """
+    point_amplitudes_t = np.array(point_amplitudes).T
+
+    augmented_matrix = np.zeros((point_amplitudes_t.shape[0] + 1, point_amplitudes_t.shape[1]))
+    augmented_matrix[0, :] = respiratory_signal
+    augmented_matrix[1:, :] = point_amplitudes_t
+
+    correlation_matrix = np.corrcoef(augmented_matrix)
+
+    cm_mean = np.mean(abs(correlation_matrix[0, 1:]))
+
+    quality_num = np.array(abs(correlation_matrix[0, 1:]) >= cm_mean).sum()
+    quality_feature_point_arg = np.array(abs(correlation_matrix[0, 1:]) >= cm_mean).argsort()[0 - quality_num:]
+
+    cgof_matrix = np.zeros((point_amplitudes.shape[0], quality_num))
+
+    for inx in range(quality_num):
+        cgof_matrix[:, inx] = point_amplitudes[:, quality_feature_point_arg[inx]]
+
+    return np.sum(cgof_matrix, 1) / quality_num
+
+
+def signal_from_amplitudes(point_amplitudes: np.ndarray, use_cgof: bool = False) -> np.ndarray:
+    """
+    Extract the respiratory signal from the given point amplitudes by averaging the amplitudes of the feature points in
+    each frame.
+    :param point_amplitudes: The amplitudes of the feature points
+    :param use_cgof: Whether to use the correlation-guided optical flow method
     :return:
     """
 
-    lk_params = {
-        'winSize': win_size,
-        'maxLevel': max_level,
-    }
-    total_frame = len(frames)
+    # Average the amplitudes of the feature points in each frame
+    respiratory_signal = np.sum(point_amplitudes, 1) / point_amplitudes.shape[1]
 
-    # Store the feature points for each frame
-    feature_point_matrix = np.zeros((int(total_frame), feature_points.shape[0], 2))
+    if use_cgof:
+        respiratory_signal = correlation_guided_optical_flow_method(point_amplitudes, respiratory_signal)
 
-    # Store the feature points for the first frame
-    feature_point_matrix[0, :, 0] = feature_points[:, 0, 0].T
-    feature_point_matrix[0, :, 1] = feature_points[:, 0, 1].T
-
-    # Calculate the optical flow of the feature points for each frame
-    for inx in range(1, total_frame):
-        current_frame = frames[inx - 1]
-        next_frame = frames[inx]
-
-        new_positions, _, _ = cv2.calcOpticalFlowPyrLK(
-            current_frame,
-            next_frame,
-            feature_points,
-            None,
-            **lk_params)
-
-        feature_points = new_positions.reshape(-1, 1, 2)
-        feature_point_matrix[inx, :, 0] = feature_points[:, 0, 0].T
-        feature_point_matrix[inx, :, 1] = feature_points[:, 0, 1].T
-
-    return feature_point_matrix
+    return respiratory_signal
 
 
-def point_amplitudes(
+def extract_signal(
         frames: np.ndarray,
-        feature_points: np.ndarray,
+        use_cgof: bool = False,
+        roi: Optional[tuple[int, int, int, int]] = None,
+        fpn: Optional[int] = None,
+        quality_level: float = 0.3,
+        quality_level_rv: float = 0.05,
 ) -> np.ndarray:
     """
-    Extract the amplitudes of the feature points.
+    Extract the respiratory signal from the given frames
     :param frames:
-    :param feature_points:
+    :param use_cgof:
+    :param roi:
+    :param fpn:
+    :param quality_level:
+    :param quality_level_rv:
     :return:
     """
 
-    # Extract movements of the feature points across the frames
+    # Extract feature points from the frames
+    feature_points = select_feature_points(
+        frames[0],
+        roi=roi,
+        fpn=fpn,
+        quality_level=quality_level,
+        quality_level_rv=quality_level_rv
+    )
+
+    # Track the movement of the feature points
     feature_point_movements = track_feature_point_movement(frames, feature_points)
 
-    # Calculate the amplitudes of the feature points
-    return np.sqrt(feature_point_movements[:, :, 0] ** 2 + feature_point_movements[:, :, 1] ** 2)
+    # Extract the amplitudes of the feature points
+    amplitudes = calculate_feature_point_amplitudes(feature_point_movements)
+
+    return signal_from_amplitudes(amplitudes, use_cgof)
