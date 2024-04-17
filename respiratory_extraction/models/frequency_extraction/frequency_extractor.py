@@ -48,7 +48,7 @@ class FrequencyExtractor:
         self.N = len(data)
         self.Time = self.N / sample_rate
 
-    def fft(self, min_freq: float = 0, max_freq: float = float('inf')) -> float:
+    def frequency_from_fft(self, min_freq: float = 0, max_freq: float = float('inf')) -> float:
         """
         Extract the predominant frequency from the data using the Fast Fourier Transform.
         :param min_freq: minimum frequency
@@ -57,9 +57,9 @@ class FrequencyExtractor:
         """
         return frequency_from_fft(self.data, self.sample_rate, min_freq, max_freq)
 
-    def peak_counting(self, height=None, threshold=None, max_rr=45) -> float:
+    def frequency_from_peaks(self, height=None, threshold=None, max_rr=45) -> float:
         """
-        Peak Counting Method
+        Extract the predominant frequency from the data using the peak counting method.
         :param height:
         :param threshold:
         :param max_rr:
@@ -67,19 +67,19 @@ class FrequencyExtractor:
         """
         return frequency_from_peaks(self.data, self.sample_rate, height, threshold, max_rr)
 
-    def crossing_point(self) -> float:
+    def frequency_from_crossing_point(self) -> float:
         """
-        Crossing Point Method
+        Extract the predominant frequency from the data using the crossing point method.
         :return:
         """
         return frequency_from_crossing_point(self.data, self.sample_rate)
 
-    def negative_feedback_crossover_point_method(
+    def frequency_from_nfcp(
             self,
             quality_level: float = 0.6
     ) -> float:
         """
-        Negative Feedback Crossover Point Method
+        Extract the predominant frequency from the data using the negative feedback crossover point method.
         :param quality_level:
         :return:
         """
