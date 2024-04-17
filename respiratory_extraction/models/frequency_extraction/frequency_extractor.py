@@ -34,7 +34,7 @@ class FrequencyExtractor:
         self.lowpass = lowpass
         self.highpass = highpass
 
-    def frequency_from_fft(self, min_freq: Optional[float], max_freq: Optional[float]) -> float:
+    def frequency_from_fft(self, min_freq: Optional[float] = None, max_freq: Optional[float] = None) -> float:
         """
         Extract the predominant frequency from the data using the Fast Fourier Transform.
         :param min_freq: minimum frequency
