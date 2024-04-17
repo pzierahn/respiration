@@ -6,6 +6,15 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
+# Update and upgrade the system
+RUN apt-get update; \
+    apt-get upgrade -y; \
+    apt-get dist-upgrade -y
+
+# Install OpenCV
+RUN apt-get install -y python3-opencv; \
+    apt-get clean
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
