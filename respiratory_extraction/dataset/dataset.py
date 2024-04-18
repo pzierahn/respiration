@@ -126,3 +126,17 @@ class Dataset:
         :return:
         """
         return self.read_unisens_entry(subject, scenario, '3_Thorax')
+
+    def contains(self, subject: str, scenario: str) -> bool:
+        """
+        Check if a given subject and scenario exists in the dataset
+        :param subject:
+        :param scenario:
+        :return:
+        """
+        subject_path = os.path.join(
+            self.data_path,
+            subject,
+            scenario)
+
+        return os.path.exists(subject_path)
