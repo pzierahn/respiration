@@ -3,6 +3,16 @@
 Master thesis: "Investigation of Image Processing Techniques for Camera-Based Respiratory Rate Measurement with Machine
 Learning"
 
+## Install dependencies
+
+```shell
+# Get the YOLO model for object detection
+mkdir -p data/yolo;
+wget https://raw.githubusercontent.com/arunponnusamy/object-detection-opencv/master/yolov3.txt -O data/yolo/yolov3.txt;
+wget https://raw.githubusercontent.com/arunponnusamy/object-detection-opencv/master/yolov3.cfg -O data/yolo/yolov3.cfg;
+wget https://pjreddie.com/media/files/yolov3.weights -O data/yolo/yolov3.weights;
+```
+
 ## Setup development environment
 
 ```shell
