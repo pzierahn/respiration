@@ -125,7 +125,7 @@ class Dataset:
         :param scenario:
         :return:
         """
-        return self.read_unisens_entry(subject, scenario, '3_Thorax')
+        return self.read_unisens_entry(subject, scenario, '8_Thorax_Abdomen')
 
     def contains(self, subject: str, scenario: str) -> bool:
         """
