@@ -4,7 +4,7 @@ from .fft import *
 from .cross_point import *
 from .peak_counting import *
 
-import respiratory_extraction.signal_preprocessing as preprocessing
+import respiration.preprocessing as preprocessing
 
 
 class FrequencyExtractor:

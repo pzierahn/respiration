@@ -1,7 +1,7 @@
 import os
 import re
 import numpy as np
-import respiratory_extraction.utils as utils
+import respiration.utils as utils
 
 from typing import List
 

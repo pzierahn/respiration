@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-import respiratory_extraction.utils as utils
+import respiration.utils as utils
 
 
 def find_feature_points(
