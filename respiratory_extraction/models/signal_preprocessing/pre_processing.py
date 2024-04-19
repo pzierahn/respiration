@@ -31,4 +31,5 @@ def normalize_signal(respiratory_signal: np.ndarray) -> np.ndarray:
     :param respiratory_signal:
     :return:
     """
-    return (respiratory_signal - np.mean(respiratory_signal)) / np.std(respiratory_signal)
+    # Normalize the signal between 1 and -1
+    return 2 * (respiratory_signal - np.min(respiratory_signal)) / np.ptp(respiratory_signal) - 1
