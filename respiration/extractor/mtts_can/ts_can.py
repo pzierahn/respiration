@@ -1,5 +1,12 @@
-from keras.layers import Conv2D, Conv3D, Input, AveragePooling2D, \
-    multiply, Dense, Dropout, Flatten, AveragePooling3D
+from keras.layers import (
+    Conv2D,
+    Input,
+    AveragePooling2D,
+    multiply,
+    Dense,
+    Dropout,
+    Flatten
+)
 from keras.models import Model
 
 from respiration.extractor.mtts_can import AttentionMask, tsm_cov_2d
@@ -14,13 +21,12 @@ def TS_CAN(
         dropout_rate1=0.25,
         dropout_rate2=0.5,
         pool_size=(2, 2), nb_dense=128):
-    diff_input = Input(shape=input_shape)
-    rawf_input = Input(shape=input_shape)
+    input = Input(shape=input_shape)
 
-    d1 = tsm_cov_2d(diff_input, n_frame, nb_filters1, kernel_size, padding='same', activation='tanh')
+    d1 = tsm_cov_2d(input, n_frame, nb_filters1, kernel_size, padding='same', activation='tanh')
     d2 = tsm_cov_2d(d1, n_frame, nb_filters1, kernel_size, padding='valid', activation='tanh')
 
-    r1 = Conv2D(nb_filters1, kernel_size, padding='same', activation='tanh')(rawf_input)
+    r1 = Conv2D(nb_filters1, kernel_size, padding='same', activation='tanh')(input)
     r2 = Conv2D(nb_filters1, kernel_size, activation='tanh')(r1)
 
     g1 = Conv2D(1, (1, 1), padding='same', activation='sigmoid')(r2)
@@ -50,5 +56,5 @@ def TS_CAN(
     d10 = Dense(nb_dense, activation='tanh')(d9)
     d11 = Dropout(dropout_rate2)(d10)
     out = Dense(1)(d11)
-    model = Model(inputs=[diff_input, rawf_input], outputs=out)
+    model = Model(inputs=[input, input], outputs=out)
     return model
