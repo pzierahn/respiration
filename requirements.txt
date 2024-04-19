@@ -7,3 +7,9 @@ jupyter
 opencv-python
 matplotlib
 tqdm
+
+# MTTS-CAN
+tensorflow
+scikit-image
+scipy
+keras
