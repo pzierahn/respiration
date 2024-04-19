@@ -2,7 +2,6 @@ import json
 
 import cv2
 import numpy as np
-from tqdm.auto import tqdm
 
 
 class VideoParams:
@@ -33,7 +32,7 @@ def read_video_bgr(path: str) -> tuple[np.array, VideoParams]:
     params = VideoParams(frame_count, fps)
 
     frames = []
-    for _ in tqdm(range(frame_count), desc='Reading video'):
+    for _ in range(frame_count):
         ret, frame = cap.read()
         if not ret:
             break
