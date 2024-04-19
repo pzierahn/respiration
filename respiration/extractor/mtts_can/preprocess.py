@@ -30,4 +30,7 @@ def preprocess_video_frames(frames: np.ndarray, target_dim=(36, 36)) -> tuple[np
     std_val = np.std(normalized_frames, axis=(0, 1, 2), keepdims=True)
     standardized_frames = (normalized_frames - mean_val) / (std_val + 1e-5)
 
+    # Remove the first frame from the resized frames to match the number of frames
+    resized_frames = resized_frames[1:]
+
     return resized_frames, standardized_frames
