@@ -27,10 +27,8 @@ def butterworth_filter(
 
 def normalize_signal(respiratory_signal: np.ndarray) -> np.ndarray:
     """
-    Normalize the respiratory signal to a range of -0.5 to 0.5.
+    Normalize the respiratory signal
     :param respiratory_signal:
     :return:
     """
-    max_ampl = max(respiratory_signal)
-    min_ampl = min(respiratory_signal)
-    return (respiratory_signal - min_ampl) / (max_ampl - min_ampl) - 0.5
+    return (respiratory_signal - np.mean(respiratory_signal)) / np.std(respiratory_signal)
