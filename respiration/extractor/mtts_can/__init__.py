@@ -3,5 +3,6 @@ from .can import *
 from .hybrid import *
 from .mt_can import *
 from .mtts_can import *
+from .preprocess import *
 from .ts_can import *
 from .tsm import *
