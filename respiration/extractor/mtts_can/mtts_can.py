@@ -1,4 +1,12 @@
-from keras.layers import Conv2D, Input, AveragePooling2D, multiply, Dense, Dropout, Flatten
+from keras.layers import (
+    Conv2D,
+    Input,
+    AveragePooling2D,
+    multiply,
+    Dense,
+    Dropout,
+    Flatten
+)
 from keras.models import Model
 
 from .tsm import tsm_cov_2d
@@ -15,13 +23,12 @@ def mtts_can(
         dropout_rate2=0.5,
         pool_size=(2, 2),
         nb_dense=128):
-    diff_input = Input(shape=input_shape)
-    rawf_input = Input(shape=input_shape)
+    input = Input(shape=input_shape)
 
-    d1 = tsm_cov_2d(diff_input, n_frame, nb_filters1, kernel_size, padding='same', activation='tanh')
+    d1 = tsm_cov_2d(input, n_frame, nb_filters1, kernel_size, padding='same', activation='tanh')
     d2 = tsm_cov_2d(d1, n_frame, nb_filters1, kernel_size, padding='valid', activation='tanh')
 
-    r1 = Conv2D(nb_filters1, kernel_size, padding='same', activation='tanh')(rawf_input)
+    r1 = Conv2D(nb_filters1, kernel_size, padding='same', activation='tanh')(input)
     r2 = Conv2D(nb_filters1, kernel_size, activation='tanh')(r1)
 
     g1 = Conv2D(1, (1, 1), padding='same', activation='sigmoid')(r2)
@@ -57,5 +64,5 @@ def mtts_can(
     d11_r = Dropout(dropout_rate2)(d10_r)
     out_r = Dense(1, name='output_2')(d11_r)
 
-    model = Model(inputs=[diff_input, rawf_input], outputs=[out_y, out_r])
+    model = Model(inputs=[input, input], outputs=[out_y, out_r])
     return model
