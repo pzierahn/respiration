@@ -1,7 +1,8 @@
+import keras
 import tensorflow as tf
 
 
-class AttentionMask(tf.keras.layers.Layer):
+class AttentionMask(keras.layers.Layer):
     def call(self, x):
         xsum = tf.reduce_sum(x, axis=1, keepdims=True)
         xsum = tf.reduce_sum(xsum, axis=2, keepdims=True)
