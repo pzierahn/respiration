@@ -2,13 +2,13 @@ import cv2
 import numpy as np
 
 
-def preprocess_video_frames(frames: np.ndarray, target_dim=(36, 36)):
+def preprocess_video_frames(frames: np.ndarray, target_dim=(36, 36)) -> tuple[np.ndarray, np.ndarray]:
     """
     Preprocesses raw video frames by down sampling, normalizing (c(t + 1) − c(t))/(c(t + 1) + c(t)), and standardizing
     them.
     :param frames: Raw video frames
     :param target_dim: Target dimensions for resizing
-    :return: Preprocessed frames
+    :return: Resized and standardized frames
     """
 
     # Resize all frames at once
@@ -30,4 +30,4 @@ def preprocess_video_frames(frames: np.ndarray, target_dim=(36, 36)):
     std_val = np.std(normalized_frames, axis=(0, 1, 2), keepdims=True)
     standardized_frames = (normalized_frames - mean_val) / (std_val + 1e-5)
 
-    return standardized_frames
+    return resized_frames, standardized_frames
