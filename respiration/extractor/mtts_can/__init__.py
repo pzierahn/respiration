@@ -1,5 +1,6 @@
 from .attention_mask import *
 from .can import *
+from .heart_beat import *
 from .hybrid import *
 from .mt_can import *
 from .mtts_can import *
