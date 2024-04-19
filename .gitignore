@@ -170,3 +170,6 @@ evaluation/signals/
 
 # YOLO model files
 yolov3.weights
+
+# Ignore model files
+data/MTTS-CAN/mtts_can.hdf5
