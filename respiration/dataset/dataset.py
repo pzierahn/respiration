@@ -79,7 +79,7 @@ class Dataset:
 
         return video_path
 
-    def read_video_gray(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_gray(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
@@ -90,7 +90,7 @@ class Dataset:
         video_path = self.get_video_path(subject, scenario)
         return utils.read_video_gray(video_path)
 
-    def read_video_bgr(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_bgr(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in BGR
         :param subject: subject name
@@ -101,7 +101,7 @@ class Dataset:
         video_path = self.get_video_path(subject, scenario)
         return utils.read_video_bgr(video_path)
 
-    def read_unisens_entry(self, subject: str, scenario: str, entry: str) -> tuple[np.ndarray, int]:
+    def get_unisens_entry(self, subject: str, scenario: str, entry: utils.VitalSigns) -> tuple[np.ndarray, int]:
         """
         Read an entry from an unisens dataset
         :param subject: subject
@@ -125,7 +125,7 @@ class Dataset:
         :param scenario:
         :return:
         """
-        return self.read_unisens_entry(subject, scenario, '8_Thorax_Abdomen')
+        return self.read_unisens_entry(subject, scenario, utils.VitalSigns.thorax_abdomen)
 
     def contains(self, subject: str, scenario: str) -> bool:
         """
