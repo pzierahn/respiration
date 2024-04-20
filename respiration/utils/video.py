@@ -46,6 +46,16 @@ def read_video_bgr(path: str, progress: bool = True) -> tuple[np.array, VideoPar
     return np.array(frames), params
 
 
+def convert_to_gray(frames: np.array) -> np.array:
+    """
+    Convert a numpy array of frames from BGR to grayscale
+    :param frames: numpy array of frames in BGR format
+    :return: numpy array of frames in grayscale
+    """
+
+    return np.array([cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) for frame in frames])
+
+
 def read_video_gray(path: str, progress: bool = True) -> tuple[np.array, VideoParams]:
     """
     Read a video file and return a numpy array of frames in grayscale
@@ -55,6 +65,4 @@ def read_video_gray(path: str, progress: bool = True) -> tuple[np.array, VideoPa
     """
 
     frames, params = read_video_bgr(path, progress=progress)
-    frames = [cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) for frame in frames]
-
-    return np.array(frames), params
+    return convert_to_gray(frames), params
