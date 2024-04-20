@@ -46,14 +46,15 @@ def read_video_bgr(path: str, progress: bool = True) -> tuple[np.array, VideoPar
     return np.array(frames), params
 
 
-def read_video_gray(path: str) -> tuple[np.array, VideoParams]:
+def read_video_gray(path: str, progress: bool = True) -> tuple[np.array, VideoParams]:
     """
     Read a video file and return a numpy array of frames in grayscale
     :param path: path to the video file
+    :param progress: whether to show progress bar
     :return: numpy array of frames and video parameters
     """
 
-    frames, params = read_video_bgr(path)
+    frames, params = read_video_bgr(path, progress=progress)
     frames = [cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) for frame in frames]
 
     return np.array(frames), params

@@ -79,16 +79,18 @@ class Dataset:
 
         return video_path
 
-    def get_video_gray(self, subject: str, scenario: str) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_gray(self, subject: str, scenario: str, progress: bool = True) -> tuple[
+        np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
         :param scenario: scenario name
+        :param progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
         video_path = self.get_video_path(subject, scenario)
-        return utils.read_video_gray(video_path)
+        return utils.read_video_gray(video_path, progress)
 
     def get_video_bgr(self, subject: str, scenario: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
@@ -100,7 +102,7 @@ class Dataset:
         """
 
         video_path = self.get_video_path(subject, scenario)
-        return utils.read_video_bgr(video_path, progress=progress)
+        return utils.read_video_bgr(video_path, progress)
 
     def get_unisens_entry(self, subject: str, scenario: str, entry: utils.VitalSigns) -> tuple[np.ndarray, int]:
         """
