@@ -1,8 +1,9 @@
+import keras
 import tensorflow as tf
 from keras.layers import Conv2D
 
 
-class TSM(tf.keras.layers.Layer):
+class TSM(keras.layers.Layer):
     """
     Temporal Shift Module
     """
