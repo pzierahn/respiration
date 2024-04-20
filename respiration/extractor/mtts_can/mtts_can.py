@@ -14,15 +14,15 @@ from .attention_mask import AttentionMask
 
 
 def mtts_can(
-        n_frame,
-        nb_filters1,
-        nb_filters2,
+        n_frame: int,
+        nb_filters1: int,
+        nb_filters2: int,
         input_shape: tuple[int, int, int],
         kernel_size=(3, 3),
         dropout_rate1=0.25,
         dropout_rate2=0.5,
         pool_size=(2, 2),
-        nb_dense=128):
+        nb_dense=128) -> Model:
     input = Input(shape=input_shape)
 
     d1 = tsm_cov_2d(input, n_frame, nb_filters1, kernel_size, padding='same', activation='tanh')
