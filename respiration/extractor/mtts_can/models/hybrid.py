@@ -1,9 +1,18 @@
 from tensorflow.keras import backend as K
-from keras.layers import Conv2D, Conv3D, Input, AveragePooling2D, \
-    multiply, Dense, Dropout, Flatten, AveragePooling3D
+from keras.layers import (
+    Conv2D,
+    Conv3D,
+    Input,
+    AveragePooling2D,
+    multiply,
+    Dense,
+    Dropout,
+    Flatten,
+    AveragePooling3D
+)
 from keras.models import Model
 
-from respiration.extractor.mtts_can import AttentionMask
+from .mtts_can import AttentionMask
 
 
 def hybrid_can_2d(

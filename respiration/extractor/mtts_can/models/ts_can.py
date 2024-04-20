@@ -9,7 +9,7 @@ from keras.layers import (
 )
 from keras.models import Model
 
-from respiration.extractor.mtts_can import AttentionMask, tsm_cov_2d
+from .mtts_can import AttentionMask, tsm_cov_2d
 
 
 def TS_CAN(
