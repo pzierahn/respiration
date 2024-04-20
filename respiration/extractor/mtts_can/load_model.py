@@ -4,6 +4,14 @@ from typing import Optional
 from respiration.extractor.mtts_can.models.mtts_can import mtts_can
 
 
+def calculate_cutoff(size: int, frame_depth: int) -> int:
+    """
+    The model expects a number of frames that is a multiple of frame_depth
+    :return:
+    """
+    return (size // frame_depth) * frame_depth
+
+
 def load_model(
         model_checkpoint: Optional[str] = None,
         frame_depth: int = 10,
