@@ -11,6 +11,10 @@ mkdir -p data/yolo;
 wget https://raw.githubusercontent.com/arunponnusamy/object-detection-opencv/master/yolov3.txt -O data/yolo/yolov3.txt;
 wget https://raw.githubusercontent.com/arunponnusamy/object-detection-opencv/master/yolov3.cfg -O data/yolo/yolov3.cfg;
 wget https://pjreddie.com/media/files/yolov3.weights -O data/yolo/yolov3.weights;
+
+# Get the MTTS-CAN pretrained model
+mkdir -p data/mtts_can;
+wget https://github.com/xliucs/MTTS-CAN/raw/main/mtts_can.hdf5 -O data/mtts_can/mtts_can.hdf5;
 ```
 
 ## Setup development environment
