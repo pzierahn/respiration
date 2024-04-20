@@ -1,5 +1,16 @@
 import numpy as np
 from scipy import signal
+from scipy.signal import resample
+
+
+def resample_signal(respiratory_signal: np.ndarray, length: int) -> np.ndarray:
+    """
+    Resample the signal to the target_fps.
+    :param respiratory_signal:
+    :param length:
+    :return:
+    """
+    return resample(respiratory_signal, length)
 
 
 def butterworth_filter(
