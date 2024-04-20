@@ -79,8 +79,9 @@ class Dataset:
 
         return video_path
 
-    def get_video_gray(self, subject: str, scenario: str, progress: bool = True) -> tuple[
-        np.ndarray, utils.VideoParams]:
+    def get_video_gray(self, subject: str,
+                       scenario: str,
+                       progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
@@ -128,7 +129,7 @@ class Dataset:
         :param scenario:
         :return:
         """
-        return self.read_unisens_entry(subject, scenario, utils.VitalSigns.thorax_abdomen)
+        return self.get_unisens_entry(subject, scenario, utils.VitalSigns.thorax_abdomen)
 
     def contains(self, subject: str, scenario: str) -> bool:
         """
