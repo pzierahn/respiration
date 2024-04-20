@@ -172,4 +172,4 @@ evaluation/signals/
 yolov3.weights
 
 # Ignore model files
-data/MTTS-CAN/mtts_can.hdf5
+data/mtts_can/mtts_can.hdf5
