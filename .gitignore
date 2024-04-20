@@ -166,7 +166,7 @@ data/subjects
 notes.txt
 
 # Ignore big evaluation files
-evaluation/signals/
+evaluation/signals*
 
 # YOLO model files
 yolov3.weights
