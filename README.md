@@ -15,6 +15,10 @@ wget https://pjreddie.com/media/files/yolov3.weights -O data/yolo/yolov3.weights
 # Get the MTTS-CAN pretrained model
 mkdir -p data/mtts_can;
 wget https://github.com/xliucs/MTTS-CAN/raw/main/mtts_can.hdf5 -O data/mtts_can/mtts_can.hdf5;
+
+# Get the DeepPhys model
+mkdir -p data/deep_phys;
+wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_DeepPhys.pth -O data/deep_phys/UBFC-rPPG_DeepPhys.pth;
 ```
 
 ## Setup development environment

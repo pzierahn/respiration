@@ -14,3 +14,5 @@ tensorflow
 scikit-image
 scipy
 keras
+
+torch

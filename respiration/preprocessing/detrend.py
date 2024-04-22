@@ -3,7 +3,7 @@ from scipy.sparse import spdiags
 
 
 # TODO: Figure out how this works...
-def detrend_tarvainen(signal: np.ndarray, strength: int):
+def detrend_tarvainen(signal: np.ndarray, strength: int = 100):
     """
     This function applies a detrending filter.
 
