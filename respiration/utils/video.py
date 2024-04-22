@@ -66,3 +66,24 @@ def read_video_gray(path: str, progress: bool = True) -> tuple[np.array, VideoPa
 
     frames, params = read_video_bgr(path, progress=progress)
     return convert_to_gray(frames), params
+
+
+def down_sample_video(frames: np.ndarray, dim: int = 36) -> np.array:
+    """
+    Down sample a numpy array of frames to a target dimension
+    :param frames: numpy array of frames
+    :param dim: target dimension
+    :return: down sampled numpy array of frames
+    """
+
+    return np.array([cv2.resize(frame, (dim, dim), interpolation=cv2.INTER_AREA) for frame in frames])
+
+
+def bgr_to_rgb(frames: np.array) -> np.array:
+    """
+    Convert a numpy array of frames from BGR to RGB
+    :param frames: numpy array of frames in BGR format
+    :return: numpy array of frames in RGB format
+    """
+
+    return np.array([cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) for frame in frames])
