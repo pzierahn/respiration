@@ -82,16 +82,36 @@ class BigSmall(nn.Module):
             kernel_size=self.kernel_size,
             padding=(1, 1),
             bias=True)
-        self.big_conv2 = nn.Conv2d(self.nb_filters1, self.nb_filters1, kernel_size=self.kernel_size, padding=(1, 1),
-                                   bias=True)
-        self.big_conv3 = nn.Conv2d(self.nb_filters1, self.nb_filters1, kernel_size=self.kernel_size, padding=(1, 1),
-                                   bias=True)
-        self.big_conv4 = nn.Conv2d(self.nb_filters1, self.nb_filters2, kernel_size=self.kernel_size, padding=(1, 1),
-                                   bias=True)
-        self.big_conv5 = nn.Conv2d(self.nb_filters2, self.nb_filters2, kernel_size=self.kernel_size, padding=(1, 1),
-                                   bias=True)
-        self.big_conv6 = nn.Conv2d(self.nb_filters2, self.nb_filters2, kernel_size=self.kernel_size, padding=(1, 1),
-                                   bias=True)
+        self.big_conv2 = nn.Conv2d(
+            self.nb_filters1,
+            self.nb_filters1,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.big_conv3 = nn.Conv2d(
+            self.nb_filters1,
+            self.nb_filters1,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.big_conv4 = nn.Conv2d(
+            self.nb_filters1,
+            self.nb_filters2,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.big_conv5 = nn.Conv2d(
+            self.nb_filters2,
+            self.nb_filters2,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.big_conv6 = nn.Conv2d(
+            self.nb_filters2,
+            self.nb_filters2,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
 
         # Big Avg Pooling / Dropout Layers
         self.big_avg_pooling1 = nn.AvgPool2d(self.pool_size1)
@@ -108,14 +128,30 @@ class BigSmall(nn.Module):
         self.TSM_4 = WTSM(n_segment=self.n_segment)
 
         # Small Convolutional Layers
-        self.small_conv1 = nn.Conv2d(self.in_channels, self.nb_filters1, kernel_size=self.kernel_size, padding=(1, 1),
-                                     bias=True)
-        self.small_conv2 = nn.Conv2d(self.nb_filters1, self.nb_filters1, kernel_size=self.kernel_size, padding=(1, 1),
-                                     bias=True)
-        self.small_conv3 = nn.Conv2d(self.nb_filters1, self.nb_filters1, kernel_size=self.kernel_size, padding=(1, 1),
-                                     bias=True)
-        self.small_conv4 = nn.Conv2d(self.nb_filters1, self.nb_filters2, kernel_size=self.kernel_size, padding=(1, 1),
-                                     bias=True)
+        self.small_conv1 = nn.Conv2d(
+            self.in_channels,
+            self.nb_filters1,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.small_conv2 = nn.Conv2d(
+            self.nb_filters1,
+            self.nb_filters1,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.small_conv3 = nn.Conv2d(
+            self.nb_filters1,
+            self.nb_filters1,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
+        self.small_conv4 = nn.Conv2d(
+            self.nb_filters1,
+            self.nb_filters2,
+            kernel_size=self.kernel_size,
+            padding=(1, 1),
+            bias=True)
 
         # AU Fully Connected Layers 
         self.au_fc1 = nn.Linear(5184, self.nb_dense, bias=True)
