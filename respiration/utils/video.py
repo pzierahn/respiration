@@ -68,7 +68,7 @@ def read_video_gray(path: str, progress: bool = True) -> tuple[np.array, VideoPa
     return convert_to_gray(frames), params
 
 
-def down_sample_video(frames: np.ndarray, dim: int = 36) -> np.array:
+def down_sample_video(frames: np.array, dim: int = 36) -> np.array:
     """
     Down sample a numpy array of frames to a target dimension
     :param frames: numpy array of frames
