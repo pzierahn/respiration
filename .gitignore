@@ -174,3 +174,4 @@ yolov3.weights
 # Ignore model files
 *.hdf5
 *.keras
+*.pth
