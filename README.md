@@ -32,8 +32,7 @@ cd data;
 ln -s /media/hdd2/07_Datenbank_Smarthome/Testaufnahmen/ subjects;
 
 # Start jupyter notebook
-cd notebooks;
-jupyter notebook --no-browser --port=8888
+jupyter notebook --no-browser --port=JUPYTER_PORT
 
 # Docker build a new image
 docker build -t respiratory-rate-estimation .
