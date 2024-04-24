@@ -7,7 +7,7 @@ def get_torch_device() -> torch.device:
     :return:
     """
 
-    if torch.backends.mps.is_available():
+    if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
         # Use the MPS (Multi-Process Service) to run the model
         # This is only available on macOS
         device = torch.device('mps')
