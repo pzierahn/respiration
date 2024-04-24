@@ -3,7 +3,7 @@ import re
 import numpy as np
 import respiration.utils as utils
 
-from typing import List
+from typing import List, Optional
 
 
 def from_path(data_path: str) -> 'Dataset':
@@ -51,7 +51,7 @@ class Dataset:
         return subjects
 
     @staticmethod
-    def get_scenarios() -> List[str]:
+    def get_settings() -> List[str]:
         return [
             '101_natural_lighting',
             '102_artificial_lighting',
@@ -64,6 +64,18 @@ class Dataset:
             '203_translation_movement',
             '204_writing'
         ]
+
+    def get_scenarios(self, settings: Optional[list[str]] = None) -> List[tuple[str, str]]:
+        if settings is None:
+            settings = Dataset.get_settings()
+
+        scenarios = []
+
+        for subject in self.get_subjects():
+            for setting in settings:
+                scenarios.append((subject, setting))
+
+        return scenarios
 
     def get_video_path(self, subject: str, scenario: str) -> str:
         """
