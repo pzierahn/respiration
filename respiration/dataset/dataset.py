@@ -22,7 +22,7 @@ def from_default() -> 'Dataset':
     :return: Dataset object
     """
 
-    data_path = os.path.join(os.getcwd(), '..', 'data', 'subjects')
+    data_path = os.path.join(os.getcwd(), '..', 'data', 'VitalCamSet')
     return from_path(data_path)
 
 
