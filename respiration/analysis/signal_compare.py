@@ -105,3 +105,13 @@ class SignalCompare:
     def distance_mse(self) -> float:
         """Calculate the mean absolute error between the two signals."""
         return distance_mse(self.ground_truth, self.prediction)
+
+    def distances(self) -> dict[str, float]:
+        gt, pred = self.compare_nfcp()
+        return {
+            "frequency_gt": gt,
+            "frequency_pred": pred,
+            "error_bpm": abs(gt - pred) * 60,
+            "mse": self.distance_mse(),
+            "pearson": self.pearson_correlation()
+        }
