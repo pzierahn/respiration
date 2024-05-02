@@ -34,3 +34,14 @@ def write_json(filename: str, data: any):
             indent=2,
             sort_keys=True,
             default=str)
+
+
+def read_json(filename: str) -> any:
+    """
+    Read JSON data from file
+    :param filename:
+    :return:
+    """
+
+    with open(filename, 'r') as file:
+        return json.load(file)
