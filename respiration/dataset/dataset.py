@@ -105,29 +105,42 @@ class Dataset:
         video_path = self.get_video_path(subject, setting)
         return utils.read_video_gray(video_path, progress)
 
-    def get_video_bgr(self, subject: str, setting: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_bgr(self,
+                      subject: str,
+                      setting: str,
+                      num_frames: Optional[int] = None,
+                      start_position: int = 0,
+                      show_progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in BGR
         :param subject: subject name
         :param setting: setting name
-        :param progress: whether to show progress bar
+        :param num_frames: number of frames to read
+        :param start_position: starting frame
+        :param show_progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
         video_path = self.get_video_path(subject, setting)
-        return utils.read_video_bgr(video_path, progress)
+        return utils.read_video_bgr(video_path, num_frames, start_position, show_progress)
 
-    def get_video_rgb(self, subject: str, setting: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_rgb(self, subject: str,
+                      setting: str,
+                      num_frames: Optional[int] = None,
+                      start_position: int = 0,
+                      show_progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in RGB
         :param subject: subject name
         :param setting: scenario name
-        :param progress: whether to show progress bar
+        :param num_frames: number of frames to read
+        :param start_position: starting frame
+        :param show_progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
         video_path = self.get_video_path(subject, setting)
-        frames, meta = utils.read_video_bgr(video_path, progress)
+        frames, meta = utils.read_video_bgr(video_path, num_frames, start_position, show_progress)
         return utils.bgr_to_rgb(frames), meta
 
     def get_unisens_entry(self, subject: str, setting: str, entry: utils.VitalSigns) -> tuple[np.ndarray, int]:
