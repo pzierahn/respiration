@@ -110,7 +110,7 @@ class Dataset:
                       setting: str,
                       num_frames: Optional[int] = None,
                       start_position: int = 0,
-                      show_progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+                      show_progress: bool = False) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in BGR
         :param subject: subject name
@@ -128,7 +128,7 @@ class Dataset:
                       setting: str,
                       num_frames: Optional[int] = None,
                       start_position: int = 0,
-                      show_progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+                      show_progress: bool = False) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in RGB
         :param subject: subject name
