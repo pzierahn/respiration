@@ -77,64 +77,64 @@ class Dataset:
 
         return scenarios
 
-    def get_video_path(self, subject: str, scenario: str) -> str:
+    def get_video_path(self, subject: str, setting: str) -> str:
         """
         Get the path to the video file for a given subject and scenario
         :param subject: subject name
-        :param scenario: scenario name
+        :param setting: scenario name
         :return: path to the video file
         """
 
         subject_path = os.path.join(self.data_path, subject)
-        scenario_path = os.path.join(subject_path, scenario)
+        scenario_path = os.path.join(subject_path, setting)
         video_path = os.path.join(scenario_path, 'Logitech HD Pro Webcam C920.avi')
 
         return video_path
 
     def get_video_gray(self, subject: str,
-                       scenario: str,
+                       setting: str,
                        progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
-        :param scenario: scenario name
+        :param setting: scenario name
         :param progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
-        video_path = self.get_video_path(subject, scenario)
+        video_path = self.get_video_path(subject, setting)
         return utils.read_video_gray(video_path, progress)
 
-    def get_video_bgr(self, subject: str, scenario: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_bgr(self, subject: str, setting: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in BGR
         :param subject: subject name
-        :param scenario: scenario name
+        :param setting: setting name
         :param progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
-        video_path = self.get_video_path(subject, scenario)
+        video_path = self.get_video_path(subject, setting)
         return utils.read_video_bgr(video_path, progress)
 
-    def get_video_rgb(self, subject: str, scenario: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+    def get_video_rgb(self, subject: str, setting: str, progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in RGB
         :param subject: subject name
-        :param scenario: scenario name
+        :param setting: scenario name
         :param progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
-        video_path = self.get_video_path(subject, scenario)
+        video_path = self.get_video_path(subject, setting)
         frames, meta = utils.read_video_bgr(video_path, progress)
         return utils.bgr_to_rgb(frames), meta
 
-    def get_unisens_entry(self, subject: str, scenario: str, entry: utils.VitalSigns) -> tuple[np.ndarray, int]:
+    def get_unisens_entry(self, subject: str, setting: str, entry: utils.VitalSigns) -> tuple[np.ndarray, int]:
         """
         Read an entry from an unisens dataset
         :param subject: subject
-        :param scenario: scenario
+        :param setting: setting
         :param entry: vital signal
         :return: numpy array of the signal and the sampling rate
         """
@@ -142,30 +142,30 @@ class Dataset:
         subject_path = os.path.join(
             self.data_path,
             subject,
-            scenario,
+            setting,
             'synced_Logitech HD Pro Webcam C920')
 
         return utils.read_unisens_entry(subject_path, entry)
 
-    def get_ground_truth_rr_signal(self, subject: str, scenario: str) -> tuple[np.ndarray, int]:
+    def get_ground_truth_rr_signal(self, subject: str, setting: str) -> tuple[np.ndarray, int]:
         """
         Get the ground truth respiratory rate signal for a given subject and scenario
         :param subject:
-        :param scenario:
+        :param setting:
         :return:
         """
-        return self.get_unisens_entry(subject, scenario, utils.VitalSigns.thorax_abdomen)
+        return self.get_unisens_entry(subject, setting, utils.VitalSigns.thorax_abdomen)
 
-    def contains(self, subject: str, scenario: str) -> bool:
+    def contains(self, subject: str, setting: str) -> bool:
         """
         Check if a given subject and scenario exists in the dataset
         :param subject:
-        :param scenario:
+        :param setting:
         :return:
         """
         subject_path = os.path.join(
             self.data_path,
             subject,
-            scenario)
+            setting)
 
         return os.path.exists(subject_path)
