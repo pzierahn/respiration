@@ -163,7 +163,7 @@ cython_debug/
 
 data/subjects
 
-notes.txt
+notes.md
 
 # Ignore big evaluation files
 evaluation/signals*
