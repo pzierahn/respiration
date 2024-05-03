@@ -131,7 +131,7 @@ class EfficientPhys(nn.Module):
 
         d7 = self.avg_pooling_3(gated2)
         d8 = self.dropout_3(d7)
-        d9 = d8.view(d8.size(0), -1)
+        d9 = d8.reshape(d8.size(0), -1)
         d10 = torch.tanh(self.final_dense_1(d9))
         d11 = self.dropout_4(d10)
         out = self.final_dense_2(d11)
