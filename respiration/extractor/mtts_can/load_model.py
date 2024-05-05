@@ -20,7 +20,7 @@ def load_model(
         input_shape: tuple[int, int, int] = (36, 36, 3),
 ):
     if model_checkpoint is None:
-        model_checkpoint = os.path.join('..', 'data', 'mtts_can', 'mtts_can.hdf5')
+        model_checkpoint = os.path.join('..', '..', 'data', 'mtts_can', 'mtts_can.hdf5')
 
     model = mtts_can(frame_depth, nb_filters1, nb_filters2, input_shape)
     model.load_weights(model_checkpoint)

@@ -10,7 +10,7 @@ def load_model(
         device: torch.device = torch.device('cpu')
 ) -> tuple[torch.nn.Module, dict]:
     if model_checkpoint is None:
-        model_checkpoint = os.path.join('..', 'data', 'rPPG-Toolbox', 'BP4D_BigSmall_Multitask_Fold3.pth')
+        model_checkpoint = os.path.join('..', '..', 'data', 'rPPG-Toolbox', 'BP4D_BigSmall_Multitask_Fold3.pth')
 
     # Wrap modul in nn.DataParallel
     model = BigSmall()

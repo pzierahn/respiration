@@ -12,7 +12,7 @@ class YOLO:
 
     def __init__(self, yolo_dir: Optional[str] = None):
         if yolo_dir is None:
-            self.yolo_dir = os.path.join(os.getcwd(), '..', 'data', 'yolo')
+            self.yolo_dir = os.path.join(os.getcwd(), '..', '..', 'data', 'yolo')
         else:
             self.yolo_dir = yolo_dir
 

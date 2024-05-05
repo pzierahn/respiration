@@ -22,7 +22,7 @@ def from_default() -> 'Dataset':
     :return: Dataset object
     """
 
-    data_path = os.path.join(os.getcwd(), '..', 'data', 'VitalCamSet')
+    data_path = os.path.join(os.getcwd(), '..', '..', 'data', 'VitalCamSet')
     return from_path(data_path)
 
 
@@ -93,17 +93,25 @@ class Dataset:
 
     def get_video_gray(self, subject: str,
                        setting: str,
+                       num_frames: Optional[int] = None,
+                       start_position: int = 0,
                        progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
         :param setting: scenario name
+        :param num_frames: number of frames to read
+        :param start_position: starting frame
         :param progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
         video_path = self.get_video_path(subject, setting)
-        return utils.read_video_gray(video_path, progress)
+        return utils.read_video_gray(
+            video_path,
+            num_frames=num_frames,
+            start_position=start_position,
+            show_progress=progress)
 
     def get_video_bgr(self,
                       subject: str,
