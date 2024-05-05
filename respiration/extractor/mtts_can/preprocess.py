@@ -22,7 +22,6 @@ def preprocess_video_frames(frames: np.ndarray, dim=36) -> tuple[np.ndarray, np.
             (dim, dim),
             interpolation=cv2.INTER_AREA)
         resized_img = resized_img.astype('float32')
-        resized_img = cv2.cvtColor(resized_img, cv2.COLOR_BGR2RGB)
         resized_img[resized_img > 1] = 1
         resized_img[resized_img < (1 / 255)] = 1 / 255
         resized[inx, :, :, :] = resized_img
