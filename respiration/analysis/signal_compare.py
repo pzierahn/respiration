@@ -1,4 +1,5 @@
 from typing import Optional
+from dtaidistance import dtw
 
 from .fft import *
 from .cross_point import *
@@ -109,9 +110,10 @@ class SignalCompare:
     def distances(self) -> dict[str, float]:
         gt, pred = self.compare_nfcp()
         return {
-            "frequency_gt": gt,
-            "frequency_pred": pred,
-            "error_bpm": abs(gt - pred) * 60,
-            "mse": self.distance_mse(),
-            "pearson": self.pearson_correlation()
+            'frequency_gt': gt,
+            'frequency_pred': pred,
+            'error_bpm': abs(gt - pred) * 60,
+            'mse': self.distance_mse(),
+            'pearson': self.pearson_correlation(),
+            'dtw': dtw.distance(self.ground_truth, self.prediction),
         }
