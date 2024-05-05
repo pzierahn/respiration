@@ -108,12 +108,25 @@ class SignalCompare:
         return distance_mse(self.ground_truth, self.prediction)
 
     def distances(self) -> dict[str, float]:
-        gt, pred = self.compare_nfcp()
+        pk_gt, pk_pred = self.compare_peaks()
+        cp_gt, cp_pred = self.compare_crossing_point()
+        nfcp_gt, nfcp_pred = self.compare_nfcp()
+        fft_gt, fft_pred = self.compare_fft()
+
         return {
-            'frequency_gt': gt,
-            'frequency_pred': pred,
-            'error_bpm': abs(gt - pred) * 60,
-            'mse': self.distance_mse(),
-            'pearson': self.pearson_correlation(),
-            'dtw': dtw.distance(self.ground_truth, self.prediction),
+            'pk_gt': pk_gt,
+            'pk_pred': pk_pred,
+            'pk_error': abs(pk_gt - pk_pred) * 60,
+            'cp_gt': cp_gt,
+            'cp_pred': cp_pred,
+            'cp_error': abs(cp_gt - cp_pred) * 60,
+            'nfcp_gt': nfcp_gt,
+            'nfcp_pred': nfcp_pred,
+            'nfcp_error': abs(nfcp_gt - nfcp_pred) * 60,
+            'fft_gt': fft_gt,
+            'fft_pred': fft_pred,
+            'fft_error': abs(fft_gt - fft_pred) * 60,
+            'distance_mse': self.distance_mse(),
+            'distance_pearson': self.pearson_correlation(),
+            'distance_dtw': dtw.distance(self.ground_truth, self.prediction),
         }
