@@ -52,7 +52,7 @@ def standard_processing(
         lowpass: float = 0.08,
         highpass: float = 0.6,
         order: int = 3,
-):
+) -> np.ndarray:
     """
     Apply the standard processing to the signal.
     :param respiratory_signal: The signal data.
