@@ -17,3 +17,4 @@ keras
 
 torch
 tslearn
+git+https://github.com/pzierahn/RAFT
