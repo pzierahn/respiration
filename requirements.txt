@@ -8,13 +8,10 @@ opencv-python
 matplotlib
 tqdm
 dtaidistance
-
-# MTTS-CAN
 tensorflow
 scikit-image
 scipy
 keras
-
 torch
 tslearn
 git+https://github.com/pzierahn/RAFT
