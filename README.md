@@ -48,6 +48,7 @@ The following methods and models are compared:
 
 * YOLO model for object detection.
 * MTTS-CAN and BigSmall models for respiration rate estimation.
+* RAFT model for optical flow estimation.
 
 ```shell
 # YOLO model
@@ -66,6 +67,12 @@ wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4
 wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/PURE_EfficientPhys.pth -O data/rPPG-Toolbox/PURE_EfficientPhys.pth;
 wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_EfficientPhys.pth -O data/rPPG-Toolbox/UBFC-rPPG_EfficientPhys.pth;
 wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_PseudoLabel_EfficientPhys.pth -O data/rPPG-Toolbox/BP4D_PseudoLabel_EfficientPhys.pth;
+
+# RAFT model
+mkdir -p data/RAFT;
+wget https://dl.dropboxusercontent.com/s/4j4z58wuv8o0mfz/models.zip -O data/RAFT/models.zip;
+cd data/RAFT;
+unzip models.zip;
 ```
 
 ## Setup development environment
