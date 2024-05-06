@@ -1,7 +1,21 @@
-# Respiratory Rate Estimation
+# Respiratory Rate Measurement
 
-Master thesis: "Investigation of Image Processing Techniques for Camera-Based Respiratory Rate Measurement with Machine
-Learning"
+This repository deals with the **"Investigation of Image Processing Techniques for Camera-Based Respiratory Rate
+Measurement with Machine Learning"**. The goal is to compare different methods for respiratory rate estimation from
+videos.
+
+The following methods and models are compared:
+
+* **Pixel intensity changes**: Analyze the pixel intensity changes in the chest region.
+* **Optical flow**: Analyze the optical flow in the chest region.
+* **MTTS-CAN**: The MTTS-CAN (Multi-Task Temporal Shift Convolutional Attention Network) model utilizes temporal shift
+  modules and attention mechanisms to perform on-device, real-time measurement of cardiopulmonary signals using video
+  input, capable of extracting vital signs like heart and respiration rates.
+* **BigSmall**: The BigSmall model efficiently integrates diverse spatial and temporal scales through a dual-branch
+  architecture for concurrent multi-task physiological measurement from video, leveraging techniques like Wrapping
+  Temporal Shift Modules for enhanced temporal feature representation.
+* **Fine-tuned EfficientPhys**: EfficientPhys is designed to extract PPG signals. The model is fine-tuned on the
+  VitalCamSet dataset to estimate the respiratory rates.
 
 ## Project structure
 
