@@ -14,7 +14,16 @@ class VideoParams:
     num_frames: int
     fps: int
 
-    def __init__(self, start_position: int, num_frames: int, fps: int):
+    width: int
+    height: int
+
+    def __init__(
+            self,
+            start_position: int,
+            num_frames: int,
+            fps: int,
+            width: int,
+            height: int):
         """
         Initialize the video parameters
         :param start_position:
@@ -24,6 +33,8 @@ class VideoParams:
         self.start_position = start_position
         self.num_frames = num_frames
         self.fps = fps
+        self.width = width
+        self.height = height
 
     def __str__(self):
         return json.dumps(self.__dict__, indent=2)
@@ -43,6 +54,28 @@ def get_frame_count(path: str) -> int:
     return frame_count
 
 
+def get_video_params(path: str) -> VideoParams:
+    """
+    Get the video parameters such as frame count and fps
+    :param path: path to the video file
+    :return: video parameters
+    """
+
+    cap = cv2.VideoCapture(path)
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap.release()
+
+    return VideoParams(
+        start_position=0,
+        num_frames=frame_count,
+        fps=fps,
+        width=width,
+        height=height)
+
+
 def read_video_bgr(path: str,
                    num_frames: Optional[int] = None,
                    start_position: int = 0,
@@ -58,6 +91,8 @@ def read_video_bgr(path: str,
 
     cap = cv2.VideoCapture(path)
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     # Set the number of frames to read
     if num_frames is None:
@@ -84,7 +119,7 @@ def read_video_bgr(path: str,
     cap.release()
 
     # Create video parameters object
-    params = VideoParams(start_position, num_frames, fps)
+    params = VideoParams(start_position, num_frames, fps, width, height)
     return np.array(frames), params
 
 
