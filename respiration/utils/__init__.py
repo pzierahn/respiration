@@ -1,3 +1,4 @@
+from .figure import *
 from .json import *
 from .torch import *
 from .unisens import *
