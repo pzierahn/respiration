@@ -62,13 +62,13 @@ def extract_signal(
 ) -> np.ndarray:
     """
     Extract the respiratory signal from the given frames
-    :param frames:
-    :param use_cgof:
-    :param roi:
-    :param fpn:
-    :param quality_level:
-    :param quality_level_rv:
-    :return:
+    :param frames: The frames to extract the respiratory signal from
+    :param use_cgof: Whether to use the correlation-guided optical flow method
+    :param roi: The region of interest to extract feature points from
+    :param fpn: The number of feature points to extract (if None, extract all feature points)
+    :param quality_level: The quality level of the feature points
+    :param quality_level_rv: The quality level random variable
+    :return: The extracted respiratory signal
     """
 
     # Extract feature points from the frames
