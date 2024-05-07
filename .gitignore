@@ -184,3 +184,5 @@ yolov3.weights
 *.csv
 *.json
 *.zip
+*.gz
+*.npy
