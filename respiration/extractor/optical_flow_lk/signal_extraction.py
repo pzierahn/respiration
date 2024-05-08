@@ -40,7 +40,7 @@ def signal_from_amplitudes(point_amplitudes: np.ndarray, use_cgof: bool = False)
     each frame.
     :param point_amplitudes: The amplitudes of the feature points
     :param use_cgof: Whether to use the correlation-guided optical flow method
-    :return:
+    :return: The extracted respiratory signal (1D array)
     """
 
     # Average the amplitudes of the feature points in each frame
@@ -68,7 +68,7 @@ def extract_signal(
     :param fpn: The number of feature points to extract (if None, extract all feature points)
     :param quality_level: The quality level of the feature points
     :param quality_level_rv: The quality level random variable
-    :return: The extracted respiratory signal
+    :return: The extracted respiratory signal (1D array)
     """
 
     # Extract feature points from the frames
