@@ -1,5 +1,8 @@
 import numpy as np
-import respiration.roi as roi
+
+from .chest import chest_from_face
+from .faces import detect_faces
+from .yolo import YOLO
 
 _yolo = None
 
@@ -15,7 +18,7 @@ def get_roi_areas(frame: np.ndarray) -> list[tuple[list[int], str]]:
 
     if _yolo is None:
         # Load the YOLO model
-        _yolo = roi.YOLO()
+        _yolo = YOLO()
 
     regions = [
         # ROI for the full frame
@@ -23,9 +26,9 @@ def get_roi_areas(frame: np.ndarray) -> list[tuple[list[int], str]]:
     ]
 
     # Calculate the region of interest (ROI) based on the face
-    faces = roi.detect_faces(frame)
+    faces = detect_faces(frame)
     if len(faces) == 1:
-        chest_roi = roi.roi_from_face(faces[0])
+        chest_roi = chest_from_face(faces[0])
         regions.append((chest_roi, 'chest'))
 
     # Use the detected person to create a mask
