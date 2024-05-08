@@ -6,7 +6,8 @@ from enum import Enum
 
 class VitalSigns(Enum):
     abdomen = '2_Abdomen'
-    thorax = '4_Licht'
+    thorax = '3_Thorax'
+    licht = '4_Licht'
     pleth = '5_Pleth'
     pulse = '6_Pulse'
     spo2 = '7_SPO2'
