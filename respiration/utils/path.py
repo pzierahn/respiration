@@ -1,4 +1,5 @@
 import os
+from typing import LiteralString
 
 
 def project_root() -> str:
@@ -6,12 +7,12 @@ def project_root() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
 
 
-def file_path(*path) -> str:
+def file_path(*paths: str) -> str:
     """Returns path from project root to file"""
-    return os.path.join(project_root(), *path)
+    return os.path.join(project_root(), *paths)
 
 
-def dir_path(*dirs, mkdir: bool = True) -> str:
+def dir_path(*dirs: str, mkdir: bool = True) -> str:
     """Returns path from project root to directory"""
 
     path = os.path.join(project_root(), *dirs)
