@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 
 from typing import Sequence
 
@@ -17,7 +16,7 @@ def detect_faces(frame, scale_factor: float = 1.3, min_neighbors: int = 5) -> Se
     return face_cascade.detectMultiScale(frame, scale_factor, min_neighbors)
 
 
-def roi_from_face(face: tuple[int, int, int, int],
+def roi_from_face(face: Sequence[int],
                   scale_w: float = 0,
                   scale_h: float = 0) -> tuple[int, int, int, int]:
     """
