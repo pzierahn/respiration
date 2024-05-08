@@ -14,12 +14,6 @@ def get_roi_areas(frame: np.ndarray) -> list[tuple[list[int], str]]:
     :return: A list of tuples containing the ROI and the name of the ROI
     """
 
-    global _yolo
-
-    if _yolo is None:
-        # Load the YOLO model
-        _yolo = YOLO()
-
     regions = [
         # ROI for the full frame
         ((0, 0, frame.shape[1], frame.shape[0]), 'full')
@@ -30,6 +24,12 @@ def get_roi_areas(frame: np.ndarray) -> list[tuple[list[int], str]]:
     if len(faces) == 1:
         chest_roi = chest_from_face(faces[0])
         regions.append((chest_roi, 'chest'))
+
+    global _yolo
+
+    if _yolo is None:
+        # Load the YOLO model
+        _yolo = YOLO()
 
     # Use the detected person to create a mask
     persons = _yolo.detect_classes(frame, clazz='person')
