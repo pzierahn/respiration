@@ -20,3 +20,8 @@ def dir_path(*dirs: str, mkdir: bool = False) -> str:
         os.makedirs(path, exist_ok=True)
 
     return path
+
+
+def join_paths(*paths: str) -> str:
+    """Joins paths"""
+    return str(os.path.join(*paths))
