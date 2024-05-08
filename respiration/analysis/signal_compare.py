@@ -23,26 +23,14 @@ class SignalCompare:
     def __init__(
             self,
             prediction: np.ndarray,
-            prediction_sample_rate: int,
             ground_truth: np.ndarray,
-            ground_truth_sample_rate: int,
+            sample_rate: int,
             lowpass: Optional[float] = 0.08,
             highpass: Optional[float] = 0.6,
             detrend_tarvainen: bool = True,
-            filter_signal: bool = True,
             normalize_signal: bool = True,
+            filter_signal: bool = True,
     ):
-        if prediction_sample_rate > ground_truth_sample_rate:
-            # Down-sample prediction
-            prediction = preprocessing.resample_signal(prediction, len(ground_truth))
-            sample_rate = ground_truth_sample_rate
-        elif prediction_sample_rate < ground_truth_sample_rate:
-            # Down-sample ground truth
-            ground_truth = preprocessing.resample_signal(ground_truth, len(prediction))
-            sample_rate = prediction_sample_rate
-        else:
-            sample_rate = prediction_sample_rate
-
         if detrend_tarvainen:
             prediction = preprocessing.detrend_tarvainen(prediction)
             ground_truth = preprocessing.detrend_tarvainen(ground_truth)
