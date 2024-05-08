@@ -9,7 +9,7 @@ def store_figure(fig: plt.Figure, dirname: str, name: str) -> None:
     :param dirname: The directory name to store the figure in.
     :param name: The name of the figure.
     """
-    path = os.path.join(os.getcwd(), '..', '..', 'reports', 'figures', dirname)
+    path = os.path.join(os.getcwd(), '..', '..', 'outputs', 'figures', dirname)
     os.makedirs(path, exist_ok=True)
 
     path_png = os.path.join(path, f'{name}.png')
