@@ -9,11 +9,11 @@ def track_feature_point_movement(
         max_level: int = 2) -> np.ndarray:
     """
     Extract the movement of the feature points in the frames using the Lucas-Kanade optical flow method.
-    :param frames:
-    :param feature_points:
-    :param win_size:
-    :param max_level:
-    :return:
+    :param frames: The frames to extract the feature points from.
+    :param feature_points: The feature points to track.
+    :param win_size: The window size of the optical flow.
+    :param max_level: The maximum level of the pyramid for the optical flow.
+    :return: The movement of the feature points in the frames. (N, F, 2)
     """
 
     lk_params = {
@@ -51,8 +51,8 @@ def track_feature_point_movement(
 def calculate_feature_point_amplitudes(motion_matrix: np.ndarray) -> np.ndarray:
     """
     Calculate the amplitudes of the feature points from the motion matrix.
-    :param motion_matrix:
-    :return:
+    :param motion_matrix: The motion matrix of the feature points. (N, F, 2)
+    :return: The amplitudes of the feature points. (N, F)
     """
 
     # Calculate the amplitudes of the feature points
