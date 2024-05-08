@@ -1,7 +1,8 @@
 import numpy as np
+from typing import Optional
 
 
-def average_pixel_intensity(frames: np.ndarray, roi: tuple[int, int, int, int] = None) -> np.ndarray:
+def average_pixel_intensity(frames: np.ndarray, roi: Optional[tuple[int, int, int, int]] = None) -> np.ndarray:
     """
     Calculate the average pixel intensity in a region of interest (ROI) for each frame
     :param frames: numpy array of frames
@@ -10,6 +11,7 @@ def average_pixel_intensity(frames: np.ndarray, roi: tuple[int, int, int, int] =
     """
 
     if roi is None:
+        # Default to the entire frame
         roi = (0, 0, frames.shape[2], frames.shape[1])
 
     roi_x, roi_y, roi_w, roi_h = roi
