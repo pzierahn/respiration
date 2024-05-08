@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from respiration.roi import roi_to_mask
+from respiration.roi import mask_from_area
 
 
 def find_feature_points(
@@ -31,7 +31,7 @@ def find_feature_points(
 
     mask = None
     if roi is not None:
-        mask = roi_to_mask(frame, roi)
+        mask = mask_from_area(frame, roi)
 
     points = cv2.goodFeaturesToTrack(frame, mask=mask, **feature_params)
 
