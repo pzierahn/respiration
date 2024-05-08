@@ -61,15 +61,15 @@ class SignalCompare:
         self.ground_truth = ground_truth
         self.sample_rate = sample_rate
 
-    def compare_fft(self) -> tuple[float, float]:
-        """Compare the frequency of the signals using the FFT method."""
-        gt_frequency = frequency_from_fft(
+    def compare_psd(self) -> tuple[float, float]:
+        """Compare the frequency of the signals using power spectral density."""
+        gt_frequency = frequency_from_psd(
             self.ground_truth,
             self.sample_rate,
             self.lowpass,
             self.highpass
         )
-        pred_frequency = frequency_from_fft(
+        pred_frequency = frequency_from_psd(
             self.prediction,
             self.sample_rate,
             self.lowpass,
@@ -111,7 +111,7 @@ class SignalCompare:
         pk_gt, pk_pred = self.compare_peaks()
         cp_gt, cp_pred = self.compare_crossing_point()
         nfcp_gt, nfcp_pred = self.compare_nfcp()
-        fft_gt, fft_pred = self.compare_fft()
+        psd_gt, psd_pred = self.compare_psd()
 
         return {
             'pk_gt': pk_gt,
@@ -123,9 +123,9 @@ class SignalCompare:
             'nfcp_gt': nfcp_gt,
             'nfcp_pred': nfcp_pred,
             'nfcp_error': abs(nfcp_gt - nfcp_pred) * 60,
-            'fft_gt': fft_gt,
-            'fft_pred': fft_pred,
-            'fft_error': abs(fft_gt - fft_pred) * 60,
+            'psd_gt': psd_gt,
+            'psd_pred': psd_pred,
+            'psd_error': abs(psd_gt - psd_pred) * 60,
             'distance_mse': self.distance_mse(),
             'distance_pearson': self.pearson_correlation(),
             'distance_dtw': dtw.distance(self.ground_truth, self.prediction),
