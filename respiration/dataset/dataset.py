@@ -93,14 +93,14 @@ class VitalCamSet:
                        setting: str,
                        num_frames: Optional[int] = None,
                        start_position: int = 0,
-                       progress: bool = True) -> tuple[np.ndarray, utils.VideoParams]:
+                       show_progress: bool = False) -> tuple[np.ndarray, utils.VideoParams]:
         """
         Get the frames of a given subject and scenario in grayscale
         :param subject: subject name
         :param setting: scenario name
         :param num_frames: number of frames to read
         :param start_position: starting frame
-        :param progress: whether to show progress bar
+        :param show_progress: whether to show progress bar
         :return: numpy array of frames and video parameters
         """
 
@@ -109,7 +109,7 @@ class VitalCamSet:
             video_path,
             num_frames=num_frames,
             start_position=start_position,
-            show_progress=progress)
+            show_progress=show_progress)
 
     def get_video_bgr(self,
                       subject: str,
