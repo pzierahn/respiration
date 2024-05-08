@@ -166,27 +166,24 @@ class VitalCamSet:
 
         return utils.read_unisens_entry(subject_path, entry)
 
-    def get_breathing_signal(self, subject: str, setting: str) -> np.ndarray:
+    def get_vital_sign(self, subject: str, setting: str, vital_sign: utils.VitalSigns) -> np.ndarray:
         """
-        Get the ground truth respiratory signal for a given subject and scenario. The signal is resampled to match the
-        video frame rate.
-        :param subject:
-        :param setting:
-        :return:
+        Get the ground truth signal for a given subject and scenario. The signal is resampled to match the video frame
+        rate.
         """
 
         video_path = self.get_video_path(subject, setting)
         params = utils.get_video_params(video_path)
-        signal, fs = self.get_unisens_entry(subject, setting, utils.VitalSigns.thorax_abdomen)
+        signal, fs = self.get_unisens_entry(subject, setting, vital_sign)
         return resample(signal, params.num_frames)
 
+    def get_breathing_signal(self, subject: str, setting: str) -> np.ndarray:
+        """Get the ground truth respiratory signal for a given subject and scenario."""
+        return self.get_vital_sign(subject, setting, utils.VitalSigns.thorax_abdomen)
+
     def contains(self, subject: str, setting: str) -> bool:
-        """
-        Check if a given subject and scenario exists in the dataset
-        :param subject:
-        :param setting:
-        :return:
-        """
+        """Check if a given subject and scenario exists in the dataset"""
+
         subject_path = os.path.join(
             self.data_path,
             subject,
