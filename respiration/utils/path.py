@@ -11,7 +11,7 @@ def file_path(*paths: str) -> str:
     return os.path.join(project_root(), *paths)
 
 
-def dir_path(*dirs: str, mkdir: bool = True) -> str:
+def dir_path(*dirs: str, mkdir: bool = False) -> str:
     """Returns path from project root to directory"""
 
     path = os.path.join(project_root(), *dirs)
