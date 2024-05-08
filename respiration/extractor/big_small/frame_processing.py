@@ -9,10 +9,10 @@ import torch
 def preprocess_frames(frames: np.ndarray, big_res: int = 144, small_res: int = 9) -> tuple[np.ndarray, np.ndarray]:
     """
     Preprocess the frames to be fed into the model. This will produce the Big Slow Branch and the Small Fast Branch.
-    :param frames:
-    :param big_res:
-    :param small_res:
-    :return:
+    :param frames: The frames to be preprocessed (N, H, W, C)
+    :param big_res: The resolution of the big branch frames
+    :param small_res: The resolution of the small branch frames
+    :return: The preprocessed frames for the Big Slow Branch and the Small Fast Branch
     """
 
     # Center crop frames to square shape
@@ -50,11 +50,19 @@ def convert_to_input(
         big: np.ndarray,
         small: np.ndarray,
         device: Optional[torch.device] = None) -> (torch.Tensor, torch.Tensor):
+    """
+    Convert the frames to a tensor and transform them to the shape expected by the model (N, C, H, W)
+    :param big: The preprocessed frames for the Big Slow Branch
+    :param small: The preprocessed frames for the Small Fast Branch
+    :param device: The device to use for the tensor
+    :return: The input tensors for the BigSmallModel
+    """
+
     # Convert the frames to a tensor
     big_tensor = torch.tensor(big, device=device)
     small_tensor = torch.tensor(small, device=device)
 
-    # Transform the tensor to the shape expected by the model (frame_count, c, w, h)
+    # Transform the tensor to the shape expected by the model (N, C, H, W)
     big_tensor = big_tensor.permute(0, 3, 1, 2)
     small_tensor = small_tensor.permute(0, 3, 1, 2)
 
