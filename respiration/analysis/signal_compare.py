@@ -122,3 +122,13 @@ class SignalCompare:
             'distance_pearson': self.pearson_correlation(),
             'distance_dtw': self.distance_dtw(),
         }
+
+    def compare_all(self) -> dict[str, float]:
+        """
+        Compare the signals using all methods.
+        :return: Dictionary with the errors for each method in beats per minute.
+        """
+        errors = self.bpm_errors()
+        distances = self.distances()
+
+        return {**errors, **distances}
