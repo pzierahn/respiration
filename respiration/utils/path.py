@@ -1,5 +1,4 @@
 import os
-from typing import LiteralString
 
 
 def project_root() -> str:
