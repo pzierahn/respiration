@@ -6,35 +6,20 @@ import respiration.utils as utils
 from typing import List, Optional
 
 
-def from_path(data_path: str) -> 'Dataset':
-    """
-    Create a new Dataset object from a given path
-    :param data_path: to the dataset
-    :return: Dataset object
-    """
-
-    return Dataset(data_path)
-
-
-def from_default() -> 'Dataset':
-    """
-    Create a new Dataset object from ../data/subjects
-    :return: Dataset object
-    """
-
-    data_path = os.path.join(os.getcwd(), '..', '..', 'data', 'VitalCamSet')
-    return from_path(data_path)
-
-
-class Dataset:
+class VitalCamSet:
     """
     Class to handle the VitalCamSet dataset
     """
 
+    # Path to the VitalCamSet dataset
     data_path: str
 
-    def __init__(self, data_path: str):
-        self.data_path = data_path
+    def __init__(self, data_path: Optional[str] = None):
+        if data_path is None:
+            # Use the default path if not provided
+            self.data_path = os.path.join('..', '..', 'data', 'VitalCamSet')
+        else:
+            self.data_path = data_path
 
     def get_subjects(self) -> List[str]:
         """
@@ -67,7 +52,7 @@ class Dataset:
 
     def get_scenarios(self, settings: Optional[list[str]] = None) -> List[tuple[str, str]]:
         if settings is None:
-            settings = Dataset.get_settings()
+            settings = VitalCamSet.get_settings()
 
         scenarios = []
 
