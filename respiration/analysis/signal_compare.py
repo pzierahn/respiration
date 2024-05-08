@@ -107,26 +107,30 @@ class SignalCompare:
         """Calculate the mean absolute error between the two signals."""
         return distance_mse(self.ground_truth, self.prediction)
 
-    def distances(self) -> dict[str, float]:
+    def distance_dtw(self) -> float:
+        """Calculate the mean absolute error between the two signals."""
+        return dtw.distance(self.ground_truth, self.prediction)
+
+    def bpm_errors(self) -> dict[str, float]:
+        """
+        Calculate the errors between the two signals.
+        :return: Dictionary with the errors for each method in beats per minute.
+        """
         pk_gt, pk_pred = self.compare_peaks()
         cp_gt, cp_pred = self.compare_crossing_point()
         nfcp_gt, nfcp_pred = self.compare_nfcp()
         psd_gt, psd_pred = self.compare_psd()
 
         return {
-            'pk_gt': pk_gt,
-            'pk_pred': pk_pred,
             'pk_error': abs(pk_gt - pk_pred) * 60,
-            'cp_gt': cp_gt,
-            'cp_pred': cp_pred,
             'cp_error': abs(cp_gt - cp_pred) * 60,
-            'nfcp_gt': nfcp_gt,
-            'nfcp_pred': nfcp_pred,
             'nfcp_error': abs(nfcp_gt - nfcp_pred) * 60,
-            'psd_gt': psd_gt,
-            'psd_pred': psd_pred,
             'psd_error': abs(psd_gt - psd_pred) * 60,
+        }
+
+    def distances(self) -> dict[str, float]:
+        return {
             'distance_mse': self.distance_mse(),
             'distance_pearson': self.pearson_correlation(),
-            'distance_dtw': dtw.distance(self.ground_truth, self.prediction),
+            'distance_dtw': self.distance_dtw(),
         }
