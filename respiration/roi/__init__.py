@@ -1,4 +1,5 @@
 from .areas import *
-from .face_roi import *
+from .chest import *
+from .faces import *
 from .mask import *
 from .yolo import *

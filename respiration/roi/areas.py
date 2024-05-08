@@ -14,6 +14,7 @@ def get_roi_areas(frame: np.ndarray) -> list[tuple[list[int], str]]:
     global _yolo
 
     if _yolo is None:
+        # Load the YOLO model
         _yolo = roi.YOLO()
 
     regions = [

@@ -1,8 +1,8 @@
 import os
 import cv2
-from typing import Optional
-
 import numpy as np
+
+from typing import Optional
 
 
 class YOLO:

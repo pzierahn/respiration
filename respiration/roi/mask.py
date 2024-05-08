@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def roi_to_mask(
+def mask_from_area(
         frame: np.ndarray,
         roi: tuple[int, int, int, int],
 ) -> np.ndarray:
