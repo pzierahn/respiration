@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .fft import *
+from .psd import *
 from .cross_point import *
 from .peak_counting import *
 

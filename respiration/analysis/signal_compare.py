@@ -1,7 +1,7 @@
 from typing import Optional
 from dtaidistance import dtw
 
-from .fft import *
+from .psd import *
 from .cross_point import *
 from .peak_counting import *
 from .distance import *
