@@ -30,11 +30,11 @@ The following methods and models are compared:
 ├── figures                  <- Figures for the report
 ├── models                   <- Trained models
 ├── notebooks
-│   ├── analyse              <- Analysis of experiment results
-│   ├── experiments          <- Extract signals from videos
-│   ├── extractors           <- Demo of all extractors
-│   ├── fine_tuning          <- Fine-tuning of the models
-│   └── misc                 <- Miscellaneous notebooks like data exploration
+│   ├── 00-Fine-Tuning       <- Fine-tuning of the models
+│   ├── 01-Extractors        <- Demos of all extractors
+│   ├── 02-Experiments       <- Extract signals from videos
+│   ├── 03-Analysis          <- Analysis of experiment results
+│   └── 04-Support           <- Miscellaneous notebooks like data exploration
 └── respiration              <- Python package
     ├── analysis             <- Extract frequencies from signals
     ├── dataset              <- Data loading
