@@ -3,6 +3,7 @@ import re
 import numpy as np
 import respiration.utils as utils
 
+from scipy.signal import resample
 from typing import List, Optional
 
 
@@ -165,14 +166,19 @@ class VitalCamSet:
 
         return utils.read_unisens_entry(subject_path, entry)
 
-    def get_ground_truth_rr_signal(self, subject: str, setting: str) -> tuple[np.ndarray, int]:
+    def get_breathing_signal(self, subject: str, setting: str) -> np.ndarray:
         """
-        Get the ground truth respiratory rate signal for a given subject and scenario
+        Get the ground truth respiratory signal for a given subject and scenario. The signal is resampled to match the
+        video frame rate.
         :param subject:
         :param setting:
         :return:
         """
-        return self.get_unisens_entry(subject, setting, utils.VitalSigns.thorax_abdomen)
+
+        video_path = self.get_video_path(subject, setting)
+        params = utils.get_video_params(video_path)
+        signal, fs = self.get_unisens_entry(subject, setting, utils.VitalSigns.thorax_abdomen)
+        return resample(signal, params.num_frames)
 
     def contains(self, subject: str, setting: str) -> bool:
         """
