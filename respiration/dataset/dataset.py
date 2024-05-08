@@ -76,6 +76,18 @@ class VitalCamSet:
 
         return video_path
 
+    def get_first_frame(self, subject: str, setting: str) -> np.ndarray:
+        """
+        Get the first frame of a given subject and scenario
+        :param subject: subject name
+        :param setting: scenario name
+        :return: numpy array of the first frame
+        """
+
+        video_path = self.get_video_path(subject, setting)
+        frames, _ = utils.read_video_rgb(video_path, 1, 0)
+        return frames[0]
+
     def get_video_gray(self, subject: str,
                        setting: str,
                        num_frames: Optional[int] = None,
