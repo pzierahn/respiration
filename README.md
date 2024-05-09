@@ -83,12 +83,12 @@ ln -s /media/hdd2/07_Datenbank_Smarthome/Testaufnahmen/ subjects;
 jupyter notebook --no-browser --port=JUPYTER_PORT
 
 # Docker build a new image
-docker build -t respiratory-rate-estimation .
+docker build -t respiration-jupyter .
 
 # Run the docker container
-docker run -it --rm \
+docker run -it --gpus all --rm \
   -v $(pwd):/app \
   -v $(DATASET):/app/data/VitalCamSet \
   -p JUPYTER_PORT:8888 \
-  respiratory-rate-estimation
+  respiration-jupyter
 ```
