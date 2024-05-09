@@ -72,23 +72,26 @@ wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4
 ## Setup development environment
 
 ```shell
+# Source your environment variables
+source .env
+
 # Connect to the remote machine with port forwarding
-ssh -L LOCAL_PORT:localhost:JUPYTER_PORT user@remote-machine
+ssh -L LOCAL_PORT:localhost:$JUPYTER_PORT user@remote-machine
 
 # Set the data directory
 cd data;
 ln -s /media/hdd2/07_Datenbank_Smarthome/Testaufnahmen/ subjects;
 
 # Start jupyter notebook
-jupyter notebook --no-browser --port=JUPYTER_PORT
+jupyter notebook --no-browser --port=$JUPYTER_PORT
 
 # Docker build a new image
 docker build -t respiration-jupyter .
 
 # Run the docker container
-docker run -it --gpus all --rm \
+docker run -d --gpus all --rm \
   -v $(pwd):/app \
-  -v $(DATASET):/app/data/VitalCamSet \
-  -p JUPYTER_PORT:8888 \
+  -v $DATASET:/app/data/VitalCamSet \
+  -p $JUPYTER_PORT:8888 \
   respiration-jupyter
 ```
