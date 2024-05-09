@@ -3,7 +3,7 @@ import os
 
 def project_root() -> str:
     """Returns project root folder"""
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
+    return os.path.abspath(os.path.join('..', '..'))
 
 
 def file_path(*paths: str) -> str:
