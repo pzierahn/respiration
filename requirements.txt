@@ -13,5 +13,6 @@ scikit-image
 scipy
 keras
 torch
+torchvision
 tslearn
 av
