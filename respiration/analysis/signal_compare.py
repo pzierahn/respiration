@@ -97,7 +97,7 @@ class SignalCompare:
 
     def distance_dtw(self) -> float:
         """Calculate the mean absolute error between the two signals."""
-        return dtw.distance(self.ground_truth, self.prediction)
+        return dtw.distance(self.ground_truth, self.prediction, use_c=True)
 
     def bpm_errors(self) -> dict[str, float]:
         """
