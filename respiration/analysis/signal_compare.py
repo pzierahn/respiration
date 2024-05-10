@@ -36,6 +36,10 @@ class SignalComparator:
             filter_signal: bool = True,
             round_decimals: int = 0
     ):
+        assert prediction.shape == ground_truth.shape, \
+            (f'Prediction and ground truth signals must have the same shape. Got prediction shape: {prediction.shape}, '
+             f'ground truth shape: {ground_truth.shape}')
+
         if detrend_tarvainen:
             prediction = preprocessing.detrend_tarvainen(prediction)
             ground_truth = preprocessing.detrend_tarvainen(ground_truth)
