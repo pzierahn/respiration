@@ -9,16 +9,20 @@ from .distance import *
 import respiration.preprocessing as preprocessing
 
 
-class SignalCompare:
+class SignalComparator:
     """
-    Class to compare two signals
+    Analyze and compare prediction and ground truth signals in terms of beats per minute,
+    error metrics, and signal distance measures.
     """
+
     prediction: np.ndarray
     ground_truth: np.ndarray
     sample_rate: int
 
     lowpass: Optional[float]
     highpass: Optional[float]
+
+    round_decimals: int
 
     def __init__(
             self,
@@ -30,6 +34,7 @@ class SignalCompare:
             detrend_tarvainen: bool = True,
             normalize_signal: bool = True,
             filter_signal: bool = True,
+            round_decimals: int = 0
     ):
         if detrend_tarvainen:
             prediction = preprocessing.detrend_tarvainen(prediction)
@@ -48,48 +53,99 @@ class SignalCompare:
         self.prediction = prediction
         self.ground_truth = ground_truth
         self.sample_rate = sample_rate
+        self.round_decimals = round_decimals
 
-    def compare_psd(self) -> tuple[float, float]:
-        """Compare the frequency of the signals using power spectral density."""
+    def __frequency_to_bmp(self, gt_frequency: float, pred_frequency: float) -> tuple[float, float]:
+        """
+        Convert the frequency to beats per minute (bpm).
+        """
+        bmp_gt = round(gt_frequency * 60, self.round_decimals)
+        bmp_pred = round(pred_frequency * 60, self.round_decimals)
+
+        return bmp_gt, bmp_pred
+
+    def psd(self) -> tuple[float, float]:
+        """Get the bpm for the ground truth and the prediction using the power spectral density (psd) method."""
+
         gt_frequency = frequency_from_psd(
             self.ground_truth,
             self.sample_rate,
             self.lowpass,
-            self.highpass
+            self.highpass,
         )
         pred_frequency = frequency_from_psd(
             self.prediction,
             self.sample_rate,
             self.lowpass,
-            self.highpass
+            self.highpass,
         )
 
-        return gt_frequency, pred_frequency
+        return self.__frequency_to_bmp(gt_frequency, pred_frequency)
 
-    def compare_peaks(self) -> tuple[float, float]:
-        """Compare the frequency of the signals using the peak counting method."""
+    def pc(self) -> tuple[float, float]:
+        """Get the bpm for the ground truth and the prediction using the peak counting method."""
         gt_frequency = frequency_from_peaks(self.ground_truth, self.sample_rate)
         pred_frequency = frequency_from_peaks(self.prediction, self.sample_rate)
 
-        return gt_frequency, pred_frequency
+        return self.__frequency_to_bmp(gt_frequency, pred_frequency)
 
-    def compare_crossing_point(self) -> tuple[float, float]:
-        """Compare the frequency of the signals using the crossing point method."""
+    def cp(self) -> tuple[float, float]:
+        """Get the bpm for the ground truth and the prediction using the crossing point method."""
         gt_frequency = frequency_from_crossing_point(self.ground_truth, self.sample_rate)
         pred_frequency = frequency_from_crossing_point(self.prediction, self.sample_rate)
 
-        return gt_frequency, pred_frequency
+        return self.__frequency_to_bmp(gt_frequency, pred_frequency)
 
-    def compare_nfcp(self) -> tuple[float, float]:
-        """Compare the frequency of the signals using the NFCP method."""
+    def nfcp(self) -> tuple[float, float]:
+        """
+        Get the bpm for the ground truth and the prediction using the negative first crossing point (nfcp) method.
+        """
+
         gt_frequency = frequency_from_nfcp(self.ground_truth, self.sample_rate)
         pred_frequency = frequency_from_nfcp(self.prediction, self.sample_rate)
 
-        return gt_frequency, pred_frequency
+        return self.__frequency_to_bmp(gt_frequency, pred_frequency)
 
-    def pearson_correlation(self) -> float:
-        """Calculate the Pearson correlation between the two signals."""
-        return pearson_correlation(self.ground_truth, self.prediction)
+    def all_results(self) -> dict[str, dict[str, float]]:
+        """
+        Compare the ground truth and the prediction signals using different methods.
+        """
+        pk_gt, pk_pred = self.pc()
+        cp_gt, cp_pred = self.cp()
+        nfcp_gt, nfcp_pred = self.nfcp()
+        psd_gt, psd_pred = self.psd()
+
+        return {
+            'pk': {
+                'ground_truth': pk_gt,
+                'prediction': pk_pred,
+            },
+            'cp': {
+                'ground_truth': cp_gt,
+                'prediction': cp_pred,
+            },
+            'nfcp': {
+                'ground_truth': nfcp_gt,
+                'prediction': nfcp_pred,
+            },
+            'psd': {
+                'ground_truth': psd_gt,
+                'prediction': psd_pred,
+            },
+        }
+
+    def errors(self) -> dict[str, float]:
+        """
+        Calculate the errors between the ground truth and the predictions for each method.
+        :return: Dictionary with the errors for each method in beats per minute.
+        """
+        results = {}
+        for metric, result in self.all_results().items():
+            gt = result['ground_truth']
+            pred = result['prediction']
+            results[f'{metric}_error'] = abs(gt - pred)
+
+        return results
 
     def distance_mse(self) -> float:
         """Calculate the mean absolute error between the two signals."""
@@ -99,36 +155,12 @@ class SignalCompare:
         """Calculate the mean absolute error between the two signals."""
         return dtw.distance(self.ground_truth, self.prediction, use_c=True)
 
-    def bpm_errors(self) -> dict[str, float]:
+    def signal_distances(self) -> dict[str, float]:
         """
-        Calculate the errors between the two signals.
-        :return: Dictionary with the errors for each method in beats per minute.
+        Calculate the distances between the ground truth and the prediction signals.
         """
-        pk_gt, pk_pred = self.compare_peaks()
-        cp_gt, cp_pred = self.compare_crossing_point()
-        nfcp_gt, nfcp_pred = self.compare_nfcp()
-        psd_gt, psd_pred = self.compare_psd()
 
-        return {
-            'pk_error': abs(pk_gt - pk_pred) * 60,
-            'cp_error': abs(cp_gt - cp_pred) * 60,
-            'nfcp_error': abs(nfcp_gt - nfcp_pred) * 60,
-            'psd_error': abs(psd_gt - psd_pred) * 60,
-        }
-
-    def distances(self) -> dict[str, float]:
         return {
             'distance_mse': self.distance_mse(),
-            'distance_pearson': self.pearson_correlation(),
             'distance_dtw': self.distance_dtw(),
         }
-
-    def compare_all(self) -> dict[str, float]:
-        """
-        Compare the signals using all methods.
-        :return: Dictionary with the errors for each method in beats per minute.
-        """
-        errors = self.bpm_errors()
-        distances = self.distances()
-
-        return {**errors, **distances}
