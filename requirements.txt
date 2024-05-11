@@ -16,3 +16,4 @@ torch
 torchvision
 tslearn
 av
+vit_pytorch
