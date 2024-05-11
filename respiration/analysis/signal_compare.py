@@ -44,13 +44,13 @@ class SignalComparator:
             prediction = preprocessing.detrend_tarvainen(prediction)
             ground_truth = preprocessing.detrend_tarvainen(ground_truth)
 
-        if normalize_signal:
-            prediction = preprocessing.normalize_signal(prediction)
-            ground_truth = preprocessing.normalize_signal(ground_truth)
-
         if filter_signal:
             prediction = preprocessing.butterworth_filter(prediction, sample_rate, lowpass, highpass)
             ground_truth = preprocessing.butterworth_filter(ground_truth, sample_rate, lowpass, highpass)
+
+        if normalize_signal:
+            prediction = preprocessing.normalize_signal(prediction)
+            ground_truth = preprocessing.normalize_signal(ground_truth)
 
         self.lowpass = lowpass
         self.highpass = highpass
