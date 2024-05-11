@@ -36,14 +36,13 @@ def butterworth_filter(
     return signal.filtfilt(b, a, respiratory_signal)
 
 
-def normalize_signal(respiratory_signal: np.ndarray) -> np.ndarray:
+def normalize_signal(time_series: np.ndarray) -> np.ndarray:
     """
     Normalize the respiratory signal
-    :param respiratory_signal:
+    :param time_series:
     :return:
     """
-    # Normalize the signal between 1 and -1
-    return 2 * (respiratory_signal - np.min(respiratory_signal)) / np.ptp(respiratory_signal) - 1
+    return (time_series - np.mean(time_series)) / np.std(time_series)
 
 
 def standard_processing(
