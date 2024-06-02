@@ -46,9 +46,10 @@ The following methods and models are compared:
 
 ## Install dependencies
 
+This projects needs the following pretrained models:
+
 * YOLO model for object detection.
 * MTTS-CAN and BigSmall models for respiration rate estimation.
-* RAFT model for optical flow estimation.
 
 ```shell
 # YOLO model
