@@ -19,3 +19,4 @@ av
 vit_pytorch
 pyyaml
 git+https://github.com/facebookresearch/detectron2.git@v0.6
+mediapipe
