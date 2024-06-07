@@ -18,7 +18,7 @@ def butterworth_filter(
         fps: float,
         lowpass: float,
         highpass: float,
-        order: int = 3) -> np.ndarray:
+        order: int = 6) -> np.ndarray:
     """
     Apply a Butterworth filter to the signal.
     :param respiratory_signal: The signal data.
