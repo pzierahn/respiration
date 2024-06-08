@@ -40,7 +40,7 @@ def sliding_window_psd(
     results = []
     for inx in range(0, len(time_series) - window_size, stride):
         prediction_window = time_series[inx:inx + window_size]
-        freq = frequency_from_psd(prediction_window, sampling_rate)
+        freq = frequency_from_psd(prediction_window, sampling_rate, lowpass, highpass)
         results.append(freq)
 
     return np.array(results)
