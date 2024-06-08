@@ -39,7 +39,13 @@ def sliding_window_analysis(
     window_size *= sampling_rate
     stride *= sampling_rate
 
-    results = []
+    results = {
+        'cp': [],
+        'nfcp': [],
+        'pk': [],
+        'psd': []
+    }
+
     for inx in range(0, len(time_series) - window_size, stride):
         prediction_window = time_series[inx:inx + window_size]
 
@@ -48,11 +54,12 @@ def sliding_window_analysis(
         frequency_pk = frequency_from_peaks(prediction_window, sampling_rate)
         frequency_psd = frequency_from_psd(prediction_window, sampling_rate, lowpass, highpass)
 
-        results.append({
-            'frequency_cp': frequency_cp,
-            'frequency_nfcp': frequency_nfcp,
-            'frequency_pk': frequency_pk,
-            'frequency_psd': frequency_psd,
-        })
+        results['cp'].append(frequency_cp)
+        results['nfcp'].append(frequency_nfcp)
+        results['pk'].append(frequency_pk)
+        results['psd'].append(frequency_psd)
+
+    # Convert the results to a numpy array
+    results = {key: np.array(value) for key, value in results.items()}
 
     return np.array(results)
