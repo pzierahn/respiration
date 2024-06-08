@@ -67,9 +67,11 @@ mkdir -p data/rPPG-Toolbox;
 wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_BigSmall_Multitask_Fold3.pth -O data/rPPG-Toolbox/BP4D_BigSmall_Multitask_Fold3.pth;
 
 # EfficientPhys models
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/PURE_EfficientPhys.pth -O data/rPPG-Toolbox/PURE_EfficientPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_EfficientPhys.pth -O data/rPPG-Toolbox/UBFC-rPPG_EfficientPhys.pth;
 wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_PseudoLabel_EfficientPhys.pth -O data/rPPG-Toolbox/BP4D_PseudoLabel_EfficientPhys.pth;
+wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/MA-UBFC_efficientphys.pth -O data/rPPG-Toolbox/MA-UBFC_efficientphys.pth;
+wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/PURE_EfficientPhys.pth -O data/rPPG-Toolbox/PURE_EfficientPhys.pth;
+wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/SCAMPS_EfficientPhys.pth -O data/rPPG-Toolbox/SCAMPS_EfficientPhys.pth;
+wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_EfficientPhys.pth -O data/rPPG-Toolbox/UBFC-rPPG_EfficientPhys.pth;
 
 # DeepPhys models
 wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_PseudoLabel_DeepPhys.pth -O data/rPPG-Toolbox/BP4D_PseudoLabel_DeepPhys.pth;
