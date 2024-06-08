@@ -12,7 +12,7 @@ def sliding_window_analysis(
         lowpass: float,
         highpass: float,
         window_size: int = 30,
-        stride: int = 1) -> np.ndarray:
+        stride: int = 1) -> dict[str, np.ndarray]:
     """
     Calculate the frequency of the signal in a sliding window fashion.
     time_series: np.ndarray
@@ -62,4 +62,4 @@ def sliding_window_analysis(
     # Convert the results to a numpy array
     results = {key: np.array(value) for key, value in results.items()}
 
-    return np.array(results)
+    return results
