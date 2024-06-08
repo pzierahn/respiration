@@ -1,10 +1,12 @@
 import numpy as np
 
+from .cross_point import (frequency_from_crossing_point, frequency_from_nfcp)
+from .peak_counting import frequency_from_peaks
 from .psd import frequency_from_psd
 from respiration.preprocessing import butterworth_filter
 
 
-def sliding_window_psd(
+def sliding_window_analysis(
         time_series: np.ndarray,
         sampling_rate: int,
         lowpass: float,
@@ -40,7 +42,17 @@ def sliding_window_psd(
     results = []
     for inx in range(0, len(time_series) - window_size, stride):
         prediction_window = time_series[inx:inx + window_size]
-        freq = frequency_from_psd(prediction_window, sampling_rate, lowpass, highpass)
-        results.append(freq)
+
+        frequency_cp = frequency_from_crossing_point(prediction_window, sampling_rate)
+        frequency_nfcp = frequency_from_nfcp(prediction_window, sampling_rate)
+        frequency_pk = frequency_from_peaks(prediction_window, sampling_rate)
+        frequency_psd = frequency_from_psd(prediction_window, sampling_rate, lowpass, highpass)
+
+        results.append({
+            'frequency_cp': frequency_cp,
+            'frequency_nfcp': frequency_nfcp,
+            'frequency_pk': frequency_pk,
+            'frequency_psd': frequency_psd,
+        })
 
     return np.array(results)
