@@ -12,7 +12,7 @@ RUN apt-get update; \
     apt-get dist-upgrade -y
 
 # Install OpenCV
-RUN apt-get install -y python3-opencv; \
+RUN apt-get install -y git nano python3-opencv; \
     apt-get clean
 
 # Install any needed packages specified in requirements.txt
