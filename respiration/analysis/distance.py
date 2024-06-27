@@ -42,4 +42,9 @@ def dtw_distance(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
     :param signal_b: Second signal.
     :return: The Dynamic Time Warping distance between the two signals.
     """
-    return dtw.distance(signal_a, signal_b)
+    return dtw.distance(
+        signal_a,
+        signal_b,
+        window=90,
+        use_c=True,
+    )
