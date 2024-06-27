@@ -169,7 +169,7 @@ class SignalComparator:
         """
 
         return {
-            'distance_mse': self.distance_mse(),
-            'distance_dtw': self.distance_dtw(),
-            'distance_pearson': self.distance_pearson(),
+            'mse': self.distance_mse(),
+            'dtw': self.distance_dtw(),
+            'pearson': self.distance_pearson(),
         }
