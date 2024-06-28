@@ -157,7 +157,11 @@ class SignalComparator:
 
     def distance_dtw(self) -> float:
         """Calculate the mean absolute error between the two signals."""
-        return dtw.distance(self.ground_truth, self.prediction, use_c=True)
+        return dtw_distance(self.ground_truth, self.prediction)
+
+    def distance_pearson(self) -> float:
+        """Calculate the mean absolute error between the two signals."""
+        return pearson_correlation(self.ground_truth, self.prediction)
 
     def signal_distances(self) -> dict[str, float]:
         """
@@ -165,6 +169,7 @@ class SignalComparator:
         """
 
         return {
-            'distance_mse': self.distance_mse(),
-            'distance_dtw': self.distance_dtw(),
+            'mse': self.distance_mse(),
+            'dtw': self.distance_dtw(),
+            'pearson': self.distance_pearson(),
         }

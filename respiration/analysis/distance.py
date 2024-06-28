@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.stats as stats
 from scipy.spatial import distance
+from dtaidistance import dtw
 
 
 def distance_euclidean(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
@@ -32,3 +33,18 @@ def pearson_correlation(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
     """
     correlation, _ = stats.pearsonr(signal_a, signal_b)
     return correlation
+
+
+def dtw_distance(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
+    """
+    Calculate the Dynamic Time Warping distance between two signals.
+    :param signal_a: First signal.
+    :param signal_b: Second signal.
+    :return: The Dynamic Time Warping distance between the two signals.
+    """
+    return dtw.distance(
+        signal_a,
+        signal_b,
+        window=90,
+        use_c=True,
+    )
