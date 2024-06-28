@@ -44,7 +44,7 @@ The following methods and models are compared:
     └── utils                <- Utility functions like video loading and transformation
 ```
 
-## Install dependencies
+## Get pretrained models
 
 This projects needs the following pretrained models:
 
@@ -124,10 +124,25 @@ Place the model under `data/flownet`.
 
 ## Setup development environment
 
-```shell
-# Source your environment variables
-source .env
+**Native setup:**
 
+```shell
+# Create a virtual environment
+pip install virtualenv;
+virtualenv .venv;
+source .venv/bin/activate;
+
+# Install the dependencies
+pip install --upgrade pip torch torchvision torchaudio;
+pip install --upgrade -r requirements.txt;
+
+# Start jupyter notebook as a demon
+nohup jupyter notebook --no-browser --port=$JUPYTER_PORT 1>jupyter.log 2>jupyter.log &
+```
+
+**Docker setup:**
+
+```shell
 # Connect to the remote machine with port forwarding
 ssh -L LOCAL_PORT:localhost:$JUPYTER_PORT user@remote-machine
 
