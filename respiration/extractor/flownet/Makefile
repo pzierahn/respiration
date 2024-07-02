@@ -1,7 +1,7 @@
 # Makefile for FlowNet package installation
 
 # Define the base directory
-BASE_DIR := ./respiration/extractor/flownet
+BASE_DIR := ./
 
 # List of packages to install
 PACKAGES := correlation_package resample2d_package channelnorm_package
