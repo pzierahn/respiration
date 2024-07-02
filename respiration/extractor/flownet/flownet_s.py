@@ -92,7 +92,7 @@ class FlowNetS(nn.Module):
             return flow2,
 
 
-class FlowNet2S(FlowNetS.FlowNetS):
+class FlowNet2S(FlowNetS):
     def __init__(self, args, batchNorm=False, div_flow=20):
         super(FlowNet2S, self).__init__(input_channels=6, batchNorm=batchNorm)
         self.rgb_max = args.rgb_max
