@@ -10,16 +10,13 @@ from .correlation_package.correlation import Correlation
 
 
 class FlowNetC(nn.Module):
-    def __init__(self, batch_norm: bool = True, div_flow=20, fp16: bool = False):
+    def __init__(self, batch_norm: bool = True, fp16: bool = False):
         super(FlowNetC, self).__init__()
 
-        self.batchNorm = batch_norm
-        self.div_flow = div_flow
-
-        self.conv1 = conv(self.batchNorm, 3, 64, kernel_size=7, stride=2)
-        self.conv2 = conv(self.batchNorm, 64, 128, kernel_size=5, stride=2)
-        self.conv3 = conv(self.batchNorm, 128, 256, kernel_size=5, stride=2)
-        self.conv_redir = conv(self.batchNorm, 256, 32, kernel_size=1, stride=1)
+        self.conv1 = conv(batch_norm, 3, 64, kernel_size=7, stride=2)
+        self.conv2 = conv(batch_norm, 64, 128, kernel_size=5, stride=2)
+        self.conv3 = conv(batch_norm, 128, 256, kernel_size=5, stride=2)
+        self.conv_redir = conv(batch_norm, 256, 32, kernel_size=1, stride=1)
 
         if fp16:
             self.corr = nn.Sequential(
@@ -141,9 +138,9 @@ class FlowNetC(nn.Module):
 
 
 class FlowNet2C(FlowNetC):
-    def __init__(self, args, batch_norm=False, div_flow=20):
-        super(FlowNet2C, self).__init__(args, batch_norm=batch_norm, div_flow=div_flow)
-        self.rgb_max = args.rgb_max
+    def __init__(self, rgb_max=255, batch_norm=False):
+        super().__init__(batch_norm=batch_norm)
+        self.rgb_max = rgb_max
 
     def forward(self, inputs):
         rgb_mean = inputs.contiguous().view(inputs.size()[:2] + (-1,)).mean(dim=-1).view(inputs.size()[:2] + (1, 1, 1,))

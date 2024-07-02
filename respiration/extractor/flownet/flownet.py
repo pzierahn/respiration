@@ -14,10 +14,9 @@ from .submodules import *
 
 class FlowNet2(nn.Module):
 
-    def __init__(self, rgb_max=255, batch_norm=False, div_flow=20.0, fp16: bool = False):
+    def __init__(self, rgb_max=255, batch_norm=False, fp16: bool = False):
         super(FlowNet2, self).__init__()
         self.batch_norm = batch_norm
-        self.div_flow = div_flow
         self.rgb_max = rgb_max
 
         self.channelnorm = ChannelNorm()
@@ -25,7 +24,6 @@ class FlowNet2(nn.Module):
         # First Block (FlowNetC)
         self.flownetc = FlowNetC(
             batch_norm=batch_norm,
-            div_flow=div_flow,
             fp16=fp16,
         )
         self.upsample1 = nn.Upsample(scale_factor=4, mode='bilinear')
@@ -54,7 +52,7 @@ class FlowNet2(nn.Module):
         self.flownets_2 = FlowNetS(batch_norm=batch_norm)
 
         # Block (FlowNetSD)
-        self.flownets_d = FlowNetSD(batchNorm=batch_norm)
+        self.flownets_d = FlowNetSD(batch_norm=batch_norm)
         self.upsample3 = nn.Upsample(scale_factor=4, mode='nearest')
         self.upsample4 = nn.Upsample(scale_factor=4, mode='nearest')
 

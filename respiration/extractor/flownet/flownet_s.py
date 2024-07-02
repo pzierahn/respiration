@@ -93,9 +93,9 @@ class FlowNetS(nn.Module):
 
 
 class FlowNet2S(FlowNetS):
-    def __init__(self, args, batchNorm=False, div_flow=20):
-        super(FlowNet2S, self).__init__(input_channels=6, batchNorm=batchNorm)
-        self.rgb_max = args.rgb_max
+    def __init__(self, rgb_max=255, batch_norm=False, div_flow=20):
+        super(FlowNet2S, self).__init__(input_channels=6, batch_norm=batch_norm)
+        self.rgb_max = rgb_max
         self.div_flow = div_flow
 
     def forward(self, inputs):
