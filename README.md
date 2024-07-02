@@ -46,81 +46,31 @@ The following methods and models are compared:
 
 ## Get pretrained models
 
-This projects needs the following pretrained models:
-
-### YOLO model
-
-The YOLO model is used for person detection in the videos
+Download the pretrained models from the following repositories:
 
 ```shell
-# YOLO model
-mkdir -p data/yolo;
-wget https://raw.githubusercontent.com/arunponnusamy/object-detection-opencv/master/yolov3.txt -O data/yolo/yolov3.txt;
-wget https://raw.githubusercontent.com/arunponnusamy/object-detection-opencv/master/yolov3.cfg -O data/yolo/yolov3.cfg;
-wget https://pjreddie.com/media/files/yolov3.weights -O data/yolo/yolov3.weights;
+cd data;
+
+cd flownet;
+sh download.sh;
+cd ..;
+
+cd mediapipe;
+sh download.sh;
+cd ..;
+
+cd mtts_can;
+sh download.sh;
+cd ..;
+
+cd rPPG-Toolbox;
+sh download.sh;
+cd ..;
+
+cd yolo;
+sh download.sh;
+cd ..;
 ```
-
-### MTTS-CAN
-
-```shell
-# MTTS-CAN model
-mkdir -p data/mtts_can;
-wget https://github.com/xliucs/MTTS-CAN/raw/main/mtts_can.hdf5 -O data/mtts_can/mtts_can.hdf5;
-```
-
-### BigSmall model
-
-```shell
-mkdir -p data/rPPG-Toolbox;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_BigSmall_Multitask_Fold3.pth -O
-data/rPPG-Toolbox/BP4D_BigSmall_Multitask_Fold3.pth;
-```
-
-### TS-CAN model
-
-```shell
-mkdir -p data/rPPG-Toolbox;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_PseudoLabel_TSCAN.pth -O data/rPPG-Toolbox/BP4D_PseudoLabel_TSCAN.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/MA-UBFC_tscan.pth -O data/rPPG-Toolbox/MA-UBFC_tscan.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/PURE_TSCAN.pth -O data/rPPG-Toolbox/PURE_TSCAN.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/SCAMPS_TSCAN.pth -O data/rPPG-Toolbox/SCAMPS_TSCAN.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_TSCAN.pth -O data/rPPG-Toolbox/UBFC-rPPG_TSCAN.pth;
-```
-
-### EfficientPhys models
-
-```shell
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_PseudoLabel_EfficientPhys.pth -O data/rPPG-Toolbox/BP4D_PseudoLabel_EfficientPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/MA-UBFC_efficientphys.pth -O data/rPPG-Toolbox/MA-UBFC_efficientphys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/PURE_EfficientPhys.pth -O data/rPPG-Toolbox/PURE_EfficientPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/SCAMPS_EfficientPhys.pth -O data/rPPG-Toolbox/SCAMPS_EfficientPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_EfficientPhys.pth -O data/rPPG-Toolbox/UBFC-rPPG_EfficientPhys.pth;
-```
-
-### DeepPhys models
-
-```shell
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/BP4D_PseudoLabel_DeepPhys.pth -O data/rPPG-Toolbox/BP4D_PseudoLabel_DeepPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/MA-UBFC_deepphys.pth -O data/rPPG-Toolbox/MA-UBFC_deepphys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/PURE_DeepPhys.pth -O data/rPPG-Toolbox/PURE_DeepPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/SCAMPS_DeepPhys.pth -O data/rPPG-Toolbox/SCAMPS_DeepPhys.pth;
-wget https://github.com/ubicomplab/rPPG-Toolbox/raw/main/final_model_release/UBFC-rPPG_DeepPhys.pth -O data/rPPG-Toolbox/UBFC-rPPG_DeepPhys.pth;
-```
-
-### Mediapipe
-
-```shell
-mkdir -p data/mediapipe;
-wget https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite -O data/mediapipe/detector.tflite
-wget https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task -O data/mediapipe/face_landmarker_v2_with_blendshapes.task
-```
-
-### FlowNet2
-
-To install the `FlowNet2-SD` flow net model, download the pre-trained model from
-the [official repository](https://github.com/NVIDIA/flownet2-pytorch) or
-click [here](https://drive.google.com/file/d/1QW03eyYG_vD-dT-Mx4wopYvtPu_msTKn/view?usp=sharing) to download the model.
-Place the model under `data/flownet`.
 
 ## Setup development environment
 
