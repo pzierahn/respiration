@@ -114,7 +114,7 @@ class FlowNetSD(nn.Module):
 
 class FlowNet2SD(FlowNetSD):
     def __init__(self, rgb_max: float = 255, batch_norm=False, div_flow=20):
-        super(FlowNet2SD, self).__init__(batch_norm=batch_norm)
+        super().__init__(batch_norm=batch_norm)
         self.rgb_max = rgb_max
         self.div_flow = div_flow
 
