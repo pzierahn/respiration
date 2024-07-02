@@ -14,8 +14,9 @@ from .submodules import *
 
 class FlowNet2(nn.Module):
 
-    def __init__(self, rgb_max=255, batch_norm=False, fp16: bool = False):
+    def __init__(self, rgb_max=255, batch_norm=False, div_flow=20.0, fp16: bool = False):
         super(FlowNet2, self).__init__()
+        self.div_flow = div_flow
         self.batch_norm = batch_norm
         self.rgb_max = rgb_max
 
