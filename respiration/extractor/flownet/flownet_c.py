@@ -10,7 +10,7 @@ from .correlation_package.correlation import Correlation
 
 
 class FlowNetC(nn.Module):
-    def __init__(self, args, batch_norm=True, div_flow=20):
+    def __init__(self, batch_norm: bool = True, div_flow=20, fp16: bool = False):
         super(FlowNetC, self).__init__()
 
         self.batchNorm = batch_norm
@@ -21,14 +21,26 @@ class FlowNetC(nn.Module):
         self.conv3 = conv(self.batchNorm, 128, 256, kernel_size=5, stride=2)
         self.conv_redir = conv(self.batchNorm, 256, 32, kernel_size=1, stride=1)
 
-        if args.fp16:
+        if fp16:
             self.corr = nn.Sequential(
                 tofp32(),
-                Correlation(pad_size=20, kernel_size=1, max_displacement=20, stride1=1, stride2=2, corr_multiply=1),
-                tofp16())
+                Correlation(
+                    pad_size=20,
+                    kernel_size=1,
+                    max_displacement=20,
+                    stride1=1,
+                    stride2=2,
+                    corr_multiply=1),
+                tofp16()
+            )
         else:
-            self.corr = Correlation(pad_size=20, kernel_size=1, max_displacement=20, stride1=1, stride2=2,
-                                    corr_multiply=1)
+            self.corr = Correlation(
+                pad_size=20,
+                kernel_size=1,
+                max_displacement=20,
+                stride1=1,
+                stride2=2,
+                corr_multiply=1)
 
         self.corr_activation = nn.LeakyReLU(0.1, inplace=True)
         self.conv3_1 = conv(self.batchNorm, 473, 256)
