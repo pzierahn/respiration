@@ -10,8 +10,10 @@ from .correlation_package.correlation import Correlation
 
 
 class FlowNetC(nn.Module):
-    def __init__(self, batch_norm: bool = True, fp16: bool = False):
+    def __init__(self, batch_norm=True, div_flow=20.0, fp16=False):
         super(FlowNetC, self).__init__()
+
+        self.div_flow = div_flow
 
         self.conv1 = conv(batch_norm, 3, 64, kernel_size=7, stride=2)
         self.conv2 = conv(batch_norm, 64, 128, kernel_size=5, stride=2)
