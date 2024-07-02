@@ -1,3 +1,4 @@
+from .flownet import FlowNet2
 from .flownet_c import FlowNet2C
 from .flownet_cs import (
     FlowNet2CS,
