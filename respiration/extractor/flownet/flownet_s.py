@@ -11,20 +11,20 @@ from .submodules import *
 
 
 class FlowNetS(nn.Module):
-    def __init__(self, input_channels=12, batchNorm=True):
+    def __init__(self, input_channels=12, batch_norm=True):
         super(FlowNetS, self).__init__()
 
-        self.batchNorm = batchNorm
-        self.conv1 = conv(self.batchNorm, input_channels, 64, kernel_size=7, stride=2)
-        self.conv2 = conv(self.batchNorm, 64, 128, kernel_size=5, stride=2)
-        self.conv3 = conv(self.batchNorm, 128, 256, kernel_size=5, stride=2)
-        self.conv3_1 = conv(self.batchNorm, 256, 256)
-        self.conv4 = conv(self.batchNorm, 256, 512, stride=2)
-        self.conv4_1 = conv(self.batchNorm, 512, 512)
-        self.conv5 = conv(self.batchNorm, 512, 512, stride=2)
-        self.conv5_1 = conv(self.batchNorm, 512, 512)
-        self.conv6 = conv(self.batchNorm, 512, 1024, stride=2)
-        self.conv6_1 = conv(self.batchNorm, 1024, 1024)
+        self.batch_norm = batch_norm
+        self.conv1 = conv(self.batch_norm, input_channels, 64, kernel_size=7, stride=2)
+        self.conv2 = conv(self.batch_norm, 64, 128, kernel_size=5, stride=2)
+        self.conv3 = conv(self.batch_norm, 128, 256, kernel_size=5, stride=2)
+        self.conv3_1 = conv(self.batch_norm, 256, 256)
+        self.conv4 = conv(self.batch_norm, 256, 512, stride=2)
+        self.conv4_1 = conv(self.batch_norm, 512, 512)
+        self.conv5 = conv(self.batch_norm, 512, 512, stride=2)
+        self.conv5_1 = conv(self.batch_norm, 512, 512)
+        self.conv6 = conv(self.batch_norm, 512, 1024, stride=2)
+        self.conv6_1 = conv(self.batch_norm, 1024, 1024)
 
         self.deconv5 = deconv(1024, 512)
         self.deconv4 = deconv(1026, 256)
@@ -92,10 +92,10 @@ class FlowNetS(nn.Module):
             return flow2,
 
 
-class FlowNet2S(FlowNetS.FlowNetS):
-    def __init__(self, args, batchNorm=False, div_flow=20):
-        super(FlowNet2S, self).__init__(input_channels=6, batchNorm=batchNorm)
-        self.rgb_max = args.rgb_max
+class FlowNet2S(FlowNetS):
+    def __init__(self, rgb_max=255, batch_norm=False, div_flow=20):
+        super(FlowNet2S, self).__init__(input_channels=6, batch_norm=batch_norm)
+        self.rgb_max = rgb_max
         self.div_flow = div_flow
 
     def forward(self, inputs):

@@ -17,10 +17,10 @@ from .submodules import (
 
 
 class FlowNetSD(nn.Module):
-    def __init__(self, batchNorm=True):
+    def __init__(self, batch_norm=True):
         super(FlowNetSD, self).__init__()
 
-        self.batchNorm = batchNorm
+        self.batchNorm = batch_norm
         self.conv0 = conv(self.batchNorm, 6, 64)
         self.conv1 = conv(self.batchNorm, 64, 64, stride=2)
         self.conv1_1 = conv(self.batchNorm, 64, 128)
@@ -113,8 +113,8 @@ class FlowNetSD(nn.Module):
 
 
 class FlowNet2SD(FlowNetSD):
-    def __init__(self, rgb_max: float = 255, batchNorm=False, div_flow=20):
-        super(FlowNet2SD, self).__init__(batchNorm=batchNorm)
+    def __init__(self, rgb_max: float = 255, batch_norm=False, div_flow=20):
+        super().__init__(batch_norm=batch_norm)
         self.rgb_max = rgb_max
         self.div_flow = div_flow
 
