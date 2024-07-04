@@ -1,0 +1,966 @@
+﻿ID,Title,Year,Approach,ROI Selection,Neuronal Networks,Algorithms,Evaluation Results,Datasets,Frequency Extraction,Implemented,Loss Function,BibTxt,optimizer,learning rate,GitHub
+Tan2024LightweightVR,Lightweight Video-Based Respiration Rate Detection Algorithm: An Application Case on Intensive Care,2024,Motion,Automatic,No,"1. Original Optical Flow (OOF) method
+2. Improved Optical Flow (IOF) method with feature point selection strategy
+3. Correlation-Guided method
+4. Negative Feedback Crossover Point (NFCP) method
+5. Fast Fourier Transform (FFT)
+6. Peak Counting (PC) method
+7. Crossover Point (CP) method","1. Mean Absolute Error (MAE):
+   - Original Optical Flow (OOF) method: 4.41 bpm
+   - Proposed algorithm: 4.35 bpm
+
+2. Root Mean Absolute Error (RMAE):
+   - Original Optical Flow (OOF) method: 4.96 bpm
+   - Proposed algorithm: 4.92 bpm  
+
+3. Root Mean Squared Error (RMSE):
+   - Original Optical Flow (OOF) method: 38.39 bpm
+   - Proposed algorithm: 37.61 bpm
+
+4. Mean Squared Error (MSE):
+   - Not explicitly reported, but can be derived from the RMSE values.
+
+5. Pearson Correlation Coefficient:
+   - Used in the Correlation-Guided method to remove irrelevant feature points. A threshold of 0.4 was used.",LBRD-IC,NFCP,Yes,,"@ARTICLE{Tan2024LightweightVR,
+author={Tan, Xudong and Hu, Menghan and Zhai, Guangtao and Zhu, Yan and Li, Wenfang and Zhang, Xiao-Ping},
+journal={IEEE Transactions on Multimedia},
+title={Lightweight Video-Based Respiration Rate Detection Algorithm: An Application Case on Intensive Care},
+year={2024},
+volume={26},
+number={},
+pages={1761-1775},
+keywords={Feature extraction;Optical flow;Estimation;Temperature measurement;Signal detection;Videos;Cameras;ICU application;non-contact detection;physiological signals;respiratory rate measurements},
+doi={10.1109/TMM.2023.3286994}
+}",,,https://github.com/ShawnTan86/
+Maxwell2023non,Non-Contact Breathing Rate Detection Using Optical Flow,2023,Motion,Automatic,No,"1. Point Detection:
+- Face points: The KAPAO human pose estimation method is used to detect three facial points - midpoint between eyes, nose, and chin. These are identified as least affected by facial deformations or noise.
+- Chest points: The OpenPose library is used to detect key points on the human body. Two approaches are tested - using left shoulder, right shoulder, and neck points; and using a triangular grid of points with shoulder points as the base.
+
+2. Optical Flow: The Lucas-Kanade optical flow algorithm tracks the detected points through each video frame. The difference in the y-coordinate positions of the points between frames generates the raw signal.
+
+3. Post-Processing: The raw signal is band-pass filtered between 0.1-0.5 Hz (6-30 breaths per minute range). Peak detection is performed on the filtered signal, and the breathing rate is calculated by dividing the number of peaks by the video length and multiplying by 60.","1. The chest-based methods performed the best in detecting breathing rate:
+- The three chest points method had the lowest RMSE of 0.6305 on average (Reference: Table 1)
+- The chest grid method also provided a strong and reliable signal, with an average RMSE of 0.76511 (Reference: Table 1)
+
+2. The face-based method was the weakest, with an average RMSE of 7.0288 (Reference: Table 1).
+- The face-based method was more susceptible to noise from head/body movements.
+
+3. The chest-based methods were able to accurately detect breathing rate even with low levels of participant motion, while the face-based method required very low levels of noise to produce an accurate signal (Reference: Figures 4 and 5).
+
+4. Compared to other breathing rate detection methods reported in the literature, this optical flow-based approach produced lower RMSEs (Reference: p.4 ""This method produces a lower RMSE than many other BR detection methods"").",,PC,,,"@article{Maxwell2023non,
+doi = {10.5281/ZENODO.8238518},
+
+url = {https://zenodo.org/record/8238518},
+
+author = {Maxwell, Robyn and Hanley, Timothy and Golden, Dara and Andonie, Adara and Parsi, Ashkan and Lemley, Joseph},
+
+keywords = {Breathing Rate, Optical Flow, Face Detection, Driver Monitoring},
+
+title = {Non-Contact Breathing Rate Detection Using Optical Flow},
+
+publisher = {Zenodo},
+
+year = {2023},
+
+copyright = {Creative Commons Attribution 4.0 International}
+}",,,
+Narayanswamy2023bigsmall,BigSmall: Efficient Multi-Task Learning for Disparate Spatial and Temporal Physiological Measurements,2023,"Motion, rPPG",None,Yes,"1. Temporal Shift Modules (TSM)
+2. Wrapping Temporal Shift Modules (WTSM)
+3. SlowFast Networks
+4. Supervised neural networks for remote photoplethysmography (rPPG) and action unit (AU) detection","Heart Rate:
+- MAE: 2.38
+- RMSE: 6.00
+- MAPE: 3.39
+- ρ: 0.89
+
+Breathing Rate: 
+- MAE: 3.39
+- RMSE: 5.00
+- MAPE: 16.65
+- ρ: 0.21
+
+AU Average:
+- F1: 43.3
+- Accuracy: 67.4","BP4D+, DISFA, PURE, UBFC",PC,Yes,MSE,"@misc{Narayanswamy2023bigsmall,
+title={BigSmall: Efficient Multi-Task Learning for Disparate Spatial and Temporal Physiological Measurements},
+author={Girish Narayanswamy and Yujia Liu and Yuzhe Yang and Chengqian Ma and Xin Liu and Daniel McDuff and Shwetak Patel},
+year={2023},
+eprint={2303.11573},
+archivePrefix={arXiv},
+primaryClass={cs.CV}
+}",Adam,"According to the paper, the models are trained using an Adam optimizer with a learning rate of 0.001.
+
+Specifically, the paper states:
+
+""Models are trained for 5 epochs, using video chunks of N =3 consecutive frames, an Adam optimizer, and a learning rate of 0.001.""
+
+So the learning rate used in the training of the BigSmall neuronal network model is 0.001.",https://github.com/ubicomplab/rPPG-Toolbox
+Cheng_Liu_2023,Motion-Robust Respiratory Rate Estimation From Camera Videos via Fusing Pixel Movement and Pixel Intensity Information,2023,Motion,Automatic,No,"1. Spectral Subtraction (SS)
+2. Canonical Correlation Analysis (CCA)
+3. Empirical Mode Decomposition (EMD)
+4. Ensemble EMD (EEMD)
+5. Principal Component Analysis (PCA)
+6. Lomb-Scargle Power Spectral Density
+7. Signal-to-Noise Ratio (SNR)","1. MAE (Mean Absolute Error):
+   - Best MAE of 1.07 bpm in the rest scenario
+   - Best MAE of 1.49 bpm in the walking scenario
+
+2. RMSE (Root Mean Square Error):
+   - Best RMSE of 1.61 bpm in the rest scenario 
+   - Best RMSE of 2.29 bpm in the walking scenario
+   - Best RMSE of 3.51 bpm in the running scenario
+   - Best RMSE of 2.96 bpm in the variety scenario
+
+3. MER (Mean Error Rate):
+   - Best MER of 8.52% in the rest scenario
+   - Best MER of 12.77% in the walking scenario
+   - Best MER of 21.38% in the running scenario
+   - Best MER of 15.55% in the variety scenario
+
+4. Detection Rate (DR):
+   - Best DR of 90.83% in the rest scenario
+   - Best DR of 83.33% in the",BSIPL-RR,Lomb-Scargle power spectral density (PSD),,MSE,"@article{Cheng_Liu_2023,
+title={Motion-robust respiratory rate estimation from camera videos via fusing pixel movement and pixel intensity information},
+author={Cheng, Juan and Liu, Runqing and Li, Jiajie and Song, Rencheng and Liu, Yu and Chen, Xun},
+journal={IEEE Transactions on Instrumentation and Measurement},
+year={2023},
+publisher={IEEE}
+}",,It only mentions that the Adam optimizer was used with a learning rate of 0.001 for the MSE loss function.,
+Brieva2023NonContactBR,Non-Contact Breathing Rate Estimation Using Machine Learning with an Optimized Architecture,2023,Motion,None,Yes,"1. Hermite transform
+2. Eulerian motion magnification
+3. Artificial Hydrocarbon Network (AHN)
+4. Convolutional Neural Network (CNN)
+5. Bayesian optimization","1. MAE (Mean Absolute Error): 2.19 ± 2.1%
+2. RMSE (Root Mean Square Error): 
+   - AHN-MV: 0.55 bpm
+   - CNN-MCV: 0.357 bpm
+3. Pearson Correlation Coefficient (PCC):
+   - AHN-MV: 0.986
+   - CNN-MCV: 0.994
+
+The article also reports the Bland-Altman analysis, showing a bias of 0.05 ± 1.09 bpm for the AHN-MV approach and 0.082 ± 0.69 bpm for the CNN-MCV approach.",Unavailable,???,,,"@article{Brieva2023NonContactBR,
+title={Non-Contact Breathing Rate Estimation Using Machine Learning with an Optimized Architecture},
+author={Jorge Brieva and Hiram Ponce and Ernesto Moya-Albor},
+journal={Mathematics},
+year={2023},
+url={https://api.semanticscholar.org/CorpusID:256438207}
+}",,,
+Liu_Huang_2023,Contactless Respiratory Rate Monitoring For ICU Patients Based On Unsupervised Learning,2023,Motion,Manual,Yes,"1. Unsupervised learning method for respiratory signal extraction
+2. Neural network-based RR estimator
+3. Kanade-Lucas-Tomasi (KLT) feature tracker for ROI tracking
+4. Fast Fourier Transform (FFT) for PSD computation","MAE: 2.651 breaths/min
+RMAE: 13.8%  
+RMSE: 3.525 breaths/min
+STD: 3.383 breaths/min",Unavailable,FFT,,MSE,"@article{Liu_Huang_2023,
+title={Contactless Respiratory Rate Monitoring For ICU Patients Based On Unsupervised Learning},
+author={Zimeng Liu and Bin Huang and Chun-Liang Lin and Chieh-Liang Wu and Changchen Zhao and Wen‐Cheng Chao and Yu-Cheng Wu and Yadan Zheng and Zhiru Wang},
+journal={2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)},
+year={2023},
+pages={6005-6014},
+url={https://api.semanticscholar.org/CorpusID:260908731}
+}",AdamW,"- For the respiratory signal extractor, the learning rate is set as 1×10^-5.
+
+- For the RR (respiratory rate) estimator, the learning rate is set as 1×10^-4.
+
+The authors mention that the AdamW optimizer is used to train the respiratory signal extractor model, while the Adam optimization algorithm is used to optimize the RR estimator model.",
+Tan2023UnobtrusiveRM,Unobtrusive Respiratory Monitoring System for Intensive Care,2023,Motion,Manual,No,"1. Lucas Kanade optical flow method
+2. Harris corner detection
+3. Negative feedback crossover point method","1. RRmae (Respiratory Rate Mean Absolute Error):
+- OOF-NFCP (Original Optical Flow with Negative Feedback Crossover Point): 3.96 bpm
+- FSSOF-NFCP (Feature Selection Strategy Optical Flow with Negative Feedback Crossover Point): 4.03 bpm",LBRD-IC,NFCP,,,"@INPROCEEDINGS{Tan2023UnobtrusiveRM,
+author={Tan, Xudong and Hu, Menghan and Zhai, Guangtao and Zhu, Yan and Li, Wenfang and Zhang, XiaoPing},
+booktitle={ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+title={Unobtrusive Respiratory Monitoring System for Intensive Care},
+year={2023},
+volume={},
+number={},
+pages={1-5},
+keywords={Negative feedback;Surveillance;Signal processing algorithms;Estimation;Signal processing;Feature extraction;Speech processing;Respiratory rate measurements;Noncontact detection;Physiological signals;ICU application},
+doi={10.1109/ICASSP49357.2023.10095831}}",,,
+Wang_Brinker_2022,Algorithmic insights of camera-based respiratory motion extraction,2022,Motion,"Automatic, Manual",No,"1. OF-M1D: Optical flow-based respiratory signal extraction using multiple 1D profiles.
+2. CC-2D: Cross-correlation based respiratory signal extraction using 2D profile.
+3. OF-2D: Optical flow-based respiratory signal extraction using 2D profile.","Based on the information provided in the paper, the key performance metrics for the recommended OF-M1D algorithm are:
+
+Mean Absolute Error (MAE): 
+- 2.1 bpm in the day-light condition
+- 4.4 bpm in the night condition
+
+Pearson Correlation Coefficient:
+- 0.68 in the day-light condition 
+- 0.44 in the night condition
+
+The paper does not explicitly report the RMAE, RMSE, or MSE values for the OF-M1D algorithm. The focus is on precision, recall, coverage, MAE, and Pearson correlation.",Unavailable,PC,,,"@article{Wang_Brinker_2022,
+title={Algorithmic insights of camera-based respiratory motion extraction},
+author={Wang, Wenjin and den Brinker, Albertus C},
+journal={Physiological Measurement},
+volume={43},
+number={7},
+pages={075004},
+year={2022},
+publisher={IOP Publishing}
+}",,,
+Guo2021remote.pdf,Remote estimation of respiration rate by optical flow using convolutional neural networks,2021,Motion,"Automatic, None",Yes,"1. Optical flow estimation using convolutional neural networks (CNNs):
+- The method uses the FlowNet2-SD CNN model to estimate the optical flow between consecutive video frames.
+- The optical flow captures the subtle upper body movements induced by periodic inhalation and exhalation during respiration cycles.
+
+2. Extracting respiration signal from optical flow:
+- The averaged value of the optical flow is calculated from each frame to construct the respiration signal over time.
+- Depending on the camera orientation and subject's posture, either the horizontal or vertical component of the optical flow is used to extract the respiration signal with higher signal-to-noise ratio.
+
+3. Respiratory rate estimation from respiration signal:
+- The respiration rate is then extracted from the power spectral density (PSD) of the respiration signal using frequency analysis.
+- The dominant frequency in the PSD within the range of 2-40 breaths per minute is identified as the final respiratory rate estimate.
+
+4. Optimization and parameter tuning:
+- The method explores the optimal settings for video frame rate, resolution, and temporal window duration to balance accuracy and computational cost.
+- It also evaluates the effectiveness of using a person segmentation mask to suppress background noise in the optical flow.
+- Comparisons are made against traditional optical flow methods and respiratory rate extraction using temporal domain analysis.","1. Correlation coefficient (ρ):
+- The paper plots the estimated respiration rate (REST) against the ground truth respiration rate (RGT) and calculates the Pearson's correlation coefficient ρ.
+- The results show a high correlation, indicating strong agreement between the estimated and ground truth respiration rates.
+
+2. Root mean square error (ε):
+- The paper plots a Bland-Altman plot to visualize the differences between REST and RGT against their mean.
+- The root mean square error ε is calculated, which quantifies the overall accuracy of the respiration rate estimation.
+
+The paper also explores the effects of various design parameters on the performance metrics:
+
+- Frame rate: The optimal frame rate for optical flow sampling was around 4 Hz.
+- Video resolution: The original video resolution (e.g. 480p) produced the best results, but reasonable accuracy could be achieved at reduced resolutions like 320p.
+- Temporal window: A 30-second window provided comparable performance to using the full 60-second video clip.
+
+Additionally, the paper compares the performance of the proposed method using a pre-trained CNN (FlowNet) versus traditional optical flow methods. The CNN-based approach outperformed the traditional methods.",COHFACE,"FFT, PC, CP",,,"@article{Guo2021remote,
+author = {Tianqi Guo and Qian Lin and Jan Allebach},
+title = {Remote estimation of respiration rate by optical flow using convolutional neural networks},
+journal = {Electronic Imaging},
+volume = {33},
+number = {8},
+pages = {267-1--267-1},
+keywords = {Respiration rate, Convolutional neural network, Optical flow, Patient monitoring},
+doi = {10.2352/ISSN.2470-1173.2021.8.IMAWM-267},
+url = {https://library.imaging.org/ei/articles/33/8/art00004},
+year = {2021},
+}",,,
+Luguern_Macwan_2021,Wavelet variance maximization: A contactless respiration rate estimation method based on remote photoplethysmography,2021,rPPG,Automatic,No,"1. CHROM
+2. PBV
+3. PVM
+4. Wavelet Variance Maximization (WVM)","MAE (Mean Absolute Error):
+- CHROM: 3.52
+- PBV: 3.63 
+- PVM: 3.87
+- WVM: 2.54
+
+RMSE (Root Mean Square Error): 
+- CHROM: 4.97
+- PBV: 5.00
+- PVM: 5.43
+- WVM: 4.02
+
+Pearson Correlation Coefficient (r):
+- CHROM: 0.45 ± 0.04
+- PBV: 0.46 ± 0.03
+- PVM: 0.37 ± 0.04
+- WVM: 0.61 ± 0.03",Unavailable,PC,,,"@article{Luguern_Macwan_2021,
+title={Wavelet variance maximization: a contactless respiration rate estimation method based on remote photoplethysmography},
+author={Luguern, Duncan and Macwan, Richard and Benezeth, Yannick and Moser, Virginie and Dunbar, L Andrea and Braun, Fabian and Lemkaddem, Alia and Dubois, Julien},
+journal={Biomedical Signal Processing and Control},
+volume={63},
+pages={102263},
+year={2021},
+publisher={Elsevier}
+}",,,
+Liu2021multitask,Multi-Task Temporal Shift Attention Networks for On-Device Contactless Vitals Measurement,2021,"Motion, rPPG",None,Yes,"1. Temporal Shift Modules (TSM) for efficient temporal modeling
+2. Convolutional Attention Networks (CAN) for spatial-temporal feature extraction
+3. Multi-task learning to jointly estimate pulse and respiration signals","Heart Rate Estimation:
+- MTTS-CAN: MAE = 1.45, RMSE = 3.72, ρ = 0.94, SNR = 8.64
+- MT-Hybrid-CAN: MAE = 1.15, RMSE = 2.69, ρ = 0.97, SNR = 10.2
+- TS-CAN: MAE = 1.32, RMSE = 3.25, ρ = 0.95, SNR = 8.86
+
+Respiration Rate Estimation: 
+- MTTS-CAN: MAE = 2.30, RMSE = 4.52, ρ = 0.40, SNR = 18.7
+- MT-Hybrid-CAN: MAE = 2.17, RMSE = 4.24, ρ = 0.45, SNR = 19.1
+- TS-CAN: MAE = 2.25, RMSE =","AFRL, MMSE-HR",???,Yes,Costum,"@misc{Liu2021multitask,
+title={Multi-Task Temporal Shift Attention Networks for On-Device Contactless Vitals Measurement},
+author={Xin Liu and Josh Fromm and Shwetak Patel and Daniel McDuff},
+year={2021},
+eprint={2006.03790},
+archivePrefix={arXiv},
+primaryClass={eess.SP}
+}",Adadelta,,https://github.com/xliucs/MTTS-CAN
+Pourbemany_Essa_2021,Real Time Video based Heart and Respiration Rate Monitoring,2021,rPPG,Automatic,No,"1. Face and facial landmark detection using Dlib library
+2. Forehead detection based on face and eye/eyebrow landmarks
+3. Average Hue calculation for forehead region pixels with Hue values between 0 and 0.1
+4. Spectrum analysis of the average Hue signal using band-pass filters to extract heart rate and respiration rate","1. Root Mean Square Error (RMSE) for Heart Rate:
+   - Hue approach: 2.9558
+   - Green channel: 3.0262
+
+2. RMSE for Respiration Rate: 
+   - Hue approach: 1.7014
+   - Green channel: 2.5026
+
+3. Pearson Correlation Coefficient was not explicitly reported, but the results indicate the proposed Hue-based approach provided better accuracy compared to the Green channel method.",Unavailable,FFT,,,"@misc{Pourbemany_Essa_2021,
+title={Real Time Video based Heart and Respiration Rate Monitoring},
+author={Jafar Pourbemany and Almabrok Essa and Ye Zhu},
+year={2021},
+eprint={2106.02669},
+archivePrefix={arXiv},
+primaryClass={eess.IV}
+}",,,
+Hwang2021NonContactRM,Non-Contact Respiration Measurement Method Based on RGB Camera Using 1D Convolutional Neural Networks,2021,Motion,Automatic,Yes,"1. 1D Convolutional Neural Network (1D CNN) for ROI detection
+2. Pearson correlation coefficient for labeling
+3. Cosine distance-based hierarchical clustering for respiration estimation
+4. Bland-Altman analysis and regression analysis for performance evaluation","1. Mean Absolute Error (MAE) of breathing rate (bpm): 0.089 ± 0.33 bpm
+2. Pearson Correlation Coefficient between estimated and reference breathing signals: 0.926
+3. Coefficient of Determination (R^2) between estimated and reference breathing rates: 0.9986
+
+The paper also reports the Mean of Differences (MOD) as -0.0011 bpm and Limits of Agreement (LOA) as ±0.6678 bpm from the Bland-Altman analysis. The Mean Absolute Error (MAE) of the peak-to-peak interval was 91 ms.",Unavailable,PC,,Cross-Entropy Loss,"@article{Hwang2021NonContactRM,
+title={Non-Contact Respiration Measurement Method Based on RGB Camera Using 1D Convolutional Neural Networks},
+author={Hyeonsang Hwang and Eui Chul Lee},
+journal={Sensors (Basel, Switzerland)},
+year={2021},
+volume={21},
+url={https://api.semanticscholar.org/CorpusID:235229132}
+}",,,
+Lucy_Suha_2021,Video based non-contact monitoring of respiratory rate and chest indrawing in children with pneumonia,2021,Motion,Manual,No,"1. Butterworth bandpass filtering to minimize noise in the respiratory signals.
+2. Fast Fourier Transform to calculate the respiratory rate from the filtered respiratory signals.
+3. Phase difference analysis between respiratory signals from different regions of interest to detect chest indrawing.","1. Mean Absolute Error (MAE) for respiratory rate measurement:
+   - Overall MAE for healthy subjects: 1.48 bpm
+   - Overall MAE for pneumonia subjects: 2.12 bpm
+
+2. Root Mean Absolute Error (RMAE) was not reported.
+
+3. Root Mean Squared Error (RMSE) was not reported. 
+
+4. Mean Squared Error (MSE) was not reported.
+
+5. Pearson Correlation Coefficient was not reported. The paper focused on the phase difference between respiratory signals from different regions of interest to detect chest indrawing.",Unavailable,FFT,,,"@article{Lucy_Suha_2021,
+title={Video based non-contact monitoring of respiratory rate and chest indrawing in children with pneumonia},
+author={Lucy, Ferdous Karim and Suha, Khadiza Tun and Dipty, Sumaiya Tabassum and Wadud, Md Sharjis Ibne and Kadir, Muhammad Abdul},
+journal={Physiological Measurement},
+volume={42},
+number={10},
+pages={105017},
+year={2021},
+publisher={IOP Publishing}
+}",,,
+Romano2021non,Non-contact respiratory monitoring using an RGB camera for real-world applications,2021,Motion,Automatic,No,"1. Optical Flow (FO) method
+2. Pixel Intensity Changes method
+   - 5% method
+   - PCA method
+3. Viola-Jones object detection algorithm for automatic ROI selection
+4. Threshold-based method for motion artifact removal
+5. Standard deviation-based method for apnea detection","1. Bias (Mean of Differences, MOD) and Limits of Agreement (LOA) from Bland-Altman analysis:
+   - Optical Flow (FO) method:
+     - 2-Sit trial: MOD = -0.03 ± 1.38 bpm
+     - Worst case: MOD = -0.16 ± 1.92 bpm
+   - 5% method and PCA method had higher bias and wider LOA.
+
+2. Percentage of respiratory rate values within ±1 bpm of the reference:
+   - Optical Flow (FO) method:
+     - 2-Sit trial: 95% of values within ±1 bpm
+   - 5% method and PCA method had lower percentages.
+
+The article does not report the MAE, RMAE, RMSE, MSE or Pearson Correlation Coefficient explicitly. The focus is on the Bland-Altman analysis and the percentage of values within a certain error",Unavailable,PC,,,"@article{Romano2021non,
+title={Non-contact respiratory monitoring using an RGB camera for real-world applications},
+author={Romano, Chiara and Schena, Emiliano and Silvestri, Sergio and Massaroni, Carlo},
+journal={Sensors},
+volume={21},
+number={15},
+pages={5126},
+year={2021},
+publisher={MDPI}
+}",,,
+Fiedler_Rapczynski_2020,Fusion-based approach for respiratory rate recognition from facial video images,2020,rPPG,"Automatic, Manual",No,"1. Poh et al. [14]
+2. Sun [15]
+3. Van Gastel et al. [29]
+4. Sanyal and Nundy [20]
+5. FuseMod (the proposed algorithm)",,BP4D+,FFT,,,"@article{Fiedler_Rapczynski_2020,
+title={Fusion-based approach for respiratory rate recognition from facial video images},
+author={Fiedler, Marc-Andr{\'e} and Rapczy{\'n}ski, Micha and Al-Hamadi, Ayoub},
+journal={IEEE Access},
+volume={8},
+pages={130036--130047},
+year={2020},
+publisher={IEEE}
+}",,,
+Luguern2020remote,Remote photoplethysmography combining color channels with SNR maximization for respiratory rate assessment,2020,rPPG,Automatic,No,"1. CHROM
+2. EVM (Energy Variance Maximization)
+3. PBV (Periodic Breathing Variation)
+4. PVM (Periodic Variance Maximization)","- MAE (Mean Absolute Error): 
+EVM = 2.72 rpm
+CHROM = 3.59 rpm
+PBV = 3.63 rpm
+PVM = 3.87 rpm
+
+- RMSE (Root Mean Square Error):
+EVM = 3.78 rpm  
+CHROM = 5.01 rpm
+PBV = 5.00 rpm
+PVM = 5.43 rpm
+
+- Pearson Correlation Coefficient (r):
+EVM = 0.64
+CHROM = 0.45
+PBV = 0.46 
+PVM = 0.37",Unavailable,PC,,,"@INPROCEEDINGS{Luguern2020remote,
+author={Luguern, Duncan and Benezeth, Yannick and Moser, Virginie and Dunbar, L. Andrea and Braun, Fabian and Lemkaddem, Alia and Nakamura, Keisuke and Gomez, Randy and Dubois, Julien},
+booktitle={2020 14th International Symposium on Medical Information Communication Technology (ISMICT)},
+title={Remote photoplethysmography combining color channels with SNR maximization for respiratory rate assessment},
+year={2020},
+volume={},
+number={},
+pages={1-6},
+keywords={Covariance matrices;Signal to noise ratio;Pipelines;Eigenvalues and eigenfunctions;Physiology;Biomedical monitoring;Microsoft Windows;rPPG;GEVD;respiratory rate;non-contact},
+doi={10.1109/ISMICT48699.2020.9152720}
+}",,,
+Brieva2020NoncontactBR,Non-contact breathing rate monitoring system using a magnification technique and convolutional networks,2020,Motion,"Automatic, Manual",Yes,"1. Eulerian motion magnification using the Hermite transform
+2. Convolutional Neural Network (CNN) for classifying inhalation and exhalation frames
+3. Breathing rate estimation from the classified frames","1. CNN-ROI Approach:
+   - Mean Average Error (MAE): 2.326 ± 1.144%
+   - Pearson Correlation Coefficient: Not reported
+
+2. CNN-Whole-Image Approach:
+   - Mean Average Error (MAE): 2.115 ± 1.135% 
+   - Pearson Correlation Coefficient: Not reported
+
+The paper does not report the Root Mean Average Error (RMAE), Root Mean Squared Error (RMSE), or Mean Squared Error (MSE) for either of the proposed approaches.",Unavailable,PC,,Cross-Entropy Loss,"@inproceedings{Brieva2020NoncontactBR,
+title={Non-contact breathing rate monitoring system using a magnification technique and convolutional networks},
+author={Jorge Brieva and Hiram Ponce and Ernesto Moya-Albor},
+booktitle={Symposium on Medical Information Processing and Analysis},
+year={2020},
+url={https://api.semanticscholar.org/CorpusID:211553738}
+}",The stochastic gradient descent algorithm.,"The learning rate used in the training of the convolutional neural network (CNN) models in this paper is 1E-6 (or 0.000001).
+
+Specifically, the paper mentions:
+
+""For implementation purposes, we trained the CNN using the stochastic gradient descent algorithm with initial learning rate of 1E-6, regularization coefficient 1E-4, maximum number of epochs 200, and mini-batch size of 128.""
+
+So the initial learning rate used in the optimization of the CNN weights and biases during the training process was set to 1E-6.",
+Zhan_Hu_2020,Revisiting motion-based respiration measurement from videos,2020,Motion,None,Yes,"1. Pixel intensity variation-based methods:
+   - Light intensity variation
+   - Pixel intensity variation-based 2D/3D-CNN
+
+2. Pixel movement-based methods:
+   - Optical flow
+   - Optical flow-based 2D/3D-CNN
+
+3. Signal extraction methods:
+   - Averaging
+   - Zero-phase Component Analysis (ZCA)
+   - 2D-CNN
+   - 3D-CNN","- Root Mean Square Error (RMSE): The RMSE is used to measure the difference between the peak location of the measurement and reference.
+
+- Accuracy: The percentage where the difference between the peak location of the measurement and reference is smaller than 6 frames (20 fps).
+
+- The paper does not report Mean Absolute Error (MAE), Relative Mean Absolute Error (RMAE), or Mean Squared Error (MSE).
+
+- The paper also does not report the Pearson Correlation Coefficient.
+
+The main focus is on comparing the RMSE and Accuracy between the different video properties (pixel intensity variation vs. pixel movement) and the various signal extraction methods (Averaging, ZCA, 2D-CNN, 3D-CNN).",Unavailable,???,,MSE,"@INPROCEEDINGS{Zhan_Hu_2020,
+author={Zhan, Qi and Hu, Jingjing and Yu, Zitong and Li, Xiaobai and Wang, Wenjin},
+booktitle={2020 42nd Annual International Conference of the IEEE Engineering in Medicine & Biology Society (EMBC)},
+title={Revisiting motion-based respiration measurement from videos},
+year={2020},
+volume={},
+number={},
+pages={5909-5912},
+keywords={Videos;Motion measurement;Cameras;Optical variables measurement;Benchmark testing;Lighting;Adaptive optics},
+doi={10.1109/EMBC44109.2020.9175662}}
+",,,
+Wu2020ARO,A Region of Interest Selection for Vision-Based Respiratory Rate Measurement in Sleeping Scenario,2020,Motion,Automatic,No,"1. Maximal ratio combining (MRC)
+2. Equal gain combining (EGC)
+3. Temporal and spatial consistency (TSC)
+4. Comb filters
+5. Background subtraction
+6. Spatial smoothing filter
+7. Binarization
+8. Morphological operations (opening)
+9. Border-following algorithm","1. MAE (Mean Absolute Error): The median MAE of the proposed TSC method is lower than the top quartiles of other compared methods.
+
+2. RMSE (Root Mean Square Error): TSC provides the lowest RMSE among all compared methods.
+
+3. Success Rate 3 (Suc3): TSC has the highest Success Rate 3 compared to the other algorithms.
+
+4. Pearson Correlation Coefficient: According to the scatter plots in Figure 14, the accuracy of the TSC method does not depend on the respiratory rate, indicating a high correlation between the estimated and reference respiratory rates.",COHFACE,FFT,,,"@article{Wu2020ARO,
+title={A Region of Interest Selection for Vision-Based Respiratory Rate Measurement in Sleeping Scenario},
+author={Bing-Fei Wu and Chun-Han Lin and Po-Wei Huang and Kuan-Hung Chen and Da-Hong He},
+journal={IEEE Access},
+year={2020},
+volume={8},
+pages={139274-139288},
+url={https://api.semanticscholar.org/CorpusID:221086149}
+}",,,
+Brieva2020contactless,A contactless respiratory rate estimation method using a hermite magnification technique and convolutional neural networks,2020,Motion,Automatic,Yes,"1. Eulerian motion magnification using Hermite transform
+2. Convolutional Neural Network (CNN) for frame classification
+3. Respiratory rate estimation using tagged frames","1. Mean Absolute Error (MAE):
+   - CNN-ROI approach: 1.83 ± 1.61%
+   - CNN-Whole-Image approach: 3.28 ± 3.33%
+
+2. Root Mean Squared Error (RMSE):
+   - CNN-ROI approach: 0.41 bpm
+   - CNN-Whole-Image approach: 0.85 bpm
+
+3. Pearson Correlation Coefficient (PCC):
+   - CNN-ROI approach: 0.99
+   - CNN-Whole-Image approach: 0.977 (for the MCV strategy)
+
+The paper does not report the Mean Squared Error (MSE) explicitly.",Unavailable,PC,,,"@article{Brieva2020contactless,
+title={A contactless respiratory rate estimation method using a hermite magnification technique and convolutional neural networks},
+author={Brieva, Jorge and Ponce, Hiram and Moya-Albor, Ernesto},
+journal={Applied Sciences},
+volume={10},
+number={2},
+pages={607},
+year={2020},
+publisher={MDPI}
+}",Stochastic gradient descent,"So the initial learning rate used in the CNN training was 1E-6, which is 0.000001.",
+Yu2019remote,Remote Photoplethysmograph Signal Measurement from Facial Videos Using Spatio-Temporal Networks,2019,rPPG,Automatic,Yes,"1. 3D Convolutional Neural Network (3DCNN)
+2. Long Short-Term Memory (LSTM)
+3. Bidirectional LSTM
+4. Convolutional LSTM
+5. Negative Pearson correlation loss function","HR Measurement:
+- RMSE: 1.812 bpm
+- R: 0.992
+
+HRV Measurement:
+- RF RMSE: 0.066 Hz
+- RF R: 0.507
+- LF RMSE: 0.148 n.u.
+- LF R: 0.766 
+- HF RMSE: 0.148 n.u.
+- HF R: 0.766
+- LF/HF RMSE: 0.631
+- LF/HF R: 0.739","MAHNOB-HCI, OBF",???,,Negative Pearson correlation (NegPea),"@article{Yu2019remote,
+title={Remote photoplethysmograph signal measurement from facial videos using spatio-temporal networks},
+author={Yu, Zitong and Li, Xiaobai and Zhao, Guoying},
+journal={arXiv preprint arXiv:1905.02419},
+year={2019}
+}",,"However, it states that the Adam optimizer is used and the learning rate is set as 1e-4 (0.0001).",
+Schrumpf_Monch_2019,Exploiting weak head movements for camera-based respiration detection,2019,"Motion, rPPG",Manual,No,"1. FIR lowpass filtering
+2. Adaptive filtering (for rPPG signal extraction)
+3. Empirical Mode Decomposition (EMD)
+4. Auto-correlation function
+5. Weighted median for respiratory rate estimation",MAE (Mean Absolute Error): The deviation of the estimated respiratory rate from the ground truth ranged between -0.25 bpm and 0.5 bpm for the facial regions.,Unavailable,Empirical Mode Decomposition (EMD),,,"@inproceedings{Schrumpf_Monch_2019,
+title={Exploiting weak head movements for camera-based respiration detection},
+author={Schrumpf, Fabian and M{\""""o}nch, Christoph and Bausch, Gerold and Fuchs, Mirco},
+booktitle={2019 41st Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)},
+pages={6059--6062},
+year={2019},
+organization={IEEE}
+}",,,
+Ghodratigohar_Ghanadian_2019,A remote respiration rate measurement method for non-stationary subjects using CEEMDAN and machine learning,2019,rPPG,Automatic,No,"1. Independent Component Analysis (ICA)
+2. Complete Ensemble Empirical Mode Decomposition with Adaptive Noise (CEEMDAN)
+3. Machine Learning (ML) models: Random Forest, K-Star, and Rotation Forest","1. RMSE (Root Mean Squared Error):
+   - In stationary mode, the proposed method reduced the RMSE by 39.6% compared to Sanyal and Nundy [11], 51.8% compared to Poh et al. [9], and 44.42% compared to Poh et al. [7].
+   - In movement mode, the RMSE for the proposed method was 2.30 BPM.
+
+2. Pearson Correlation Coefficient: 
+   - The paper reports a high agreement (R^2 = 0.94) between the estimated RR and the ground truth, demonstrating the strong correlation between the two.",Unavailable,FFT,,,"@article{Ghodratigohar_Ghanadian_2019,
+title={A remote respiration rate measurement method for non-stationary subjects using CEEMDAN and machine learning},
+author={Ghodratigohar, Mohammad and Ghanadian, Hamideh and Al Osman, Hussein},
+journal={IEEE Sensors Journal},
+volume={20},
+number={3},
+pages={1400--1410},
+year={2019},
+publisher={IEEE}
+}",,,
+Massaroni_Presti_2019,Non-contact monitoring of breathing pattern and respiratory rate via RGB signal measurement,2019,Motion,Manual,No,"1. Pixel intensity averaging
+2. Signal detrending
+3. Normalization
+4. Bandpass filtering
+5. Zero-crossing detection
+6. Breath-by-breath respiratory rate calculation
+7. Bland-Altman analysis","MAE (Mean Absolute Error): 0.39 breaths/min
+SE (Standard Error of the mean): 0.02 breaths/min
+%E (Percentage Error): 0.07%
+
+The article also reports a Bland-Altman analysis, which showed a bias of -0.01 breaths/min with limits of agreement of ±1.02 breaths/min.
+
+The article does not explicitly report the RMAE (Root Mean Absolute Error), RMSE (Root Mean Squared Error), MSE (Mean Squared Error), or Pearson Correlation Coefficient. These metrics are not mentioned in the paper.",Unavailable,CP,,,"@article{Massaroni_Presti_2019,
+title={Non-contact monitoring of breathing pattern and respiratory rate via RGB signal measurement},
+author={Massaroni, Carlo and Lo Presti, Daniela and Formica, Domenico and Silvestri, Sergio and Schena, Emiliano},
+journal={Sensors},
+volume={19},
+number={12},
+pages={2758},
+year={2019},
+publisher={MDPI}
+}",,,
+Jakkaew_Onoye_2019,An approach to non-contact monitoring of respiratory rate and breathing pattern based on slow motion images,2019,Motion,Manual,No,"1. Gaussian filter for image noise reduction
+2. MOSSE motion tracking algorithm for tracking the region of interest
+3. Butterworth low-pass filter for removing high-frequency components
+4. Savitzky-Golay filter for signal smoothing
+5. Findpeaks function for counting the number of breath peaks","1. Mean Absolute Error (MAE): Not explicitly reported.
+2. Relative Mean Absolute Error (RMAE): Not explicitly reported.
+3. Root Mean Squared Error (RMSE): Not explicitly reported.
+4. Mean Squared Error (MSE): Not explicitly reported.
+5. Pearson Correlation Coefficient: The average accuracy after applying the proposed approach is 99.09%, which indicates a very high correlation between the estimated and reference breathing rates.
+
+The paper focuses on demonstrating the feasibility of the proposed non-contact respiratory monitoring approach using simple computer vision techniques on slow-motion video data. The key findings are the high accuracy of the breathing rate estimation and the ability to capture the breathing pattern.",Unavailable,PC,,,"@inproceedings{Jakkaew_Onoye_2019,
+title={An approach to non-contact monitoring of respiratory rate and breathing pattern based on slow motion images},
+author={Jakkaew, Prasara and Onoye, Takao},
+booktitle={2019 IEEE International Conference on Consumer Electronics-Asia (ICCE-Asia)},
+pages={47--51},
+year={2019},
+organization={IEEE}
+}",,,
+Massaroni2019comparison,Comparison of two methods for estimating respiratory waveforms from videos without contact,2019,Motion,Manual,No,"1. Pixel Intensity Changes Method
+2. Optical Flow Method","1. Mean Absolute Error (MAE):
+   - The maximum MAE reported for the optical flow method is less than 1 breath/min.
+   - The maximum MAE reported for the intensity change method is less than 3 breaths/min.
+
+2. Percentage Error:
+   - The maximum percentage error for the optical flow method in the frequency domain is less than 3%.
+   - The maximum percentage error for the intensity change method in the frequency domain is up to 10.5%.
+
+The paper does not report the Root Mean Absolute Error (RMAE), Root Mean Squared Error (RMSE), Mean Squared Error (MSE) or Pearson Correlation Coefficient. The focus is on the MAE and percentage error metrics.",Unavailable,FFT,,,"@inproceedings{Massaroni2019comparison,
+title={Comparison of two methods for estimating respiratory waveforms from videos without contact},
+author={Massaroni, Carlo and Schena, Emiliano and Silvestri, Sergio and Maji, Soumyajyoti},
+booktitle={2019 IEEE International Symposium on Medical Measurements and Applications (MeMeA)},
+pages={1--6},
+year={2019},
+organization={IEEE}
+}",,,
+Braun2018contactless,Contactless Respiration Monitoring in Real-Time via a Video Camera,2018,Motion,Automatic,No,"1. Motion estimation by dividing the image into blocks and estimating vertical motion for each block separately using a projection and correlation-based approach.
+
+2. Block classification to determine likelihood of containing valid respiratory motion based on respiratory rate estimation, motion symmetry, and likelihood of artifacts.
+
+3. Automatic region of interest (ROI) selection by combining classified blocks with high likelihood scores.
+
+4. Respiratory rate estimation by constructing a probability density function from per-block rates weighted by their scores and taking the maximum.
+
+5. Signal quality estimation based on the spread of the respiratory rate probability density function.",Error = 0.2 ± 2.3 bpm (mean ± 1.96 std),Unavailable,???,,,"@InProceedings{Braun2018contactless,
+author=""Braun, Fabian
+and Lemkaddem, Alia
+and Moser, Virginie
+and Dasen, Stephan
+and Grossenbacher, Olivier
+and Bertschi, Mattia"",
+editor=""Eskola, Hannu
+and V{\""a}is{\""a}nen, Outi
+and Viik, Jari
+and Hyttinen, Jari"",
+title=""Contactless Respiration Monitoring in Real-Time via a Video Camera"",
+booktitle=""EMBEC {\&} NBC 2017"",
+year=""2018"",
+publisher=""Springer Singapore"",
+address=""Singapore"",
+pages=""567--570"",
+isbn=""978-981-10-5122-7""
+}",,,
+Jorgea_Villarroela_2018,Data fusion for improved camera-based detection of respiration in neonates,2018,Motion,Automatic,Yes,"1. Principal Component Analysis (PCA)
+2. Independent Component Analysis (ICA) 
+3. Auto-Regressive (AR) modeling
+4. Convolutional Neural Network (CNN) for skin segmentation","Mean Absolute Error (MAE):
+- RRP CA: 6.9 breaths/min
+- RRICA: 7.5 breaths/min",Unavailable,Auto-Regressive (AR) modeling,,,"@inproceedings{Jorgea_Villarroela_2018,
+title={Data fusion for improved camera-based detection of respiration in neonates},
+author={Jorge, Jo{\~a}o and Villarroel, Mauricio and Chaichulee, Sitthichok and McCormick, Kenny and Tarassenko, Lionel},
+booktitle={Optical Diagnostics and Sensing XVIII: Toward Point-of-Care Diagnostics},
+volume={10501},
+pages={215--224},
+year={2018},
+organization={SPIE}
+}",,,
+Chen_McDuff_2018,DeepPhys: Video-Based Physiological Measurement Using Convolutional Attention Networks,2018,"Motion, rPPG",None,Yes,"1. Skin Reflection Model based on Dichromatic Reflection Model
+2. Normalized Frame Difference as Motion Representation
+3. Convolutional Attention Network (CAN) for end-to-end physiological measurement
+4. Ensemble learning over training checkpoints for improved frequency estimation","MAE (Mean Absolute Error):
+- For heart rate, the proposed CAN model achieves the lowest MAE compared to previous methods across the different datasets and tasks.
+- For breathing rate, the CAN model also shows improvements in MAE over the baseline methods.
+
+RMSE (Root Mean Square Error):
+- The RMSE results follow a similar pattern to the MAE, with the CAN model outperforming previous methods.
+
+Pearson Correlation Coefficient (r):
+- The CAN model demonstrates high correlation between the estimated physiological signals and the ground truth, again outperforming existing approaches.",MAHNOB-HCI,PC,Yes,MSE,"@misc{Chen_McDuff_2018,
+title={DeepPhys: Video-Based Physiological Measurement Using Convolutional Attention Networks},
+author={Weixuan Chen and Daniel McDuff},
+year={2018},
+eprint={1805.07888},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}",Adadelta,,
+Massaroni2018contactless,Contactless monitoring of breathing patterns and respiratory rate at the pit of the neck: A single camera approach,2018,Motion,Manual,No,"1. Butterworth digital filter design
+2. Power spectral density (PSD) estimation
+3. Time-domain breath detection using zero-crossing and local minima points
+4. Bland-Altman analysis
+5. Linear regression analysis
+6. Spearman correlation analysis","1. Frequency domain analysis:
+- The proposed method achieved 100% accuracy in estimating the average breathing rate compared to the reference.
+
+2. Time domain analysis:
+- Mean Absolute Error (MAE): 0.55 breaths/min (average), with a maximum of 1.23 breaths/min.
+- Standard Error (SE) of the mean was always better than 0.45 breaths/min.
+- Bland-Altman analysis showed a bias of -0.03 ± 1.78 breaths/min.
+- Spearman correlation coefficient was 0.97, with a slope (β) of 1.001.
+
+3. Influence of sensor resolution:
+- At the lowest resolution (NTSC), the method still showed good performance:
+  - MAE of 1.53 breaths/min
+  - Bland-Altman bias of -0.06 ± 2.08 breaths/min
+  - Correlation coefficient of 0.95",Unavailable,FFT,,,"@article{Massaroni2018contactless,
+title={Contactless monitoring of breathing patterns and respiratory rate at the pit of the neck: A single camera approach},
+author={Massaroni, Carlo and Lopes, Daniel Sim{\~o}es and Lo Presti, Daniela and Schena, Emiliano and Silvestri, Sergio and others},
+journal={Journal of Sensors},
+volume={2018},
+year={2018},
+publisher={Hindawi}
+}",,,
+Prathosh_Praveena_2017,Estimation of respiratory pattern from video using selective ensemble aggregation,2017,Motion,Automatic,No,"1. Blind deconvolution of single-input multiple-output (SIMO) systems.
+2. Quadratic basis projection and statistical aggregation for estimating the generating respiratory signal.
+3. Selective ensemble aggregation for choosing the optimal membership set (X+) based on phase characteristics.
+4. Goodness-of-estimation (GoE) metric using l0 norm of the magnitude spectrum for parameter selection.","1. Pearson Correlation Coefficient:
+   - For the ventral video, the correlation coefficient (r) was 0.94 with p < 0.001, indicating a strong positive correlation between the estimated signal and the ground truth.
+   - For the lateral video, the correlation coefficient (r) was 0.85 with p < 0.001.
+
+2. Bland-Altman Analysis:
+   - For the ventral video, 91% of the respiration rate measurements were within ±3 breaths per minute (BPM) of the ground truth.
+   - For the lateral video, 87% of the respiration rate measurements were within ±3 BPM of the ground truth.",Unavailable,FFT,,,"@article{Prathosh_Praveena_2017,
+title={Estimation of respiratory pattern from video using selective ensemble aggregation},
+author={Prathosh, AP and Praveena, Pragathi and Mestha, Lalit K and Bharadwaj, Sanjay},
+journal={IEEE Transactions on Signal Processing},
+volume={65},
+number={11},
+pages={2902--2916},
+year={2017},
+publisher={IEEE}
+}",,,
+Wiede_Richter_2017,Remote respiration rate determination in video data–vital parameter extraction based on optical flow and principal component analysis,2017,Motion,Automatic,No,"1. Kanade-Lucas-Tomasi (KLT) point tracker
+2. Principal Component Analysis (PCA)
+3. Fast Fourier Transform (FFT)
+4. Welch's method for spectral estimation
+5. Peak detection method for frequency determination",,Unavailable,"FFT, Welch's spectral estimation method, PC",,,"@inproceedings{Wiede_Richter_2017,
+title={Remote respiration rate determination in video data-vital parameter extraction based on optical flow and principal component analysis},
+author={Wiede, Christian and Richter, Julia and Manuel, Manu and Hirtz, Gangolf},
+booktitle={International Conference on Computer Vision Theory and Applications},
+volume={5},
+pages={326--333},
+year={2017},
+organization={SCITEPRESS}
+}",,,
+Mirmohamadsadeghi2016real,Real-time respiratory rate estimation using imaging photoplethysmography inter-beat intervals,2016,rPPG,Manual,No,"1. Notch Filter Bank (NFB) algorithm [10, 11] to estimate instantaneous respiratory rate from iPPG and ECG inter-beat intervals.
+
+2. Singular Value Decomposition (SVD) algorithm [15] as a pre-processing step before applying NFB on iPPG signals.
+
+3. Welch's method of spectral estimation on a sliding window to estimate respiratory rate from the reference respiratory signal.","MAE:
+- ECG estimate vs reference:
+- Welch method (1): 3.18 ± 2.94 bpm
+- NFB (2): 2.86 ± 3.67 bpm
+- Mean of (1) and (2): 2.74 ± 3.25 bpm
+
+- iPPG green estimate vs reference:
+- Welch method (1): 4.06 ± 1.88 bpm
+- NFB (2): 3.49 ± 2.32 bpm
+- Mean of (1) and (2): 3.52 ± 1.99 bpm
+
+Pearson correlation between iPPG green and ECG inter-beat intervals: 0.65 ± 0.27",Unavailable,PC,,,"@INPROCEEDINGS{Mirmohamadsadeghi2016real,
+  author={Mirmohamadsadeghi, Leila and Fallet, Sibylle and Moser, Virginie and Braun, Fabian and Vesin, Jean-Marc},
+  booktitle={2016 Computing in Cardiology Conference (CinC)}, 
+  title={Real-time respiratory rate estimation using imaging photoplethysmography inter-beat intervals}, 
+  year={2016},
+  volume={},
+  number={},
+  pages={861-864},
+  keywords={Electrocardiography;Indexes;Real-time systems;Estimation;Heart rate variability},
+  doi={}}
+",,,
+Gastel_Stuijk_2016,Robust respiration detection from remote photoplethysmography,2016,rPPG,Automatic,No,"1. CHROM method
+2. PBV (Pulse Base Variation) method
+3. Benchmark algorithm by Karlen et al. (BMI and BMF versions)","Guided Breathing (Visible Light):
+- Mean Absolute Error (MAE): 1.74 BPM
+- Root Mean Absolute Error (RMAE): 2.67 BPM 
+- Root Mean Squared Error (RMSE): 2.92 BPM
+- Pearson Correlation Coefficient (r): 0.973
+
+Guided Breathing (Infrared):
+- Mean Absolute Error (MAE): 2.27 BPM
+- Root Mean Absolute Error (RMAE): 3.96 BPM
+- Root Mean Squared Error (RMSE): 2.57 BPM 
+- Pearson Correlation Coefficient (r): 0.985
+
+Spontaneous Breathing (Visible Light):
+- Mean Absolute Error (MAE): 4.72 BPM
+- Root Mean Absolute Error (RMAE): 9.35 BPM
+- Root Mean Squared Error (RMSE): 9.66 BPM",Unavailable,???,,,"@article{Gastel_Stuijk_2016,
+title={Robust respiration detection from remote photoplethysmography},
+author={Van Gastel, Mark and Stuijk, Sander and De Haan, Gerard},
+journal={Biomedical optics express},
+volume={7},
+number={12},
+pages={4941--4957},
+year={2016},
+publisher={Optica Publishing Group}
+}",,,
+Janssen_Wang_2016,Video-based respiration monitoring with automatic region of interest detection,2016,Motion,Automatic,No,"1. Dense optical flow
+2. Motion matrix factorization (SVD, PCA)
+3. Covariance-based respiratory region of interest (RoI) detection
+4. Non-respiratory motion rejection using covariance, singular value and RoI consistency scores
+5. Respiratory signal extraction via numerical integration of valid flow vectors","1. Mean Absolute Error (MAE): Not explicitly reported, but can be inferred from the Bland-Altman analysis to be around 2.74 bpm (half the 95% limits of agreement range of -2.67 to 2.81 bpm).
+
+2. Relative Mean Absolute Error (RMAE): Not reported.
+
+3. Root Mean Squared Error (RMSE): Not explicitly reported, but can be estimated to be around 1.40 bpm based on the standard error of the estimate (SEE) value provided.
+
+4. Mean Squared Error (MSE): Not reported.
+
+5. Pearson Correlation Coefficient (r): The paper reports a very high correlation of r^2 > 0.99 between the video-based method and the reference, which corresponds to a Pearson correlation coefficient (r) of around 0.995.",Unavailable,PC,,,"@article{Janssen_Wang_2016,
+title={Video-based respiration monitoring with automatic region of interest detection},
+author={Janssen, Rik and Wang, Wenjin and Mo{\c{c}}o, Andreia and De Haan, Gerard},
+journal={Physiological measurement},
+volume={37},
+number={1},
+pages={100},
+year={2015},
+publisher={IOP Publishing}
+}",,,
+Lin_Chen_2016,Image-based motion-tolerant remote respiratory rate evaluation,2016,Motion,Automatic,No,"1. Haar-like features and AdaBoost for face detection.
+2. Horn-Schunk optical flow for motion estimation.
+3. Median filtering and zero-crossing method for respiratory rate measurement.
+4. Noise elimination methods (band-pass filtering and magnitude filtering).","1. Root Mean Square Error (RMSE): The paper reports RMSE values ranging from 0.60 to 3.53 breaths/min, depending on the test conditions.
+
+2. Pearson Correlation Coefficient (PCC or r): The paper reports PCC values ranging from 0.653 to 0.990, indicating high correlation between the proposed method and the ground truth.
+
+3. Tolerance Interval (T.I.): The paper reports 95% tolerance intervals, which range from around -6 to +8 breaths/min, depending on the test conditions.",Unavailable,CP,,,"@article{Lin_Chen_2016,
+title={Image-based motion-tolerant remote respiratory rate evaluation},
+author={Lin, Kuan-Yi and Chen, Duan-Yu and Tsai, Wen-Jiin},
+journal={IEEE Sensors Journal},
+volume={16},
+number={9},
+pages={3263--3271},
+year={2016},
+publisher={IEEE}
+}",,,
+Chatterjee_Prathosh_2016,Real-time respiration rate measurement from thoracoabdominal movement with a consumer grade camera,2016,Motion,None,No,"1. Computation of optical flow along the image gradients
+2. Extraction of principal flow field (PFF)","1. 92% and 95% of the respiration rate measurements obtained using the proposed method were within ±3 BPM and ±5 BPM of the ground truth, respectively.
+
+2. The Pearson correlation coefficient between the respiration rates measured using the proposed method and the impedance pneumograph was 0.8828 (p < 0.001).",Unavailable,???,,,"@inproceedings{Chatterjee_Prathosh_2016,
+title={Real-time respiration rate measurement from thoracoabdominal movement with a consumer grade camera},
+author={Chatterjee, Avishek and Prathosh, AP and Praveena, Pragathi},
+booktitle={2016 38th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)},
+pages={2708--2711},
+year={2016},
+organization={IEEE}
+}",,,
+Koolen_Decroupet_2015,Automated respiration detection from neonatal video data,2015,Motion,Manual,No,"1. Eulerian Video Magnification: To amplify small motions in the video data.
+2. Optical Flow Algorithm: To extract a respiration signal from the video data.
+3. Independent Component Analysis (ICA): To separate the respiration pattern from other motion sources.
+4. Principal Component Analysis (PCA): To extract the most important modes of variation and reconstruct a higher quality respiration signal.
+5. Short-Time Fourier Transform (STFT): To extract the dominant respiratory rate from the processed signals.
+6. Cross-correlation: To assess the similarity between the extracted respiration signal and the control signal.","1. Mean Absolute Error (MAE): Not reported
+
+2. Relative Mean Absolute Error (RMAE): Not reported
+
+3. Root Mean Squared Error (RMSE): Not reported
+
+4. Mean Squared Error (MSE): Not reported
+
+5. Pearson Correlation Coefficient:
+   - The paper reports the correlation between the extracted respiration signal and the control signal (Table 1)
+   - The highest correlation values are around 0.7 for some patients, indicating a good correlation.
+   - The correlation between the extracted respiration rate and the control respiration rate is also reported (Table 2), 
+     with values up to 0.999 for some patients, indicating a very high correlation.",Unavailable,Short-Time Fourier Transform (STFT),,,"@inproceedings{Koolen_Decroupet_2015,
+title={Automated respiration detection from neonatal video data},
+author={Koolen, Ninah and Decroupet, Olivier and Dereymaeker, Anneleen and Jansen, Katrien and Vervisch, Jan and Matic, Vladimir and Vanrumste, Bart and Naulaers, Gunnar and Van Huffel, Sabine and De Vos, Maarten},
+booktitle={International Conference on Pattern Recognition Applications and Methods},
+volume={2},
+pages={164--169},
+year={2015},
+organization={SciTePress}
+}",,,
+Tarassenko_Villarroel_2014,Non-contact video-based vital sign monitoring using ambient light and auto-regressive models,2014,rPPG,Automatic,No,"1. Auto-regressive (AR) modeling for spectral analysis to estimate heart rate and respiratory rate.
+2. Pole cancellation algorithm to remove aliased frequency components caused by artificial light flicker.
+3. Spatial mapping of the strength of heart rate and respiratory rate information across the patient's face.
+4. Ratio of ratios method to estimate changes in oxygen saturation from the red and blue color channels.","Mean Absolute Error (MAE) for heart rate: ~3 beats/min, similar to the MAE between pulse oximeter measurements at different sites (finger and earlobe).
+
+Pearson Correlation Coefficient for heart rate: Very high correlation between camera-derived estimates and reference values during sections with minimal patient movement.
+
+For respiratory rate, the camera-derived estimates were at least as accurate as those from the chest belt sensor, as evidenced by the more consistent respiratory rate estimates from the camera compared to the reference.",Unavailable,Auto-Regressive (AR) modeling,,,"@article{Tarassenko_Villarroel_2014,
+title={Non-contact video-based vital sign monitoring using ambient light and auto-regressive models},
+author={Tarassenko, Lionel and Villarroel, Mauricio and Guazzi, Alessandro and Jorge, Joao and Clifton, DA and Pugh, Chris},
+journal={Physiological measurement},
+volume={35},
+number={5},
+pages={807},
+year={2014},
+publisher={IOP Publishing}
+}",,,
+Lukavc2014contactless,Contactless recognition of respiration phases using web camera,2014,Motion,Automatic,No,"1. Single-step Lucas-Kanade method for optical flow computation.
+2. Iterative multi-scale Lucas-Kanade method for optical flow computation.
+3. Signal-to-noise ratio (SNR) estimation for selection of suitable tracking regions.
+4. Weighted averaging of velocity signals based on their SNR.
+5. Bidirectional Butterworth low-pass filtering of the averaged velocity signal.
+6. Zero-crossing detection in the filtered velocity signal to identify inspiration and expiration phases.","1. Mean Absolute Error (MAE): Mean absolute difference between automatic and human reference scoring is 1.1 frames for inspiration onset detection.
+
+2. Relative Mean Absolute Error (RMAE): Mean absolute z-score is 0.26 for inspiration onset detection, and 0.13 for expiration onset detection.
+
+3. Root Mean Squared Error (RMSE): Not reported.
+
+4. Mean Squared Error (MSE): Not reported.
+
+5. Pearson Correlation Coefficient: Not explicitly reported, but the authors mention that the waveforms closely resemble typical spirograms, suggesting a good correspondence between the camera-derived and reference respiration signals.",Unavailable,FFT,,,"@INPROCEEDINGS{Lukavc2014contactless,
+author={Lukáč, Tomáš and Púčik, Jozef and Chrenko, Lukáš},
+booktitle={2014 24th International Conference Radioelektronika},
+title={Contactless recognition of respiration phases using web camera},
+year={2014},
+volume={},
+number={},
+pages={1-4},
+keywords={Signal to noise ratio;Monitoring;Electrocardiography;Cameras;Optical imaging;Optical signal processing;respiration;respiration phase;web-camera;optic flow;Lucas-Kanade method},
+doi={10.1109/Radioelek.2014.6828427}
+}",,,
+Li_Yadollahi_2014,A non-contact vision-based system for respiratory rate estimation,2014,Motion,None,No,"1. Harris corner detector for feature point detection
+2. Lucas-Kanade algorithm for feature point tracking
+3. Principal component analysis (PCA) for extracting representative signals from feature point trajectories
+4. Fast Fourier transform (FFT) for spectral analysis and respiratory rate estimation","MAE (Mean Absolute Error): 0.74 ± 0.57 breaths/minute
+RMAE (Relative Mean Absolute Error): Not reported
+RMSE (Root Mean Squared Error): 1.02 ± 0.85 breaths/minute 
+MSE (Mean Squared Error): Not reported
+Pearson Correlation Coefficient: Not reported",Unavailable,FFT,,,"@inproceedings{Li_Yadollahi_2014,
+title={A non-contact vision-based system for respiratory rate estimation},
+author={Li, Michael H and Yadollahi, Azadeh and Taati, Babak},
+booktitle={2014 36th Annual International Conference of the IEEE Engineering in Medicine and Biology Society},
+pages={2119--2122},
+year={2014},
+organization={IEEE}
+}",,,
+Bartula2013camera,Camera-based system for contactless monitoring of respiration,2013,Motion,Automatic,No,"1. Projection-based transformation to obtain a 1D signal from the video frames.
+2. Cross-correlation to estimate motion between consecutive 1D profiles.
+3. High-pass and low-pass filtering to preprocess the raw breathing signal.
+4. Motion detection algorithm based on adaptive thresholding of optical flow.
+5. Breath-to-breath classification using a decision tree classifier.","1. For the experiments with the breathing phantom:
+- Accuracy and precision of approximately 90% were achieved.
+- After post-processing, the precision improved to 95%.
+- The correlation coefficient between the reference and video-based estimation was R = 0.97.
+
+2. For the recordings of human subjects:
+- Accuracy and precision of approximately 85% were achieved.
+- After post-processing, the accuracy improved to 89% and the precision to 95%.
+- The correlation coefficient was R = 0.98.",Unavailable,"The method uses a combination of cross-correlation, motion detection, and a binary classifier to extract the respiration rate from the video signal.",,,"@inproceedings{Bartula2013camera,
+title={Camera-based system for contactless monitoring of respiration},
+author={Bartula, Marek and Tigges, Timo and Muehlsteff, Jens},
+booktitle={2013 35th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)},
+pages={2672--2675},
+year={2013},
+organization={IEEE}
+}",,,
+Sun2011motion,Motion-compensated noncontact imaging photoplethysmography to monitor cardiorespiratory status during exercise,2011,"Motion, rPPG",Manual,No,"1. Planar motion compensation via 2D cross-correlation
+2. Single-channel independent component analysis (SCICA)
+3. Smoothed pseudo-Wigner-Ville distribution (SPWVD) for time-frequency analysis","1. Mean Absolute Error (MAE): Not explicitly reported, but can be inferred from the Bland-Altman plots to be approximately 0.33-0.78 bpm.
+
+2. Root Mean Absolute Error (RMAE): Not reported.
+
+3. Root Mean Squared Error (RMSE): Not explicitly reported, but can be inferred from the Bland-Altman 95% limits of agreement to be approximately 1.29-2.42 bpm.
+
+4. Mean Squared Error (MSE): Not reported.
+
+5. Pearson Correlation Coefficient (r): Reported as r > 0.9 (p < 0.01) for all exercise conditions, indicating strong correlation between iPPG and contact PPG heart rate measurements.",Unavailable,Smoothed Pseudo-Wigner-Ville distribution (SPWVD),,,"@article{Sun2011motion,
+title={Motion-compensated noncontact imaging photoplethysmography to monitor cardiorespiratory status during exercise},
+author={Sun, Yu and Hu, Sijung and Azorin-Peris, Vicente and Greenwald, Stephen and Chambers, Jonathon and Zhu, Yisheng},
+journal={Journal of biomedical optics},
+volume={16},
+number={7},
+pages={077010--077010},
+year={2011},
+publisher={Society of Photo-Optical Instrumentation Engineers}
+}",,,
