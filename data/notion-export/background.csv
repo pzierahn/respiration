@@ -74,7 +74,7 @@ number={},
 pages={1-12},
 keywords={Gold;Transformers;Task analysis;Face recognition;Redundancy;Feature extraction;Databases;Facial action unit detection;facial expression recognition;multi-modal feature fusion;attention;transformer;multi-channel;multi-head;diversity;disagreement},
 doi={10.1109/TAFFC.2023.3286838}}"
-Dosovitskiy2021image.pdf,An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale,Vision transformers,"@misc{dosovitskiy2021image,
+Dosovitskiy2021image.pdf,An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale,Vision transformers,"@misc{Dosovitskiy2021image,
 title={An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale},
 author={Alexey Dosovitskiy and Lucas Beyer and Alexander Kolesnikov and Dirk Weissenborn and Xiaohua Zhai and Thomas Unterthiner and Mostafa Dehghani and Matthias Minderer and Georg Heigold and Sylvain Gelly and Jakob Uszkoreit and Neil Houlsby},
 year={2021},
