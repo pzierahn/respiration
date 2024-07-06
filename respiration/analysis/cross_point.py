@@ -46,12 +46,11 @@ def find_crossing_points_nfcp(
     points = find_crossing_points(cross_curve)
     point_count = len(points)
 
-    rr_tmp = ((point_count / 2) / (len(data) / sample_rate))
-
     if point_count <= 1:
         return points
 
-    time_span = rr_tmp / 2 * sample_rate * quality_level
+    # Time span of an average respiratory cycle
+    time_span = len(data) / point_count * quality_level
 
     zero_span = []
     for inx in range(point_count - 1):
@@ -59,7 +58,6 @@ def find_crossing_points_nfcp(
 
     while min(zero_span) < time_span:
         doubt_point = np.argmin(zero_span)
-        points.pop(doubt_point)
         points.pop(doubt_point)
 
         if len(points) <= 1:
