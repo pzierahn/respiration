@@ -257,7 +257,7 @@ pages={610},
 year={2016},
 publisher={IOP Publishing}
 }"
-Pimentel_Johnson_2017,Toward a Robust Estimation of Respiratory Rate From Pulse Oximeters,,"@article{pimentel2016toward,
+Pimentel_Johnson_2017,Toward a Robust Estimation of Respiratory Rate From Pulse Oximeters,,"@article{Pimentel_Johnson_2017,
 title={Toward a robust estimation of respiratory rate from pulse oximeters},
 author={Pimentel, Marco AF and Johnson, Alistair EW and Charlton, Peter H and Birrenkott, Drew and Watkinson, Peter J and Tarassenko, Lionel and Clifton, David A},
 journal={IEEE Transactions on Biomedical Engineering},
@@ -280,3 +280,13 @@ volume={15},
 year={2015},
 publisher={Springer}
 }"
+Chon2009estimation,Estimation of Respiratory Rate From Photoplethysmogram Data Using Time–Frequency Spectral Estimation,,"@article{Chon2009estimation,
+author={Chon, K.H. and Dash, Shishir and Ju, Kihwan},
+journal={IEEE Transactions on Biomedical Engineering},
+title={Estimation of Respiratory Rate From Photoplethysmogram Data Using Time–Frequency Spectral Estimation},
+year={2009},
+volume={56},
+number={8},
+pages={2054-2063},
+keywords={Continuous wavelet transforms;Frequency modulation;Mathematical model;Time frequency analysis;Frequency estimation;Demodulation;Wavelet transforms;Testing;Computational efficiency;MATLAB;FM;pulse oximeter;respiratory sinus arrhythmia;time–frequency analysis},
+doi={10.1109/TBME.2009.2019766}}"
