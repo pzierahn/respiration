@@ -257,3 +257,26 @@ pages={610},
 year={2016},
 publisher={IOP Publishing}
 }"
+Pimentel_Johnson_2017,Toward a Robust Estimation of Respiratory Rate From Pulse Oximeters,,"@article{pimentel2016toward,
+title={Toward a robust estimation of respiratory rate from pulse oximeters},
+author={Pimentel, Marco AF and Johnson, Alistair EW and Charlton, Peter H and Birrenkott, Drew and Watkinson, Peter J and Tarassenko, Lionel and Clifton, David A},
+journal={IEEE Transactions on Biomedical Engineering},
+volume={64},
+number={8},
+pages={1914--1923},
+year={2016},
+publisher={IEEE}
+}"
+Critical_2016,Secondary Analysis of Electronic Health Records,,"@book{Critical_2016,
+title={Secondary analysis of electronic health records},
+author={Critical Data, MIT},
+year={2016},
+publisher={Springer Nature}
+}"
+Mukhopadhyay_2015,Wearable electronics sensors: For safe and healthy living,,"@book{Mukhopadhyay_2015,
+title={Wearable electronics sensors: For safe and healthy living},
+author={Mukhopadhyay, Subhas C},
+volume={15},
+year={2015},
+publisher={Springer}
+}"
