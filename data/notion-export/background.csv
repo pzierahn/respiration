@@ -247,3 +247,13 @@ journal={Advances in neural information processing systems},
 volume={25},
 year={2012}
 }"
+Charlton2016assessment,An assessment of algorithms to estimate respiratory rate from the electrocardiogram and photoplethysmogram,,"@article{Charlton2016assessment,
+title={An assessment of algorithms to estimate respiratory rate from the electrocardiogram and photoplethysmogram},
+author={Charlton, Peter H and Bonnici, Timothy and Tarassenko, Lionel and Clifton, David A and Beale, Richard and Watkinson, Peter J},
+journal={Physiological measurement},
+volume={37},
+number={4},
+pages={610},
+year={2016},
+publisher={IOP Publishing}
+}"
