@@ -143,19 +143,19 @@ archivePrefix={arXiv},
 primaryClass={eess.IV}
 }"
 Charlton2016,Waveform Analysis to Estimate Respiratory Rate,Some background on Waveforms,"@Inbook{Charlton2016,
-author=""""Charlton, Peter H.
+author=""Charlton, Peter H.
 and Villarroel, Mauricio
-and Salguiero, Francisco"""",
-title=""""Waveform Analysis to Estimate Respiratory Rate"""",
-bookTitle=""""Secondary Analysis of Electronic Health Records"""",
-year=""""2016"""",
-publisher=""""Springer International Publishing"""",
-address=""""Cham"""",
-pages=""""377--390"""",
-abstract=""""Several techniques have been developed for estimation of respiratory rate (RR) from physiological waveforms. This case study presents a comparison of exemplary techniques for estimation of RR from the electrocardiogram (ECG) and photoplethysmogram (PPG) waveforms."""",
-isbn=""""978-3-319-43742-2"""",
-doi=""""10.1007/978-3-319-43742-2_26"""",
-url=""""https://doi.org/10.1007/978-3-319-43742-2_26""""
+and Salguiero, Francisco"",
+title=""Waveform Analysis to Estimate Respiratory Rate"",
+bookTitle=""Secondary Analysis of Electronic Health Records"",
+year=""2016"",
+publisher=""Springer International Publishing"",
+address=""Cham"",
+pages=""377--390"",
+abstract=""Several techniques have been developed for estimation of respiratory rate (RR) from physiological waveforms. This case study presents a comparison of exemplary techniques for estimation of RR from the electrocardiogram (ECG) and photoplethysmogram (PPG) waveforms."",
+isbn=""978-3-319-43742-2"",
+doi=""10.1007/978-3-319-43742-2_26"",
+url=""https://doi.org/10.1007/978-3-319-43742-2_26""
 }"
 Vanderplas2018understanding.pdf,Understanding the Lomb–Scargle Periodogram,,"@article{Vanderplas2018understanding,
 title={Understanding the lomb--scargle periodogram},
