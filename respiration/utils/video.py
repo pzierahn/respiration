@@ -2,6 +2,7 @@ from typing import Optional
 
 import cv2
 import json
+import torch
 import numpy as np
 from tqdm.auto import tqdm
 
@@ -186,3 +187,14 @@ def bgr_to_rgb(frames: np.array) -> np.array:
     """
 
     return np.array([cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) for frame in frames])
+
+
+def normalize_frames(frames: torch.Tensor) -> torch.Tensor:
+    """
+    Normalize a tensor of frames. The frames are normalized to the range [0, 1].
+    :param frames: tensor of frames
+    :return: preprocessed tensor of frames
+    """
+
+    frames = (frames - frames.min()) / (frames.max() - frames.min())
+    return frames
