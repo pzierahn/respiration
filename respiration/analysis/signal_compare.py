@@ -1,5 +1,4 @@
 from typing import Optional
-from dtaidistance import dtw
 
 from .psd import *
 from .cross_point import *
