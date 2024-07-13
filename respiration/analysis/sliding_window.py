@@ -2,7 +2,13 @@ import numpy as np
 
 from typing import Optional
 
-from .cross_point import (frequency_from_crossing_point, frequency_from_nfcp)
+from .cross_point import (
+    frequency_from_crossing_point,
+    frequency_from_nfcp,
+)
+from .distance import (
+    pearson_correlation,
+)
 from .peak_counting import frequency_from_peaks
 from .psd import frequency_from_psd
 from .preprocessing import *
@@ -224,6 +230,10 @@ class Analysis:
                 'value': np.mean(np.abs(
                     (self.prediction_results[key] - self.ground_truth_results[key]) / self.ground_truth_results[
                         key])) * 100
+            }, {
+                'metric': 'Correlation',
+                'method': key,
+                'value': pearson_correlation(self.prediction_results[key], self.ground_truth_results[key])
             }])
 
         return metrics
