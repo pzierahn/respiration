@@ -4,7 +4,7 @@ from .cross_point import (frequency_from_crossing_point, frequency_from_nfcp)
 from .peak_counting import frequency_from_peaks
 from .psd import frequency_from_psd
 
-from respiration.preprocessing import butterworth_filter
+from .preprocessing import butterworth_filter
 
 
 def sliding_window_analysis(

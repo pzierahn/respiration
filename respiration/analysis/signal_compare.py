@@ -5,12 +5,12 @@ from .cross_point import *
 from .peak_counting import *
 from .distance import *
 
-import respiration.preprocessing as preprocessing
+from .preprocessing import *
 
 
 class SignalComparator:
     """
-    Analyze and compare prediction and ground truth signals in terms of beats per minute,
+    Analyze and compare prediction and ground truth signals in terms of Beats per Minute (BPM),
     error metrics, and signal distance measures.
     """
 
@@ -30,8 +30,8 @@ class SignalComparator:
             sample_rate: int,
             lowpass: Optional[float] = 0.08,
             highpass: Optional[float] = 0.6,
-            detrend_tarvainen: bool = True,
-            normalize_signal: bool = True,
+            detrend: bool = True,
+            normalize: bool = True,
             filter_signal: bool = True,
             round_decimals: int = 0
     ):
@@ -39,17 +39,17 @@ class SignalComparator:
             (f'Prediction and ground truth signals must have the same shape. Got prediction shape: {prediction.shape}, '
              f'ground truth shape: {ground_truth.shape}')
 
-        if detrend_tarvainen:
-            prediction = preprocessing.detrend_tarvainen(prediction)
-            ground_truth = preprocessing.detrend_tarvainen(ground_truth)
+        if detrend:
+            prediction = detrend_tarvainen(prediction)
+            ground_truth = detrend_tarvainen(ground_truth)
 
         if filter_signal:
-            prediction = preprocessing.butterworth_filter(prediction, sample_rate, lowpass, highpass)
-            ground_truth = preprocessing.butterworth_filter(ground_truth, sample_rate, lowpass, highpass)
+            prediction = butterworth_filter(prediction, sample_rate, lowpass, highpass)
+            ground_truth = butterworth_filter(ground_truth, sample_rate, lowpass, highpass)
 
-        if normalize_signal:
-            prediction = preprocessing.normalize_signal(prediction)
-            ground_truth = preprocessing.normalize_signal(ground_truth)
+        if normalize:
+            prediction = normalize_signal(prediction)
+            ground_truth = normalize_signal(ground_truth)
 
         self.lowpass = lowpass
         self.highpass = highpass
