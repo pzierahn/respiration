@@ -4,7 +4,8 @@ from typing import Optional
 
 def average_pixel_intensity(frames: np.ndarray, roi: Optional[tuple[int, int, int, int]] = None) -> np.ndarray:
     """
-    Calculate the average pixel intensity in a region of interest (ROI) for each frame
+    Calculate the average pixel intensity in a region of interest (ROI) for each frame. This function is used for
+    grayscale frames.
     :param frames: numpy array of frames
     :param roi: region of interest (x, y, w, h)
     :return: average pixel value
@@ -21,3 +22,23 @@ def average_pixel_intensity(frames: np.ndarray, roi: Optional[tuple[int, int, in
 
     # Calculate the average pixel value
     return roi_frames.mean(axis=(1, 2))
+
+
+def average_pixel_intensity_rgb(frames: np.ndarray, roi: Optional[tuple[int, int, int, int]] = None) -> np.ndarray:
+    """
+    Calculate the average pixel intensity in a region of interest (ROI) for each frame. This function is used for RGB
+    frames.
+    :param frames: numpy array of frames
+    :param roi: region of interest (x, y, w, h)
+    :return: average pixel value
+    """
+
+    # For each channel, calculate the average pixel intensity
+    channels = []
+    for idx in range(frames.shape[3]):
+        channel = average_pixel_intensity(frames[:, :, :, idx], roi)
+        channels.append(channel)
+
+    # Average the pixel values across the channels
+    stack = np.stack(channels, axis=1)
+    return stack.mean(axis=1)
