@@ -28,6 +28,15 @@ def sliding_window_analysis(
         The size of the window in seconds.
     stride: int
         The stride of the window in seconds.
+
+    Returns
+    -------
+    dict[str, np.ndarray]
+        A dictionary with the following keys:
+        - cp: The frequency calculated using the crossing point method.
+        - nfcp: The frequency calculated using the negative first crossing point method.
+        - pk: The frequency calculated using the peak counting method.
+        - psd: The frequency calculated using the power spectral density method.
     """
 
     time_series = butterworth_filter(
