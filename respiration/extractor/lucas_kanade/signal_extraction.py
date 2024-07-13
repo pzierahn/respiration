@@ -52,7 +52,7 @@ def signal_from_amplitudes(point_amplitudes: np.ndarray, use_cgof: bool = False)
     return respiratory_signal
 
 
-def extract_signal(
+def extract_signal_grey(
         frames: np.ndarray,
         use_cgof: bool = False,
         roi: Optional[tuple[int, int, int, int]] = None,
@@ -61,7 +61,7 @@ def extract_signal(
         quality_level_rv: float = 0.05,
 ) -> np.ndarray:
     """
-    Extract the respiratory signal from the given frames
+    Extract the respiratory signal from grey frames
     :param frames: The frames to extract the respiratory signal from
     :param use_cgof: Whether to use the correlation-guided optical flow method
     :param roi: The region of interest to extract feature points from
@@ -87,3 +87,30 @@ def extract_signal(
     amplitudes = calculate_feature_point_amplitudes(feature_point_movements)
 
     return signal_from_amplitudes(amplitudes, use_cgof)
+
+
+def extract_signal_rgb(
+        frames: np.ndarray,
+        use_cgof: bool = False,
+        roi: Optional[tuple[int, int, int, int]] = None,
+        fpn: Optional[int] = None,
+        quality_level: float = 0.3,
+        quality_level_rv: float = 0.05,
+) -> np.ndarray:
+    """
+    Extract the respiratory signal from RGB frames
+    :param frames: The frames to extract the respiratory signal from
+    :param use_cgof: Whether to use the correlation-guided optical flow method
+    :param roi: The region of interest to extract feature points from
+    :param fpn: The number of feature points to extract (if None, extract all feature points)
+    :param quality_level: The quality level of the feature points
+    :param quality_level_rv: The quality level random variable
+    :return: The extracted respiratory signal (1D array)
+    """
+
+    channels = []
+    for idx in range(frames.shape[3]):
+        frames_channel = frames[:, :, :, idx]
+        channels.append(extract_signal_grey(frames_channel, use_cgof, roi, fpn, quality_level, quality_level_rv))
+
+    return np.mean(channels, axis=0)
