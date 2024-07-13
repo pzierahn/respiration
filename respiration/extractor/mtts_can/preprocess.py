@@ -13,6 +13,10 @@ def preprocess_video_frames(frames: np.ndarray, dim=36) -> tuple[np.ndarray, np.
 
 
 def preprocess_frames_original(frames, dim=36):
+    """
+    Original preprocess function from the MTTS-CAN paper.
+    Source: https://github.com/xliucs/MTTS-CAN
+    """
     total_frames = len(frames)
     Xsub = np.zeros((total_frames, dim, dim, 3), dtype=np.float32)
 

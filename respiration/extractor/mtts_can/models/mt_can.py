@@ -1,5 +1,17 @@
-from keras.layers import Conv2D, Conv3D, Input, AveragePooling2D, \
-    multiply, Dense, Dropout, Flatten, AveragePooling3D
+"""
+Source: https://github.com/xliucs/MTTS-CAN
+"""
+from keras.layers import (
+    Conv2D,
+    Conv3D,
+    Input,
+    AveragePooling2D,
+    multiply,
+    Dense,
+    Dropout,
+    Flatten,
+    AveragePooling3D,
+)
 from keras.models import Model
 
 from .attention_mask import AttentionMask

@@ -1,3 +1,7 @@
+"""
+Source: https://github.com/xliucs/MTTS-CAN
+"""
+
 import keras
 import tensorflow as tf
 from keras.layers import Conv2D

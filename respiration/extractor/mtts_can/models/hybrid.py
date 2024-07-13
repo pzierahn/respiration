@@ -1,3 +1,6 @@
+"""
+Source: https://github.com/xliucs/MTTS-CAN
+"""
 from tensorflow.keras import backend as K
 from keras.layers import (
     Conv2D,
