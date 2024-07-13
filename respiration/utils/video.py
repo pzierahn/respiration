@@ -189,6 +189,16 @@ def bgr_to_rgb(frames: np.array) -> np.array:
     return np.array([cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) for frame in frames])
 
 
+def rgb_to_grey(frames: np.array) -> np.array:
+    """
+    Convert a numpy array of frames from RGB to grayscale
+    :param frames: numpy array of frames in RGB format
+    :return: numpy array of frames in grayscale
+    """
+
+    return np.array([cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY) for frame in frames])
+
+
 def normalize_frames(frames: torch.Tensor) -> torch.Tensor:
     """
     Normalize a tensor of frames. The frames are normalized to the range [0, 1].
