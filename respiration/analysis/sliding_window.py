@@ -206,43 +206,43 @@ class Analysis:
         for model in self.prediction_results.keys():
             for method in self.prediction_results[model].keys():
                 metrics.extend([{
-                    'metric': 'MSE',
                     'model': model,
                     'method': method,
+                    'metric': 'MSE',
                     'value': np.mean(
                         (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2)
                 }, {
-                    'metric': 'MAE',
                     'model': model,
                     'method': method,
+                    'metric': 'MAE',
                     'value': np.mean(
                         np.abs(self.prediction_results[model][method] - self.ground_truth_results[model][method]))
                 }, {
-                    'metric': 'RMSE',
                     'model': model,
                     'method': method,
+                    'metric': 'RMSE',
                     'value': np.sqrt(
                         np.mean(
                             (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2))
                 }, {
-                    'metric': 'MAPE',
                     'model': model,
                     'method': method,
+                    'metric': 'MAPE',
                     'value': np.mean(np.abs(
                         (self.prediction_results[model][method] - self.ground_truth_results[model][method]) /
                         self.ground_truth_results[
                             model][method])) * 100
                 }, {
-                    'metric': 'PCC',
                     'model': model,
                     'method': method,
+                    'metric': 'PCC',
                     'value': pearson_correlation(
                         self.prediction_results[model][method],
                         self.ground_truth_results[model][method])
                 }, {
-                    'metric': 'SCC',
                     'model': model,
                     'method': method,
+                    'metric': 'SCC',
                     'value': spearman_correlation(
                         self.prediction_results[model][method],
                         self.ground_truth_results[model][method])
