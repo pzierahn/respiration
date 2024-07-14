@@ -205,47 +205,32 @@ class Analysis:
 
         for model in self.prediction_results.keys():
             for method in self.prediction_results[model].keys():
-                metrics.extend([{
+                metrics.append({
                     'model': model,
                     'method': method,
-                    'metric': 'MSE',
-                    'value': np.mean(
-                        (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2)
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'MAE',
-                    'value': np.mean(
-                        np.abs(self.prediction_results[model][method] - self.ground_truth_results[model][method]))
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'RMSE',
-                    'value': np.sqrt(
+                    'MSE': np.mean(
+                        (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2
+                    ),
+                    'MAE': np.mean(
+                        np.abs(self.prediction_results[model][method] - self.ground_truth_results[model][method])
+                    ),
+                    'RMSE': np.sqrt(
                         np.mean(
-                            (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2))
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'MAPE',
-                    'value': np.mean(np.abs(
+                            (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2
+                        )
+                    ),
+                    'MAPE': np.mean(np.abs(
                         (self.prediction_results[model][method] - self.ground_truth_results[model][method]) /
-                        self.ground_truth_results[
-                            model][method])) * 100
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'PCC',
-                    'value': pearson_correlation(
+                        self.ground_truth_results[model][method]
+                    )) * 100,
+                    'PCC': pearson_correlation(
                         self.prediction_results[model][method],
-                        self.ground_truth_results[model][method])
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'SCC',
-                    'value': spearman_correlation(
+                        self.ground_truth_results[model][method]
+                    ),
+                    'SCC': spearman_correlation(
                         self.prediction_results[model][method],
-                        self.ground_truth_results[model][method])
-                }])
+                        self.ground_truth_results[model][method]
+                    )
+                })
 
         return metrics
