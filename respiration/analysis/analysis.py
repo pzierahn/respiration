@@ -17,6 +17,8 @@ from .preprocessing import *
 
 
 class Analysis:
+    sample_rate: int
+
     lowpass: Optional[float]
     highpass: Optional[float]
 
@@ -28,11 +30,12 @@ class Analysis:
     stride: int
 
     # Analysis results: Model Name --> Method --> Results
-    prediction_results: dict[str, dict[str, np.ndarray]]
-    ground_truth_results: dict[str, dict[str, np.ndarray]]
+    prediction_metrics: dict[str, dict[str, np.ndarray]]
+    ground_truth_metrics: dict[str, dict[str, np.ndarray]]
 
     def __init__(
             self,
+            sample_rate: int,
             lowpass: Optional[float] = 0.08,
             highpass: Optional[float] = 0.6,
             detrend: bool = False,
@@ -41,6 +44,8 @@ class Analysis:
             window_size: int = 30,
             stride: int = 1
     ):
+        self.sample_rate = sample_rate
+
         self.lowpass = lowpass
         self.highpass = highpass
 
@@ -51,19 +56,19 @@ class Analysis:
         self.window_size = window_size
         self.stride = stride
 
-        self.prediction_results = {}
-        self.ground_truth_results = {}
+        self.prediction_metrics = {}
+        self.ground_truth_metrics = {}
+
+        self.distances = {}
 
     def __preprocess(
             self,
             prediction: np.ndarray,
-            ground_truth: np.ndarray,
-            sample_rate: int) -> tuple[np.ndarray, np.ndarray]:
+            ground_truth: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """
         Preprocess the prediction and ground truth signals.
         :param prediction: The predicted signal.
         :param ground_truth: The ground truth signal.
-        :param sample_rate: The sampling rate of the signals in Hz.
         :return: The preprocessed prediction and ground truth signals.
         """
 
@@ -78,12 +83,12 @@ class Analysis:
         if self.filter_signal:
             prediction = butterworth_filter(
                 prediction,
-                sample_rate,
+                self.sample_rate,
                 self.lowpass,
                 self.highpass)
             ground_truth = butterworth_filter(
                 ground_truth,
-                sample_rate,
+                self.sample_rate,
                 self.lowpass,
                 self.highpass)
 
@@ -93,19 +98,18 @@ class Analysis:
 
         return prediction, ground_truth
 
-    def add_data(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray, sample_rate: int):
+    def add_data(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray):
         """
         Add data to the analysis.
         :param model: The model used to generate the prediction.
         :param prediction: The predicted signal.
         :param ground_truth: The ground truth signal.
-        :param sample_rate: The sampling rate of the signals in Hz.
         """
-        prediction, ground_truth = self.__preprocess(prediction, ground_truth, sample_rate)
+        prediction, ground_truth = self.__preprocess(prediction, ground_truth)
 
         # Calculate the window size and stride in samples
-        window_size = self.window_size * sample_rate
-        stride = self.stride * sample_rate
+        window_size = self.window_size * self.sample_rate
+        stride = self.stride * self.sample_rate
 
         metrics = {
             'cp': frequency_from_crossing_point,
@@ -114,11 +118,11 @@ class Analysis:
             'psd': frequency_from_psd,
         }
 
-        if model not in self.prediction_results:
-            self.prediction_results[model] = {
+        if model not in self.prediction_metrics:
+            self.prediction_metrics[model] = {
                 key: np.array([]) for key in metrics.keys()
             }
-            self.ground_truth_results[model] = {
+            self.ground_truth_metrics[model] = {
                 key: np.array([]) for key in metrics.keys()
             }
 
@@ -127,14 +131,14 @@ class Analysis:
             ground_truth_window = ground_truth[inx:inx + window_size]
 
             for key, metric in metrics.items():
-                self.prediction_results[model][key] = np.append(
-                    self.prediction_results[model][key],
-                    metric(prediction_window, sample_rate)
+                self.prediction_metrics[model][key] = np.append(
+                    self.prediction_metrics[model][key],
+                    metric(prediction_window, self.sample_rate)
                 )
 
-                self.ground_truth_results[model][key] = np.append(
-                    self.ground_truth_results[model][key],
-                    metric(ground_truth_window, sample_rate)
+                self.ground_truth_metrics[model][key] = np.append(
+                    self.ground_truth_metrics[model][key],
+                    metric(ground_truth_window, self.sample_rate)
                 )
 
     def compute_metrics(self) -> list[dict[str, float]]:
@@ -144,49 +148,49 @@ class Analysis:
         """
         metrics = []
 
-        for model in self.prediction_results.keys():
-            for method in self.prediction_results[model].keys():
+        for model in self.prediction_metrics.keys():
+            for method in self.prediction_metrics[model].keys():
                 metrics.extend([{
                     'model': model,
                     'method': method,
                     'metric': 'MSE',
                     'value': np.mean(
-                        (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2)
+                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2)
                 }, {
                     'model': model,
                     'method': method,
                     'metric': 'MAE',
                     'value': np.mean(
-                        np.abs(self.prediction_results[model][method] - self.ground_truth_results[model][method]))
+                        np.abs(self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]))
                 }, {
                     'model': model,
                     'method': method,
                     'metric': 'RMSE',
                     'value': np.sqrt(
                         np.mean(
-                            (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2))
+                            (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2))
                 }, {
                     'model': model,
                     'method': method,
                     'metric': 'MAPE',
                     'value': np.mean(np.abs(
-                        (self.prediction_results[model][method] - self.ground_truth_results[model][method]) /
-                        self.ground_truth_results[
+                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) /
+                        self.ground_truth_metrics[
                             model][method])) * 100
                 }, {
                     'model': model,
                     'method': method,
                     'metric': 'PCC',
                     'value': pearson_correlation(
-                        self.prediction_results[model][method],
-                        self.ground_truth_results[model][method])
+                        self.prediction_metrics[model][method],
+                        self.ground_truth_metrics[model][method])
                 }, {
                     'model': model,
                     'method': method,
                     'metric': 'SCC',
                     'value': spearman_correlation(
-                        self.prediction_results[model][method],
-                        self.ground_truth_results[model][method])
+                        self.prediction_metrics[model][method],
+                        self.ground_truth_metrics[model][method])
                 }])
 
         return metrics
