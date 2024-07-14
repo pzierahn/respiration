@@ -35,6 +35,17 @@ def pearson_correlation(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
     return correlation
 
 
+def spearman_correlation(signal_a: np.array, signal_b: np.array) -> float:
+    """
+    Calculate the Spearman correlation
+    :param signal_a: First signal.
+    :param signal_b: Second signal.
+    :return: The Pearson correlation coefficient between the two signals.
+    """
+    res = stats.spearmanr(signal_a, signal_b)
+    return res.statistic
+
+
 def dtw_distance(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
     """
     Calculate the Dynamic Time Warping distance between two signals.

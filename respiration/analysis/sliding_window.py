@@ -8,6 +8,7 @@ from .cross_point import (
 )
 from .distance import (
     pearson_correlation,
+    spearman_correlation,
 )
 from .peak_counting import frequency_from_peaks
 from .psd import frequency_from_psd
@@ -234,6 +235,10 @@ class Analysis:
                 'metric': 'PCC',
                 'method': key,
                 'value': pearson_correlation(self.prediction_results[key], self.ground_truth_results[key])
+            }, {
+                'metric': 'SCC',
+                'method': key,
+                'value': spearman_correlation(self.prediction_results[key], self.ground_truth_results[key])
             }])
 
         return metrics
