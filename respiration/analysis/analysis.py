@@ -55,9 +55,17 @@ class Analysis:
         self.ground_truth_results = {}
 
     def __preprocess(
-            self, prediction: np.ndarray,
+            self,
+            prediction: np.ndarray,
             ground_truth: np.ndarray,
             sample_rate: int) -> tuple[np.ndarray, np.ndarray]:
+        """
+        Preprocess the prediction and ground truth signals.
+        :param prediction: The predicted signal.
+        :param ground_truth: The ground truth signal.
+        :param sample_rate: The sampling rate of the signals in Hz.
+        :return: The preprocessed prediction and ground truth signals.
+        """
 
         assert prediction.shape == ground_truth.shape, \
             (f'Prediction and ground truth signals must have the same shape. Got prediction shape: {prediction.shape}, '
