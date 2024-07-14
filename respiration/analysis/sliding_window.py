@@ -256,13 +256,20 @@ class Analysis:
         :return: A list of dictionaries containing the computed metrics.
         """
         metrics = self.compute_metrics()
-        table = []
+        table = {}
 
         for metric in metrics:
-            table.append({
-                'model': metric['model'],
-                'method': metric['method'],
-                metric['metric']: metric['value'],
-            })
+            model = metric['model']
+            method = metric['method']
 
-        return table
+            if model not in table:
+                table[model] = {}
+            if method not in table[model]:
+                table[model][method] = {
+                    'model': model,
+                    'method': method,
+                }
+
+            table[model][method][metric['metric']] = metric['value']
+
+        return [value for value in table.values()]
