@@ -191,8 +191,8 @@ class Analysis:
                     metric(prediction_window, sample_rate)
                 )
 
-                self.prediction_results[model][key] = np.append(
-                    self.prediction_results[model][key],
+                self.ground_truth_results[model][key] = np.append(
+                    self.ground_truth_results[model][key],
                     metric(ground_truth_window, sample_rate)
                 )
 
