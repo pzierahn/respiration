@@ -207,6 +207,7 @@ class Analysis:
             for method in self.prediction_results[model].keys():
                 metrics.extend([{
                     'model': model,
+                    'metric': 'MSE',
                     'method': method,
                     'metric': 'MSE',
                     'value': np.mean(
