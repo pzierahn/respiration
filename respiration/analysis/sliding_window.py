@@ -272,4 +272,8 @@ class Analysis:
 
             table[model][method][metric['metric']] = metric['value']
 
-        return [value for value in table.values()]
+        entries = []
+        for value in table.values():
+            entries.extend([entry for entry in value.values()])
+
+        return entries
