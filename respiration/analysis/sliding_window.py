@@ -313,7 +313,7 @@ class Analysis:
                 loc = ((analysis_results['method'] == method) &
                        (analysis_results['metric'] == metric))
 
-                ranks = analysis_results[loc]['value'].rank()
+                ranks = analysis_results[loc]['value'].rank().astype(int)
                 analysis_results.loc[loc, 'rank'] = ranks
 
         return analysis_results
