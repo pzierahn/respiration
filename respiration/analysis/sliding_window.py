@@ -231,7 +231,7 @@ class Analysis:
                     (self.prediction_results[key] - self.ground_truth_results[key]) / self.ground_truth_results[
                         key])) * 100
             }, {
-                'metric': 'Correlation',
+                'metric': 'PCC',
                 'method': key,
                 'value': pearson_correlation(self.prediction_results[key], self.ground_truth_results[key])
             }])
