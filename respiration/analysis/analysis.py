@@ -33,6 +33,9 @@ class Analysis:
     prediction_metrics: dict[str, dict[str, np.ndarray]]
     ground_truth_metrics: dict[str, dict[str, np.ndarray]]
 
+    predictions: dict[str, np.ndarray]
+    ground_truths: dict[str, np.ndarray]
+
     def __init__(
             self,
             sample_rate: int,
@@ -59,7 +62,8 @@ class Analysis:
         self.prediction_metrics = {}
         self.ground_truth_metrics = {}
 
-        self.distances = {}
+        self.predictions = {}
+        self.ground_truths = {}
 
     def __preprocess(
             self,
@@ -107,6 +111,13 @@ class Analysis:
         """
         prediction, ground_truth = self.__preprocess(prediction, ground_truth)
 
+        if model not in self.predictions:
+            self.predictions[model] = np.array([])
+            self.ground_truths[model] = np.array([])
+
+        self.predictions[model] = np.append(self.predictions[model], prediction)
+        self.ground_truths[model] = np.append(self.ground_truths[model], ground_truth)
+
         # Calculate the window size and stride in samples
         window_size = self.window_size * self.sample_rate
         stride = self.stride * self.sample_rate
@@ -140,6 +151,71 @@ class Analysis:
                     self.ground_truth_metrics[model][key],
                     metric(ground_truth_window, self.sample_rate)
                 )
+
+    def correlation_metrics(self):
+        """
+        Compute the correlations for each metric.
+        """
+        correlations = []
+
+        for model in self.prediction_metrics.keys():
+            for method in self.prediction_metrics[model].keys():
+                pcc, p_pcc = pearson_correlation(
+                    self.prediction_metrics[model][method],
+                    self.ground_truth_metrics[model][method]
+                )
+
+                scc, p_scc = spearman_correlation(
+                    self.prediction_metrics[model][method],
+                    self.ground_truth_metrics[model][method]
+                )
+
+                correlations.extend([{
+                    'model': model,
+                    'method': method,
+                    'correlation': 'PCC',
+                    'statistic': pcc,
+                    'p-value': pcc,
+                }, {
+                    'model': model,
+                    'method': method,
+                    'correlation': 'SCC',
+                    'statistic': scc,
+                    'p-value': p_scc,
+                }])
+
+        return correlations
+
+    def correlation_signals(self):
+        """
+        Compute the correlations for the signals.
+        """
+        correlations = []
+
+        for model in self.prediction_metrics.keys():
+            pcc, p_pcc = pearson_correlation(
+                self.predictions[model],
+                self.ground_truths[model]
+            )
+
+            scc, p_scc = spearman_correlation(
+                self.predictions[model],
+                self.ground_truths[model]
+            )
+
+            correlations.extend([{
+                'model': model,
+                'correlation': 'PCC',
+                'statistic': pcc,
+                'p-value': pcc,
+            }, {
+                'model': model,
+                'correlation': 'SCC',
+                'statistic': scc,
+                'p-value': p_scc,
+            }])
+
+        return correlations
 
     def compute_metrics(self) -> list[dict[str, float]]:
         """
@@ -177,20 +253,6 @@ class Analysis:
                         (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) /
                         self.ground_truth_metrics[
                             model][method])) * 100
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'PCC',
-                    'value': pearson_correlation(
-                        self.prediction_metrics[model][method],
-                        self.ground_truth_metrics[model][method])
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'SCC',
-                    'value': spearman_correlation(
-                        self.prediction_metrics[model][method],
-                        self.ground_truth_metrics[model][method])
                 }])
 
         return metrics

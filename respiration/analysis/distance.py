@@ -24,18 +24,18 @@ def distance_mse(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
     return np.mean((signal_a - signal_b) ** 2)
 
 
-def pearson_correlation(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
+def pearson_correlation(signal_a: np.ndarray, signal_b: np.ndarray) -> tuple[float, float]:
     """
     Calculate the Pearson correlation coefficient between two signals.
     :param signal_a: First signal.
     :param signal_b: Second signal.
     :return: The Pearson correlation coefficient between the two signals.
     """
-    correlation, _ = stats.pearsonr(signal_a, signal_b)
-    return correlation
+    correlation, p = stats.pearsonr(signal_a, signal_b)
+    return correlation, p
 
 
-def spearman_correlation(signal_a: np.array, signal_b: np.array) -> float:
+def spearman_correlation(signal_a: np.array, signal_b: np.array) -> tuple[float, float]:
     """
     Calculate the Spearman correlation
     :param signal_a: First signal.
@@ -43,7 +43,7 @@ def spearman_correlation(signal_a: np.array, signal_b: np.array) -> float:
     :return: The Pearson correlation coefficient between the two signals.
     """
     res = stats.spearmanr(signal_a, signal_b)
-    return res.statistic
+    return res.statistic, res.pvalue
 
 
 def dtw_distance(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
