@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from typing import Optional
 
@@ -277,3 +278,61 @@ class Analysis:
             entries.extend([entry for entry in value.values()])
 
         return entries
+
+    def rank_models(self, show_metrics: Optional[list[str]] = None) -> pd.DataFrame:
+        """
+        Rank the models based on the computed metrics.
+        :param show_metrics: The metrics to show in the ranking. If None, all metrics are shown.
+        :return: A DataFrame containing the ranking of the models.
+        """
+        metrics = self.compute_metrics()
+        analysis_results = pd.DataFrame(metrics)
+
+        if show_metrics is None:
+            # Show all metrics if not specified
+            show_metrics = analysis_results['metric'].unique()
+
+        # Keep only the metrics that are specified
+        analysis_results = analysis_results[analysis_results['metric'].isin(show_metrics)]
+
+        # A higher correlation value is better. Hence, we need to invert the correlation values
+        # to rank the models.
+        corr_loc = (analysis_results['metric'] == 'SCC') | (analysis_results['metric'] == 'PCC')
+        analysis_results.loc[corr_loc, 'value'] = analysis_results.loc[corr_loc, 'value'].abs()
+        analysis_results.loc[corr_loc, 'value'] = 1 - analysis_results.loc[corr_loc, 'value']
+
+        # Rank the models based on the mean of the metrics
+        # Add new rank column
+        analysis_results['rank'] = 0
+
+        metrics = analysis_results['metric'].unique()
+        methods = analysis_results['method'].unique()
+
+        for metric in metrics:
+            for method in methods:
+                loc = ((analysis_results['method'] == method) &
+                       (analysis_results['metric'] == metric))
+
+                ranks = analysis_results[loc]['value'].rank()
+                analysis_results.loc[loc, 'rank'] = ranks
+
+        return analysis_results
+
+    def get_mean_model_ranks(self, show_metrics: Optional[list[str]] = None) -> pd.DataFrame:
+        """
+        Get the scores of the models based on the computed metrics.
+        :param show_metrics: The metrics to show in the ranking. If None, all metrics are shown.
+        :return: A DataFrame containing the scores of the model.
+        """
+        analysis_results = self.rank_models(show_metrics)
+
+        # Show the mean rank for each model
+        mean_rank = analysis_results.groupby('model')['rank'].mean().sort_values()
+        mean_rank = mean_rank.rename('mean_rank')
+
+        # Add the standard deviation
+        std_rank = analysis_results.groupby('model')['rank'].std().sort_values()
+        std_rank = std_rank.rename('std_rank')
+
+        mean_rank = pd.concat([mean_rank, std_rank], axis=1)
+        return mean_rank
