@@ -173,12 +173,13 @@ class Analysis:
             'psd': frequency_from_psd,
         }
 
-        self.prediction_results[model] = {
-            key: np.array([]) for key in metrics.keys()
-        }
-        self.ground_truth_results[model] = {
-            key: np.array([]) for key in metrics.keys()
-        }
+        if model not in self.prediction_results:
+            self.prediction_results[model] = {
+                key: np.array([]) for key in metrics.keys()
+            }
+            self.ground_truth_results[model] = {
+                key: np.array([]) for key in metrics.keys()
+            }
 
         for inx in range(0, len(prediction) - window_size, stride):
             prediction_window = prediction[inx:inx + window_size]
