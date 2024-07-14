@@ -94,9 +94,9 @@ class Analysis:
     window_size: int
     stride: int
 
-    # Analysis results
-    prediction_results: dict[str, np.ndarray]
-    ground_truth_results: dict[str, np.ndarray]
+    # Analysis results: Model Name --> Method --> Results
+    prediction_results: dict[str, dict[str, np.ndarray]]
+    ground_truth_results: dict[str, dict[str, np.ndarray]]
 
     def __init__(
             self,
@@ -118,19 +118,8 @@ class Analysis:
         self.window_size = window_size
         self.stride = stride
 
-        self.prediction_results = {
-            'cp': np.array([]),
-            'nfcp': np.array([]),
-            'pk': np.array([]),
-            'psd': np.array([]),
-        }
-
-        self.ground_truth_results = {
-            'cp': np.array([]),
-            'nfcp': np.array([]),
-            'pk': np.array([]),
-            'psd': np.array([]),
-        }
+        self.prediction_results = {}
+        self.ground_truth_results = {}
 
     def __preprocess(
             self, prediction: np.ndarray,
@@ -163,9 +152,10 @@ class Analysis:
 
         return prediction, ground_truth
 
-    def add_data(self, prediction: np.ndarray, ground_truth: np.ndarray, sample_rate: int):
+    def add_data(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray, sample_rate: int):
         """
         Add data to the analysis.
+        :param model: The model used to generate the prediction.
         :param prediction: The predicted signal.
         :param ground_truth: The ground truth signal.
         :param sample_rate: The sampling rate of the signals in Hz.
@@ -183,27 +173,27 @@ class Analysis:
             'psd': frequency_from_psd,
         }
 
+        self.prediction_results[model] = {
+            key: np.array([]) for key in metrics.keys()
+        }
+        self.ground_truth_results[model] = {
+            key: np.array([]) for key in metrics.keys()
+        }
+
         for inx in range(0, len(prediction) - window_size, stride):
             prediction_window = prediction[inx:inx + window_size]
             ground_truth_window = ground_truth[inx:inx + window_size]
 
             for key, metric in metrics.items():
-                self.prediction_results[key] = np.append(
-                    self.prediction_results[key],
+                self.prediction_results[model][key] = np.append(
+                    self.prediction_results[model][key],
                     metric(prediction_window, sample_rate)
                 )
 
-                self.ground_truth_results[key] = np.append(
-                    self.ground_truth_results[key],
+                self.prediction_results[model][key] = np.append(
+                    self.prediction_results[model][key],
                     metric(ground_truth_window, sample_rate)
                 )
-
-    def get_results(self) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray]]:
-        """
-        Get the analysis results.
-        :return: A dictionary containing the analysis results.
-        """
-        return self.prediction_results, self.ground_truth_results
 
     def compute_metrics(self) -> list[dict[str, float]]:
         """
@@ -212,33 +202,49 @@ class Analysis:
         """
         metrics = []
 
-        for key in self.prediction_results.keys():
-            metrics.extend([{
-                'metric': 'MSE',
-                'method': key,
-                'value': np.mean((self.prediction_results[key] - self.ground_truth_results[key]) ** 2)
-            }, {
-                'metric': 'MAE',
-                'method': key,
-                'value': np.mean(np.abs(self.prediction_results[key] - self.ground_truth_results[key]))
-            }, {
-                'metric': 'RMSE',
-                'method': key,
-                'value': np.sqrt(np.mean((self.prediction_results[key] - self.ground_truth_results[key]) ** 2))
-            }, {
-                'metric': 'MAPE',
-                'method': key,
-                'value': np.mean(np.abs(
-                    (self.prediction_results[key] - self.ground_truth_results[key]) / self.ground_truth_results[
-                        key])) * 100
-            }, {
-                'metric': 'PCC',
-                'method': key,
-                'value': pearson_correlation(self.prediction_results[key], self.ground_truth_results[key])
-            }, {
-                'metric': 'SCC',
-                'method': key,
-                'value': spearman_correlation(self.prediction_results[key], self.ground_truth_results[key])
-            }])
+        for model in self.prediction_results.keys():
+            for method in self.prediction_results[model].keys():
+                metrics.extend([{
+                    'metric': 'MSE',
+                    'model': model,
+                    'method': method,
+                    'value': np.mean(
+                        (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2)
+                }, {
+                    'metric': 'MAE',
+                    'model': model,
+                    'method': method,
+                    'value': np.mean(
+                        np.abs(self.prediction_results[model][method] - self.ground_truth_results[model][method]))
+                }, {
+                    'metric': 'RMSE',
+                    'model': model,
+                    'method': method,
+                    'value': np.sqrt(
+                        np.mean(
+                            (self.prediction_results[model][method] - self.ground_truth_results[model][method]) ** 2))
+                }, {
+                    'metric': 'MAPE',
+                    'model': model,
+                    'method': method,
+                    'value': np.mean(np.abs(
+                        (self.prediction_results[model][method] - self.ground_truth_results[model][method]) /
+                        self.ground_truth_results[
+                            model][method])) * 100
+                }, {
+                    'metric': 'PCC',
+                    'model': model,
+                    'method': method,
+                    'value': pearson_correlation(
+                        self.prediction_results[model][method],
+                        self.ground_truth_results[model][method])
+                }, {
+                    'metric': 'SCC',
+                    'model': model,
+                    'method': method,
+                    'value': spearman_correlation(
+                        self.prediction_results[model][method],
+                        self.ground_truth_results[model][method])
+                }])
 
         return metrics
