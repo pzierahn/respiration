@@ -218,8 +218,8 @@ class Analysis:
         for model in self.prediction_metrics.keys():
             for method in self.prediction_metrics[model].keys():
                 pcc, p_pcc = pearson_correlation(
-                    self.predictions[model],
-                    self.ground_truths[model]
+                    self.prediction_metrics[model][method],
+                    self.ground_truth_metrics[model][method],
                 )
 
                 metrics[model][method] = {
