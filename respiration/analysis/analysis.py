@@ -70,6 +70,8 @@ class Analysis:
         self.predictions = {}
         self.ground_truths = {}
 
+        self.distances = {}
+
     def __preprocess(
             self,
             prediction: np.ndarray,
