@@ -217,112 +217,106 @@ class Analysis:
 
         return correlations
 
-    def compute_metrics(self) -> list[dict[str, float]]:
+    def compute_metrics(self) -> dict[str, dict[str, dict[str, float]]]:
         """
         Compute the metrics for the analysis.
         :return: A dictionary containing the computed metrics.
         """
-        metrics = []
+        metrics = {}
+
+        for model in self.prediction_metrics.keys():
+            metrics[model] = {}
+            for method in self.prediction_metrics[model].keys():
+                metrics[model][method] = {}
 
         for model in self.prediction_metrics.keys():
             for method in self.prediction_metrics[model].keys():
-                metrics.extend([{
-                    'model': model,
-                    'method': method,
-                    'metric': 'MSE',
-                    'value': np.mean(
-                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2)
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'MAE',
-                    'value': np.mean(
-                        np.abs(self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]))
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'RMSE',
-                    'value': np.sqrt(
+                pcc, p_pcc = pearson_correlation(
+                    self.predictions[model],
+                    self.ground_truths[model]
+                )
+
+                signal_corr, signal_p = spearman_correlation(
+                    self.predictions[model],
+                    self.ground_truths[model]
+                )
+
+                metrics[model][method] = {
+                    'MSE': np.mean(
+                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2
+                    ),
+                    'MAE': np.mean(
+                        np.abs(self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method])
+                    ),
+                    'RMSE': np.sqrt(
                         np.mean(
-                            (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2))
-                }, {
-                    'model': model,
-                    'method': method,
-                    'metric': 'MAPE',
-                    'value': np.mean(np.abs(
+                            (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2
+                        )
+                    ),
+                    'MAPE': np.mean(np.abs(
                         (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) /
-                        self.ground_truth_metrics[
-                            model][method])) * 100
-                }])
+                        self.ground_truth_metrics[model][method]
+                    )) * 100,
+                    'PCC': pcc,
+                    'PCC-p': p_pcc,
+                    'SCC-Signal': signal_corr,
+                    'SCC-Signal-p': signal_corr,
+                }
 
         return metrics
 
-    def metric_table(self) -> list[dict[str, float]]:
+    def metrics_df(self) -> pd.DataFrame:
         """
         Generate a table with the computed metrics.
         :return: A list of dictionaries containing the computed metrics.
         """
         metrics = self.compute_metrics()
-        table = {}
+        rows = []
 
-        for metric in metrics:
-            model = metric['model']
-            method = metric['method']
-
-            if model not in table:
-                table[model] = {}
-            if method not in table[model]:
-                table[model][method] = {
+        for model in metrics:
+            for method in metrics[model]:
+                row = {
                     'model': model,
                     'method': method,
                 }
 
-            table[model][method][metric['metric']] = metric['value']
+                for metric in metrics[model][method]:
+                    row[metric] = metrics[model][method][metric]
 
-        entries = []
-        for value in table.values():
-            entries.extend([entry for entry in value.values()])
+                rows.append(row)
 
-        return entries
+        return pd.DataFrame(rows)
 
-    def rank_models(self, show_metrics: Optional[list[str]] = None) -> pd.DataFrame:
+    def rank_models(self) -> pd.DataFrame:
         """
         Rank the models based on the computed metrics.
         :param show_metrics: The metrics to show in the ranking. If None, all metrics are shown.
         :return: A DataFrame containing the ranking of the models.
         """
         metrics = self.compute_metrics()
-        analysis_results = pd.DataFrame(metrics)
+        rows = []
 
-        if show_metrics is None:
-            # Show all metrics if not specified
-            show_metrics = analysis_results['metric'].unique()
+        for model in metrics:
+            for method in metrics[model]:
+                for metric in metrics[model][method]:
+                    value = metrics[model][method][metric]
 
-        # Keep only the metrics that are specified
-        analysis_results = analysis_results[analysis_results['metric'].isin(show_metrics)]
+                    if metric is "PCC-p" or metric is "SCC-Signal-p":
+                        # Skip the p-values, because they should not be used for ranking
+                        continue
 
-        # A higher correlation value is better. Hence, we need to invert the correlation values
-        # to rank the models.
-        corr_loc = (analysis_results['metric'] == 'SCC') | (analysis_results['metric'] == 'PCC')
-        analysis_results.loc[corr_loc, 'value'] = analysis_results.loc[corr_loc, 'value'].abs()
-        analysis_results.loc[corr_loc, 'value'] = 1 - analysis_results.loc[corr_loc, 'value']
+                    row = {
+                        'model': model,
+                        'method': method,
+                        'metric': metric,
+                        'value': abs(value),  # Correlation values need to be positive
+                    }
+                    rows.append(row)
 
-        # Rank the models based on the mean of the metrics
-        # Add new rank column
-        analysis_results['rank'] = 0
+        metrics_df = pd.DataFrame(rows)
+        metrics_df['rank'] = metrics_df.groupby(['metric', 'method'])['value'].rank(ascending=False)
 
-        metrics = analysis_results['metric'].unique()
-        methods = analysis_results['method'].unique()
-
-        for metric in metrics:
-            for method in methods:
-                loc = ((analysis_results['method'] == method) &
-                       (analysis_results['metric'] == metric))
-
-                ranks = analysis_results[loc]['value'].rank().astype(int)
-                analysis_results.loc[loc, 'rank'] = ranks
-
-        return analysis_results
+        return metrics_df
 
     def get_mean_model_ranks(self, show_metrics: Optional[list[str]] = None) -> pd.DataFrame:
         """
