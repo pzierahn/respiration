@@ -141,8 +141,8 @@ class Analysis:
             }
 
             self.distances[model] = {
-                'dtw': np.array([]),
-                'scc': np.array([]),
+                'DTW': np.array([]),
+                'SCC': np.array([]),
             }
 
         self.predictions[model] = np.append(self.predictions[model], prediction)
@@ -163,12 +163,12 @@ class Analysis:
                     metric(ground_truth_window, self.sample_rate)
                 )
 
-            self.distances[model]['dtw'] = np.append(
-                self.distances[model]['dtw'],
+            self.distances[model]['DTW'] = np.append(
+                self.distances[model]['DTW'],
                 dtw_distance(prediction_window, ground_truth_window)
             )
-            self.distances[model]['scc'] = np.append(
-                self.distances[model]['scc'],
+            self.distances[model]['SCC'] = np.append(
+                self.distances[model]['SCC'],
                 spearman_correlation(prediction_window, ground_truth_window)[0]
             )
 
@@ -315,22 +315,3 @@ class Analysis:
                 rows.append(row)
 
         return pd.DataFrame(rows)
-
-    def get_mean_model_ranks(self, show_metrics: Optional[list[str]] = None) -> pd.DataFrame:
-        """
-        Get the scores of the models based on the computed metrics.
-        :param show_metrics: The metrics to show in the ranking. If None, all metrics are shown.
-        :return: A DataFrame containing the scores of the model.
-        """
-        analysis_results = self.rank_models(show_metrics)
-
-        # Show the mean rank for each model
-        mean_rank = analysis_results.groupby('model')['rank'].mean().sort_values()
-        mean_rank = mean_rank.rename('mean_rank')
-
-        # Add the standard deviation
-        std_rank = analysis_results.groupby('model')['rank'].std().sort_values()
-        std_rank = std_rank.rename('std_rank')
-
-        mean_rank = pd.concat([mean_rank, std_rank], axis=1)
-        return mean_rank
