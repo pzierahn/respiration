@@ -163,48 +163,14 @@ class Analysis:
                     metric(ground_truth_window, self.sample_rate)
                 )
 
-                self.distances[model]['dtw'] = np.append(
-                    self.distances[model]['dtw'],
-                    dtw_distance(prediction_window, ground_truth_window)
-                )
-                self.distances[model]['scc'] = np.append(
-                    self.distances[model]['scc'],
-                    spearman_correlation(prediction_window, ground_truth_window)[0]
-                )
-
-    def correlation_metrics(self):
-        """
-        Compute the correlations for each metric.
-        """
-        correlations = []
-
-        for model in self.prediction_metrics.keys():
-            for method in self.prediction_metrics[model].keys():
-                pcc, p_pcc = pearson_correlation(
-                    self.prediction_metrics[model][method],
-                    self.ground_truth_metrics[model][method]
-                )
-
-                scc, p_scc = spearman_correlation(
-                    self.prediction_metrics[model][method],
-                    self.ground_truth_metrics[model][method]
-                )
-
-                correlations.extend([{
-                    'model': model,
-                    'method': method,
-                    'correlation': 'PCC',
-                    'statistic': pcc,
-                    'p-value': pcc,
-                }, {
-                    'model': model,
-                    'method': method,
-                    'correlation': 'SCC',
-                    'statistic': scc,
-                    'p-value': p_scc,
-                }])
-
-        return correlations
+            self.distances[model]['dtw'] = np.append(
+                self.distances[model]['dtw'],
+                dtw_distance(prediction_window, ground_truth_window)
+            )
+            self.distances[model]['scc'] = np.append(
+                self.distances[model]['scc'],
+                spearman_correlation(prediction_window, ground_truth_window)[0]
+            )
 
     def correlation_signals(self):
         """
@@ -340,14 +306,13 @@ class Analysis:
 
         for model in self.distances:
             for distance in self.distances[model]:
-                for value in self.distances[model][distance]:
-                    row = {
-                        'model': model,
-                        'distance': distance,
-                        'mean': value.mean(),
-                        'std': value.std(),
-                    }
-                    rows.append(row)
+                row = {
+                    'model': model,
+                    'distance': distance,
+                    'mean': self.distances[model][distance].mean(),
+                    'std': self.distances[model][distance].std(),
+                }
+                rows.append(row)
 
         return pd.DataFrame(rows)
 
