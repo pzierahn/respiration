@@ -310,6 +310,7 @@ class Analysis:
 
             for distance in data[model]:
                 row[distance] = data[model][distance]['mean']
+                row[f'{distance}_sdt'] = data[model][distance]['std']
 
             rows.append(row)
 
@@ -329,7 +330,7 @@ class Analysis:
                 for metric in metrics[model][method]:
                     value = metrics[model][method][metric]
 
-                    if metric is "PCC-p-value":
+                    if metric == "PCC-p-value":
                         # Skip the p-values, because they should not be used for ranking
                         continue
 
