@@ -203,7 +203,7 @@ class Analysis:
 
         return correlations
 
-    def compute_metrics(self) -> dict[str, dict[str, dict[str, float]]]:
+    def get_metrics(self) -> dict[str, dict[str, dict[str, float]]]:
         """
         Compute the metrics for the analysis.
         :return: A dictionary containing the computed metrics.
@@ -249,7 +249,7 @@ class Analysis:
         Generate a table with the computed metrics.
         :return: A list of dictionaries containing the computed metrics.
         """
-        metrics = self.compute_metrics()
+        metrics = self.get_metrics()
         rows = []
 
         for model in metrics:
@@ -263,6 +263,55 @@ class Analysis:
                     row[metric] = metrics[model][method][metric]
 
                 rows.append(row)
+
+        return pd.DataFrame(rows)
+
+    def get_distances(self) -> list[dict]:
+        """
+        Generate a table with the computed distances.
+        :return: A list of dictionaries containing the computed distances.
+        """
+        rows = []
+
+        for model in self.distances:
+            for distance in self.distances[model]:
+                row = {
+                    'model': model,
+                    'distance': distance,
+                    'mean': self.distances[model][distance].mean(),
+                    'std': self.distances[model][distance].std(),
+                }
+                rows.append(row)
+
+        return rows
+
+    def distances_df(self) -> pd.DataFrame:
+        """
+        Generate a table with the computed distances.
+        :return: A list of dictionaries containing the computed distances.
+        """
+        distances = self.get_distances()
+        data = {}
+
+        for entry in distances:
+            model = entry['model']
+            distance = entry['distance']
+
+            if model not in data:
+                data[model] = {}
+
+            data[model][distance] = entry
+
+        rows = []
+        for model in data:
+            row = {
+                'model': model,
+            }
+
+            for distance in data[model]:
+                row[distance] = data[model][distance]['mean']
+
+            rows.append(row)
 
         return pd.DataFrame(rows)
 
@@ -296,22 +345,3 @@ class Analysis:
         metrics_df['rank'] = metrics_df.groupby(['metric', 'method'])['value'].rank(ascending=True)
 
         return metrics_df
-
-    def distances_df(self) -> pd.DataFrame:
-        """
-        Generate a table with the computed distances.
-        :return: A list of dictionaries containing the computed distances.
-        """
-        rows = []
-
-        for model in self.distances:
-            for distance in self.distances[model]:
-                row = {
-                    'model': model,
-                    'distance': distance,
-                    'mean': self.distances[model][distance].mean(),
-                    'std': self.distances[model][distance].std(),
-                }
-                rows.append(row)
-
-        return pd.DataFrame(rows)
