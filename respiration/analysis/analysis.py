@@ -10,6 +10,7 @@ from .cross_point import (
 from .distance import (
     pearson_correlation,
     spearman_correlation,
+    dtw_distance,
 )
 from .peak_counting import frequency_from_peaks
 from .psd import frequency_from_psd
@@ -33,8 +34,12 @@ class Analysis:
     prediction_metrics: dict[str, dict[str, np.ndarray]]
     ground_truth_metrics: dict[str, dict[str, np.ndarray]]
 
+    # Raw data: Model Name --> Signal
     predictions: dict[str, np.ndarray]
     ground_truths: dict[str, np.ndarray]
+
+    # Distances between signals
+    distances: dict[str, dict[str, np.ndarray]]
 
     def __init__(
             self,
@@ -111,13 +116,6 @@ class Analysis:
         """
         prediction, ground_truth = self.__preprocess(prediction, ground_truth)
 
-        if model not in self.predictions:
-            self.predictions[model] = np.array([])
-            self.ground_truths[model] = np.array([])
-
-        self.predictions[model] = np.append(self.predictions[model], prediction)
-        self.ground_truths[model] = np.append(self.ground_truths[model], ground_truth)
-
         # Calculate the window size and stride in samples
         window_size = self.window_size * self.sample_rate
         stride = self.stride * self.sample_rate
@@ -130,12 +128,23 @@ class Analysis:
         }
 
         if model not in self.prediction_metrics:
+            self.predictions[model] = np.array([])
+            self.ground_truths[model] = np.array([])
+
             self.prediction_metrics[model] = {
                 key: np.array([]) for key in metrics.keys()
             }
             self.ground_truth_metrics[model] = {
                 key: np.array([]) for key in metrics.keys()
             }
+
+            self.distances[model] = {
+                'dtw': np.array([]),
+                'scc': np.array([]),
+            }
+
+        self.predictions[model] = np.append(self.predictions[model], prediction)
+        self.ground_truths[model] = np.append(self.ground_truths[model], ground_truth)
 
         for inx in range(0, len(prediction) - window_size, stride):
             prediction_window = prediction[inx:inx + window_size]
@@ -150,6 +159,15 @@ class Analysis:
                 self.ground_truth_metrics[model][key] = np.append(
                     self.ground_truth_metrics[model][key],
                     metric(ground_truth_window, self.sample_rate)
+                )
+
+                self.distances[model]['dtw'] = np.append(
+                    self.distances[model]['dtw'],
+                    dtw_distance(prediction_window, ground_truth_window)
+                )
+                self.distances[model]['scc'] = np.append(
+                    self.distances[model]['scc'],
+                    spearman_correlation(prediction_window, ground_truth_window)[0]
                 )
 
     def correlation_metrics(self):
@@ -310,6 +328,26 @@ class Analysis:
         metrics_df['rank'] = metrics_df.groupby(['metric', 'method'])['value'].rank(ascending=True)
 
         return metrics_df
+
+    def distances_df(self) -> pd.DataFrame:
+        """
+        Generate a table with the computed distances.
+        :return: A list of dictionaries containing the computed distances.
+        """
+        rows = []
+
+        for model in self.distances:
+            for distance in self.distances[model]:
+                for value in self.distances[model][distance]:
+                    row = {
+                        'model': model,
+                        'distance': distance,
+                        'mean': value.mean(),
+                        'std': value.std(),
+                    }
+                    rows.append(row)
+
+        return pd.DataFrame(rows)
 
     def get_mean_model_ranks(self, show_metrics: Optional[list[str]] = None) -> pd.DataFrame:
         """
