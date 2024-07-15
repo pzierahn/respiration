@@ -236,11 +236,6 @@ class Analysis:
                     self.ground_truths[model]
                 )
 
-                signal_corr, signal_p = spearman_correlation(
-                    self.predictions[model],
-                    self.ground_truths[model]
-                )
-
                 metrics[model][method] = {
                     'MSE': np.mean(
                         (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2
@@ -258,9 +253,7 @@ class Analysis:
                         self.ground_truth_metrics[model][method]
                     )) * 100,
                     'PCC': pcc,
-                    'PCC-p': p_pcc,
-                    'SCC-Signal': signal_corr,
-                    'SCC-Signal-p': signal_corr,
+                    'PCC-p-value': p_pcc,
                 }
 
         return metrics
@@ -301,7 +294,7 @@ class Analysis:
                 for metric in metrics[model][method]:
                     value = metrics[model][method][metric]
 
-                    if metric is "PCC-p" or metric is "SCC-Signal-p":
+                    if metric is "PCC-p-value":
                         # Skip the p-values, because they should not be used for ranking
                         continue
 
