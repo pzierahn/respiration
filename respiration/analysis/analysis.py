@@ -307,7 +307,7 @@ class Analysis:
                     rows.append(row)
 
         metrics_df = pd.DataFrame(rows)
-        metrics_df['rank'] = metrics_df.groupby(['metric', 'method'])['value'].rank(ascending=False)
+        metrics_df['rank'] = metrics_df.groupby(['metric', 'method'])['value'].rank(ascending=True)
 
         return metrics_df
 
