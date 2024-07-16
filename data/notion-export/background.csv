@@ -290,3 +290,12 @@ number={8},
 pages={2054-2063},
 keywords={Continuous wavelet transforms;Frequency modulation;Mathematical model;Time frequency analysis;Frequency estimation;Demodulation;Wavelet transforms;Testing;Computational efficiency;MATLAB;FM;pulse oximeter;respiratory sinus arrhythmia;time–frequency analysis},
 doi={10.1109/TBME.2009.2019766}}"
+Lucas-Kanade-1981,An Iterative Image Registration Technique with an Application to Stereo Vision (IJCAI),,"@inproceedings{Lucas-Kanade-1981,
+author = {Lucas, Bruce and Kanade, Takeo},
+year = {1981},
+month = {04},
+pages = {},
+title = {An Iterative Image Registration Technique with an Application to Stereo Vision (IJCAI)},
+volume = {81},
+journal = {[No source information available]}
+}"
