@@ -18,5 +18,6 @@ av
 vit_pytorch
 pyyaml
 mediapipe
+timm
 git+https://github.com/facebookresearch/detectron2.git@v0.6
 git+https://github.com/Unisens/pyunisens
