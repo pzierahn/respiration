@@ -75,23 +75,15 @@ class PhysFormer(nn.Module):
 
     def __init__(
             self,
-            name: Optional[str] = None,
-            pretrained: bool = False,
-            patches: int = 16,
+            image_size: tuple[int, int, int] = (160, 128, 128),
+            patches: tuple[int, int, int] = (4, 4, 4),
             dim: int = 768,
             ff_dim: int = 3072,
             num_heads: int = 12,
             num_layers: int = 12,
-            attention_dropout_rate: float = 0.0,
             dropout_rate: float = 0.2,
-            representation_size: Optional[int] = None,
-            load_repr_layer: bool = False,
-            classifier: str = 'token',
-            # positional_embedding: str = '1d',
-            in_channels: int = 3,
             frame: int = 160,
             theta: float = 0.2,
-            image_size: Optional[int] = None,
     ):
         super().__init__()
 
@@ -102,7 +94,6 @@ class PhysFormer(nn.Module):
         t, h, w = as_tuple(image_size)  # tube sizes
         ft, fh, fw = as_tuple(patches)  # patch sizes, ft = 4 ==> 160/4=40
         gt, gh, gw = t // ft, h // fh, w // fw  # number of patches
-        seq_len = gh * gw * gt
 
         # fusion stem
         # self.fusion_stem = fusion_stem()
