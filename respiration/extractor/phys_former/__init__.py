@@ -1,1 +1,1 @@
-from .physformer_layer import PhysformerLayer
+from .model import PhysFormer

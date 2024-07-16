@@ -71,7 +71,7 @@ class fusion_stem(nn.Module):
 
 
 # stem_3DCNN + ST-ViT with local Depthwise Spatio-Temporal MLP
-class ViT_ST_ST_Compact3_TDC_gra_sharp(nn.Module):
+class PhysFormer(nn.Module):
 
     def __init__(
             self,
