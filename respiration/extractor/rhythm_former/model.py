@@ -130,11 +130,11 @@ class RhythmFormer(nn.Module):
 
     def __init__(
             self,
-            name: Optional[str] = None,
-            pretrained: bool = False,
-            dim: int = 64, frame: int = 160,
+            dim: int = 64,
+            frame: int = 160,
             image_size: Optional[int] = (160, 128, 128),
-            in_chans=64, head_dim=16,
+            in_chans=64,
+            head_dim=16,
             stage_n=3,
             embed_dim=[64, 64, 64],
             mlp_ratios=[1.5, 1.5, 1.5],
@@ -143,7 +143,6 @@ class RhythmFormer(nn.Module):
             topks: Union[int, Tuple[int]] = (40, 40, 40),
             side_dwconv: int = 3,
             drop_path_rate=0.,
-            use_checkpoint_stages=[],
     ):
         super().__init__()
 
