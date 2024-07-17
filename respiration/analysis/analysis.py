@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 from typing import Optional
@@ -10,8 +9,8 @@ from .cross_point import (
 from .distance import (
     pearson_correlation,
     spearman_correlation,
-    dtw_distance,
 )
+
 from .peak_counting import frequency_from_peaks
 from .psd import frequency_from_psd
 from .preprocessing import *
@@ -153,7 +152,6 @@ class Analysis:
             }
 
             self.distances[model] = {
-                'DTW': np.array([]),
                 'SCC': np.array([]),
             }
 
@@ -175,10 +173,6 @@ class Analysis:
                     metric(ground_truth_window, self.sample_rate)
                 )
 
-            self.distances[model]['DTW'] = np.append(
-                self.distances[model]['DTW'],
-                dtw_distance(prediction_window, ground_truth_window)
-            )
             self.distances[model]['SCC'] = np.append(
                 self.distances[model]['SCC'],
                 spearman_correlation(prediction_window, ground_truth_window)[0]
