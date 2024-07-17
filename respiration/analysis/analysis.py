@@ -120,6 +120,14 @@ class Analysis:
 
         return prediction, ground_truth
 
+    def frequency_from_peaks(self, data: np.ndarray) -> float:
+        """
+        Compute the respiration frequency from the peaks of the signal.
+        :param data: The signal.
+        :return: The respiration frequency.
+        """
+        return frequency_from_peaks(data, self.sample_rate, min_frequency=self.lowpass)
+
     def add_data(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray):
         """
         Add data to the analysis.
@@ -136,7 +144,7 @@ class Analysis:
         metrics = {
             'cp': frequency_from_crossing_point,
             'nfcp': frequency_from_nfcp,
-            'pk': frequency_from_peaks,
+            'pk': self.frequency_from_peaks,
             'psd': frequency_from_psd,
         }
 
