@@ -120,13 +120,14 @@ class Analysis:
 
         return prediction, ground_truth
 
-    def frequency_from_peaks(self, data: np.ndarray) -> float:
+    def frequency_from_peaks(self, data: np.ndarray, sample_rate: int) -> float:
         """
         Compute the respiration frequency from the peaks of the signal.
         :param data: The signal.
+        :param sample_rate: The sample rate of the signal.
         :return: The respiration frequency.
         """
-        return frequency_from_peaks(data, self.sample_rate, min_frequency=self.lowpass)
+        return frequency_from_peaks(data, sample_rate, min_frequency=self.lowpass)
 
     def add_data(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray):
         """
