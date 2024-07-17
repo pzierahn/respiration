@@ -172,37 +172,6 @@ class Analysis:
                 spearman_correlation(prediction_window, ground_truth_window)[0]
             )
 
-    def correlation_signals(self):
-        """
-        Compute the correlations for the signals.
-        """
-        correlations = []
-
-        for model in self.prediction_metrics.keys():
-            pcc, p_pcc = pearson_correlation(
-                self.predictions[model],
-                self.ground_truths[model]
-            )
-
-            scc, p_scc = spearman_correlation(
-                self.predictions[model],
-                self.ground_truths[model]
-            )
-
-            correlations.extend([{
-                'model': model,
-                'correlation': 'PCC',
-                'statistic': pcc,
-                'p-value': pcc,
-            }, {
-                'model': model,
-                'correlation': 'SCC',
-                'statistic': scc,
-                'p-value': p_scc,
-            }])
-
-        return correlations
-
     def get_metrics(self) -> dict[str, dict[str, dict[str, float]]]:
         """
         Compute the metrics for the analysis.
