@@ -279,10 +279,9 @@ class Analysis:
     def rank_models(self) -> pd.DataFrame:
         """
         Rank the models based on the computed metrics.
-        :param show_metrics: The metrics to show in the ranking. If None, all metrics are shown.
         :return: A DataFrame containing the ranking of the models.
         """
-        metrics = self.compute_metrics()
+        metrics = self.get_metrics()
         rows = []
 
         for model in metrics:
@@ -294,11 +293,16 @@ class Analysis:
                         # Skip the p-values, because they should not be used for ranking
                         continue
 
+                    if metric == "PCC":
+                        # Bigger correlation values are better. We want to rank them in descending order.
+                        # Therefore, we need to invert the value.
+                        value = 1 - abs(value)
+
                     row = {
                         'model': model,
                         'method': method,
                         'metric': metric,
-                        'value': abs(value),  # Correlation values need to be positive
+                        'value': abs(value),
                     }
                     rows.append(row)
 
