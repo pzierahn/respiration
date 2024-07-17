@@ -9,10 +9,10 @@ def find_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, 
     :param sample_rate: Sampling rate
     :param height: Required height of peaks
     :param threshold: Required threshold of peaks
-    :param max_rr: Maximum respiratory rate
+    :param max_rr: Maximum respiratory rate in breaths per minute (bpm)
     :return: Peaks
     """
-    distance = 60 / max_rr * sample_rate
+    distance = (max_rr / 60) * sample_rate
 
     peaks, _ = signal.find_peaks(
         data,
