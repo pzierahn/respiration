@@ -18,15 +18,26 @@ from .preprocessing import *
 
 
 class Analysis:
+    """
+    Class to perform an analysis of the respiration signals. The analysis includes the following steps:
+    - Preprocess the signals (detrend, normalize, filter)
+    - Compute the metrics for the signals
+    - Compute the distances between the signals
+    - Rank the models based on the computed metrics
+    """
+    # Signal parameters
     sample_rate: int
 
+    # Bandpass filter parameters
     lowpass: Optional[float]
     highpass: Optional[float]
 
+    # Preprocessing parameters
     detrend: bool
     normalize: bool
     filter_signal: bool
 
+    # Parameters for the sliding window analysis
     window_size: int
     stride: int
 
@@ -77,7 +88,8 @@ class Analysis:
             prediction: np.ndarray,
             ground_truth: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """
-        Preprocess the prediction and ground truth signals.
+        Preprocess the prediction and ground truth signals. The preprocessing steps include detrending, filtering,
+        and normalization.
         :param prediction: The predicted signal.
         :param ground_truth: The ground truth signal.
         :return: The preprocessed prediction and ground truth signals.
