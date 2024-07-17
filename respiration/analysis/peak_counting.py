@@ -23,16 +23,16 @@ def find_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, 
     return peaks
 
 
-def frequency_from_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, max_rr=45) -> float:
+def frequency_from_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, min_frequency=0.08) -> float:
     """
     Peak Counting Method
     :param data:
     :param sample_rate:
     :param height:
     :param threshold:
-    :param max_rr:
+    :param min_frequency:
     :return:
     """
 
-    peaks = find_peaks(data, sample_rate, height, threshold, max_rr)
+    peaks = find_peaks(data, sample_rate, height, threshold, min_frequency)
     return len(peaks) / (len(data) / sample_rate)
