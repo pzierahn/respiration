@@ -223,21 +223,12 @@ class Analysis:
                 )
 
                 metrics[model][method] = {
-                    'MSE': np.mean(
-                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2
-                    ),
                     'MAE': np.mean(
                         np.abs(self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method])
                     ),
-                    'RMSE': np.sqrt(
-                        np.mean(
-                            (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2
-                        )
-                    ),
-                    'MAPE': np.mean(np.abs(
-                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) /
-                        self.ground_truth_metrics[model][method]
-                    )) * 100,
+                    'RMSE': np.sqrt(np.mean(
+                        (self.prediction_metrics[model][method] - self.ground_truth_metrics[model][method]) ** 2
+                    )),
                     'PCC': pcc,
                     'PCC-p-value': p_pcc,
                 }
