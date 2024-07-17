@@ -281,38 +281,3 @@ class Analysis:
             rows.append(row)
 
         return pd.DataFrame(rows)
-
-    def rank_models(self) -> pd.DataFrame:
-        """
-        Rank the models based on the computed metrics.
-        :return: A DataFrame containing the ranking of the models.
-        """
-        metrics = self.get_metrics()
-        rows = []
-
-        for model in metrics:
-            for method in metrics[model]:
-                for metric in metrics[model][method]:
-                    value = metrics[model][method][metric]
-
-                    if metric == "PCC-p-value":
-                        # Skip the p-values, because they should not be used for ranking
-                        continue
-
-                    if metric == "PCC":
-                        # Bigger correlation values are better. We want to rank them in descending order.
-                        # Therefore, we need to invert the value.
-                        value = 1 - abs(value)
-
-                    row = {
-                        'model': model,
-                        'method': method,
-                        'metric': metric,
-                        'value': abs(value),
-                    }
-                    rows.append(row)
-
-        metrics_df = pd.DataFrame(rows)
-        metrics_df['rank'] = metrics_df.groupby(['metric', 'method'])['value'].rank(ascending=True)
-
-        return metrics_df
