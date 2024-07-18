@@ -87,8 +87,15 @@ class ScenarioLoader:
 
 
 class VitalCamLoader:
+    """
+    A data loader for the VitalCamSet dataset. This class loads the video frames and the ground truth signal for a list
+    of subjects and settings. The video frames split into parts and loaded in chunks.
+
+    Version: 1.0
+    """
+
     # The list of subjects and settings to load
-    settings: list[tuple[str, str]]
+    scenarios: list[tuple[str, str]]
 
     # The number of frames per video
     total_frames = 3600
@@ -97,21 +104,30 @@ class VitalCamLoader:
     parts: int
 
     def __init__(self,
-                 settings: list[tuple[str, str]],
+                 scenarios: list[tuple[str, str]],
                  parts: int,
                  device: torch.device = torch.device("cpu")):
-        self.settings = settings
+        self.scenarios = scenarios
         self.parts = parts
         self.device = device
 
     def __len__(self) -> int:
-        return len(self.settings) * self.parts
+        """
+        Return the number of items in the data loader. This is the number of scenarios times the number of parts.
+        """
+        return len(self.scenarios) * self.parts
 
     def __iter__(self):
+        """
+        Initialize the data loader
+        """
         self.current_index = 0
         return self
 
     def __next__(self):
+        """
+        Return the next item in the data loader
+        """
         if self.current_index >= self.__len__():
             raise StopIteration
         else:
@@ -120,12 +136,15 @@ class VitalCamLoader:
             return item
 
     def __getitem__(self, index) -> (torch.Tensor, torch.Tensor):
+        """
+        Return the frames and the ground truth signal for the given index
+        """
         if index >= self.__len__():
             raise IndexError("Index out of range")
 
         subject_index = index // self.parts
         setting_index = index % self.parts
 
-        subject, setting = self.settings[subject_index]
+        subject, setting = self.scenarios[subject_index]
         scenario_loader = ScenarioLoader(subject, setting, self.total_frames // self.parts, self.device)
         return scenario_loader[setting_index]
