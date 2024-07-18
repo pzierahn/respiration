@@ -14,6 +14,8 @@ class ScenarioLoader:
     A data loader for the VitalCamSet dataset. This class loads the video frames and the ground truth signal for a
     specific scenario. The video frames are loaded in chunks of a specific size. The ground truth signal is down-sampled
     to match the video frames' dimensions and normalized between -0.5 and 0.5.
+
+    Version: 1.0
     """
     subject: str
     setting: str
@@ -103,11 +105,16 @@ class VitalCamLoader:
     # The number of parts to split the video into
     parts: int
 
+    # The device to use for the tensors
+    device: torch.device
+
     def __init__(self,
                  scenarios: list[tuple[str, str]],
-                 parts: int,
+                 total_frames: int = 3600,
+                 parts: int = 10,
                  device: torch.device = torch.device("cpu")):
         self.scenarios = scenarios
+        self.total_frames = total_frames
         self.parts = parts
         self.device = device
 
