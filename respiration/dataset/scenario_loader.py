@@ -84,3 +84,48 @@ class ScenarioLoader:
         gt_waveform = gt_waveform[start:end]
 
         return frames, gt_waveform
+
+
+class VitalCamLoader:
+    # The list of subjects and settings to load
+    settings: list[tuple[str, str]]
+
+    # The number of frames per video
+    total_frames = 3600
+
+    # The number of parts to split the video into
+    parts: int
+
+    def __init__(self,
+                 settings: list[tuple[str, str]],
+                 parts: int,
+                 device: torch.device = torch.device("cpu")):
+        self.settings = settings
+        self.parts = parts
+        self.device = device
+
+    def __len__(self) -> int:
+        return len(self.settings) * self.parts
+
+    def __iter__(self):
+        self.current_index = 0
+        return self
+
+    def __next__(self):
+        if self.current_index >= self.__len__():
+            raise StopIteration
+        else:
+            item = self.__getitem__(self.current_index)
+            self.current_index += 1
+            return item
+
+    def __getitem__(self, index) -> (torch.Tensor, torch.Tensor):
+        if index >= self.__len__():
+            raise IndexError("Index out of range")
+
+        subject_index = index // self.parts
+        setting_index = index % self.parts
+
+        subject, setting = self.settings[subject_index]
+        scenario_loader = ScenarioLoader(subject, setting, self.total_frames // self.parts, self.device)
+        return scenario_loader[setting_index]
