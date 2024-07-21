@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import signal
+from scipy.sparse import spdiags
 
 
 def butterworth_filter(
@@ -32,10 +33,6 @@ def normalize_signal(time_series: np.ndarray) -> np.ndarray:
     :return:
     """
     return (time_series - np.mean(time_series)) / np.std(time_series)
-
-
-import numpy as np
-from scipy.sparse import spdiags
 
 
 # TODO: Figure out how this works...
