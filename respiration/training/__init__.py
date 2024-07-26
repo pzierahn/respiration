@@ -3,4 +3,7 @@ from .loss_functions import (
     MeanSquaredError,
     SoftDWT,
 )
-from .scenario_loader import ScenarioLoader
+from .scenario_loader import (
+    ScenarioLoader,
+    VitalCamLoader,
+)
