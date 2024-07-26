@@ -1,74 +1,151 @@
 import torch
-from torch import nn
-from abc import abstractmethod
-from tslearn.metrics import SoftDTWLossPyTorch
+import torch.nn as nn
+import torch.nn.functional as F
 
 
-class _LossFunction(nn.Module):
-    def __init__(self):
-        super(_LossFunction, self).__init__()
-
-    @abstractmethod
-    def name(self):
-        pass
-
-    @abstractmethod
-    def forward(self, inputs: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
-        pass
+def normal_sampling(mean: torch.Tensor, std: torch.Tensor, label_k: torch.Tensor):
+    """
+    Compute the normal distribution for a given mean and standard deviation.
+    :param mean: Mean of the normal distribution
+    :param std: Standard deviation of the normal distribution
+    :param label_k: Label for the normal distribution
+    :return: Normal distribution
+    """
+    return torch.exp(-((label_k - mean) ** 2) / (2 * std ** 2)) / (torch.sqrt(torch.tensor(2 * torch.pi)) * std)
 
 
-class PearsonLoss(_LossFunction):
-    def name(self):
-        return 'pearson'
+def filtered_periodogram(
+        time_series: torch.Tensor,
+        sampling_rate: int,
+        min_freq: float = 0,
+        max_freq: float = float('inf')) -> tuple[torch.Tensor, torch.Tensor]:
+    """
+    Computes the power spectral density (PSD) of a signal within a given frequency range.
+    :param time_series: Respiratory signal
+    :param sampling_rate: Sampling rate
+    :param min_freq: minimum frequency
+    :param max_freq: maximum frequency
+    :return: Frequencies and FFT result
+    """
 
-    def forward(self, inputs: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
-        """
-        Calculates the Pearson loss between the true and predicted signals using PyTorch.
-        :param inputs: The predicted signal
-        :param targets: The true signal
-        :return: The Pearson loss
-        """
+    # Compute the power spectral density (PSD) using periodogram
+    psd = (torch.fft.fft(time_series).abs() ** 2) / time_series.shape[0]
 
-        # Ensure the signals have the same length
-        assert targets.size(0) == inputs.size(0), "Signals must have the same length"
+    psd = psd[:len(psd) // 2]
+    freq = torch.fft.fftfreq(time_series.shape[0], 1 / sampling_rate)[:len(psd)]
 
-        vx = inputs - torch.mean(inputs)
-        vy = targets - torch.mean(targets)
+    # Find the indices corresponding to the frequency range
+    idx = (freq >= min_freq) & (freq <= max_freq)
 
-        cost = torch.sum(vx * vy) / (torch.sqrt(torch.sum(vx ** 2)) * torch.sqrt(torch.sum(vy ** 2)))
-        return 1 - cost
+    # Extract the frequencies and PSDs within the specified range
+    freq_range = freq[idx]
+    psd_range = psd[idx]
 
+    # Make the psd sum to 1
+    psd_range = psd_range / psd_range.sum()
 
-class MeanSquaredError(_LossFunction):
-    def name(self):
-        return 'mse'
-
-    def forward(self, inputs: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
-        """
-        Calculates the Mean Squared Error loss between the true and predicted signals using PyTorch.
-        :param inputs: The predicted signal
-        :param targets: The true signal
-        :return: The Mean Squared Error loss
-        """
-        criterion = nn.MSELoss()
-        return criterion(inputs, targets)
+    return freq_range, psd_range
 
 
-class SoftDWT(_LossFunction):
-    def name(self):
-        return 'soft_dwt'
+def euclidean_distance(pred_psd: torch.Tensor, gt_psd: torch.Tensor):
+    """
+    Compute the Euclidean distance between the predicted and ground truth power spectral densities.
+    :param pred_psd: Predicted power spectral density
+    :param gt_psd: Ground truth power spectral density
+    :return: Euclidean distance
+    """
+    return torch.dist(pred_psd.softmax(dim=0), gt_psd.softmax(dim=0))
 
-    def forward(self, inputs: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
-        """
-        Calculate the Cross Entropy loss between the true and predicted signals using PyTorch.
-        :param inputs: The predicted signal
-        :param targets: The true signal
-        :return: The Mean Squared Error loss
-        """
 
-        # Transform the signals to the shape batch_size x 1 x sequence_length
-        inputs = inputs.reshape(1, inputs.shape[0], 1)
-        targets = targets.reshape(1, targets.shape[0], 1)
+def cosine_distance(pred_psd: torch.Tensor, gt_psd: torch.Tensor):
+    """
+    Compute the cosine distance between the predicted and ground truth power spectral densities.
+    :param pred_psd: Predicted power spectral density
+    :param gt_psd: Ground truth power spectral density
+    :return: Cosine distance
+    """
+    return 1 - F.cosine_similarity(pred_psd, gt_psd, dim=0)
 
-        criterion = SoftDTWLossPyTorch(gamma=0.1)
-        return criterion(inputs, targets).abs().mean()
+
+def frequency_loss(pred_psd: torch.Tensor, gt_psd: torch.Tensor):
+    """
+    Compute the cross-entropy loss between the predicted and ground truth power spectral densities.
+    :param pred_psd: Predicted power spectral density
+    :param gt_psd: Ground truth power spectral density
+    :return: Cross-entropy loss
+    """
+    return F.cross_entropy(pred_psd, torch.argmax(gt_psd))
+
+
+def pearson_correlation(prediction: torch.Tensor, ground_truth: torch.Tensor):
+    """
+    Compute Pearson correlation coefficient
+    :param prediction: Predicted respiratory signal
+    :param ground_truth: Ground truth respiratory signal
+    :return: Pearson correlation coefficient
+    """
+    x_mean = torch.mean(prediction)
+    y_mean = torch.mean(ground_truth)
+
+    num = torch.sum((prediction - x_mean) * (ground_truth - y_mean))
+    den = torch.sqrt(torch.sum((prediction - x_mean) ** 2) * torch.sum((ground_truth - y_mean) ** 2))
+
+    correlation = num / den
+
+    # Bigger correlation means smaller loss, so we negate it
+    return 1 - correlation
+
+
+def norm_kl_loss(pred_psd: torch.Tensor, gt_psd: torch.Tensor, std=torch.tensor(3.0)) -> torch.Tensor:
+    """
+    Compute the Kullback-Leibler divergence between two normal distributions.
+    :param pred_psd: Predicted power spectral density
+    :param gt_psd: Ground truth power spectral density
+    :param std: Standard deviation of the normal distribution
+    :return: Kullback-Leibler divergence between
+    """
+
+    pred_mean = torch.argmax(pred_psd)
+    pred_label = torch.arange(pred_psd.shape[0], device=pred_psd.device)
+    pred_norm = normal_sampling(pred_mean, std, pred_label)
+
+    gt_mean = torch.argmax(gt_psd)
+    gt_label = torch.arange(gt_psd.shape[0], device=gt_psd.device)
+    gt_norm = normal_sampling(gt_mean, std, gt_label)
+
+    criterion = torch.nn.KLDivLoss(reduction='none')
+    return criterion(pred_norm.log(), gt_norm).sum()
+
+
+class HybridLoss(nn.Module):
+    """
+    Hybrid loss function combining temporal loss (Pearson correlation), frequency loss and norm loss.
+    """
+
+    # Sampling rate of the signal
+    sampling_rate: int
+
+    # Frequency range for filtering the signal
+    min_freq: float
+    max_freq: float
+
+    def __init__(self, sampling_rate: int = 30, min_freq: float = 0.08, max_freq: float = 0.6):
+        super(HybridLoss, self).__init__()
+        self.sampling_rate = sampling_rate
+        self.min_freq = min_freq
+        self.max_freq = max_freq
+
+    def forward(self, prediction, ground_truth):
+        """Compute the hybrid loss"""
+        pearson = pearson_correlation(prediction, ground_truth)
+
+        freq_pred, pred_psd = filtered_periodogram(prediction, self.sampling_rate, self.min_freq, self.max_freq)
+        freq_gt, gt_psd = filtered_periodogram(ground_truth, self.sampling_rate, self.min_freq, self.max_freq)
+
+        freq_loss = frequency_loss(pred_psd, gt_psd)
+        norm_l = norm_kl_loss(pred_psd, gt_psd)
+
+        # Combine losses
+        total_loss = 0.2 * pearson + 1.0 * freq_loss + 1.0 * norm_l
+
+        return total_loss
