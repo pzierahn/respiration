@@ -4,7 +4,9 @@ import cv2
 import json
 import torch
 import numpy as np
+
 from tqdm.auto import tqdm
+from torchvision import transforms
 
 
 class VideoParams:
@@ -208,3 +210,25 @@ def normalize_frames(frames: torch.Tensor) -> torch.Tensor:
 
     frames = (frames - frames.min()) / (frames.max() - frames.min())
     return frames
+
+
+def preprocess_frames(frames: np.ndarray, size=(128, 128), device='cpu') -> torch.Tensor:
+    """
+    Preprocess a numpy array of frames. The frames are resized to the target size and converted to a tensor.
+    :param frames: numpy array of frames
+    :param size: target size
+    :param device: device to store the tensor
+    :return: preprocessed tensor of frames
+    """
+    transform = transforms.Compose([
+        transforms.ToPILImage(mode='RGB'),
+        transforms.Resize(size),
+        transforms.ToTensor(),
+    ])
+
+    # Transform each frame
+    transformed_frames = torch.stack([
+        transform(frame) for frame in frames
+    ])
+
+    return transformed_frames.unsqueeze(0).to(device)
