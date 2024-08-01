@@ -97,10 +97,6 @@ class Analysis:
             (f'Prediction and ground truth signals must have the same shape. Got prediction shape: {prediction.shape}, '
              f'ground truth shape: {ground_truth.shape}')
 
-        if self.detrend:
-            prediction = detrend_tarvainen(prediction)
-            ground_truth = detrend_tarvainen(ground_truth)
-
         if self.filter_signal:
             prediction = butterworth_filter(
                 prediction,
