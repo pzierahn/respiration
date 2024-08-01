@@ -1,7 +1,9 @@
 import numpy as np
 import scipy.stats as stats
-from scipy.spatial import distance
+
 from dtaidistance import dtw
+from scipy.spatial import distance
+from .peak_counting import find_peaks
 
 
 def distance_euclidean(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
@@ -59,3 +61,30 @@ def dtw_distance(signal_a: np.ndarray, signal_b: np.ndarray) -> float:
         window=90,
         use_c=True,
     )
+
+
+def peak_distance(
+        prediction: np.ndarray,
+        ground_truth: np.ndarray,
+        sample_rate: int,
+        height=None,
+        threshold=None,
+        min_frequency=0.08) -> float:
+    """
+    Calculate the distance between the peaks of the prediction and the ground truth.
+    :param prediction:
+    :param ground_truth:
+    :param sample_rate:
+    :param height:
+    :param threshold:
+    :param min_frequency:
+    :return:
+    """
+
+    pred_peaks = find_peaks(prediction, sample_rate, height, threshold, min_frequency)
+    gt_peaks = find_peaks(ground_truth, sample_rate, height, threshold, min_frequency)
+
+    if len(pred_peaks) == 0 or len(gt_peaks) == 0:
+        return np.nan
+
+    return np.mean(np.abs(np.array(pred_peaks) - np.array(gt_peaks)))
