@@ -153,6 +153,7 @@ class HybridLoss(nn.Module):
         self.pearson_weight = pearson_weight
         self.frequency_weight = frequency_weight
         self.norm_weight = norm_weight
+        self.mse_weight = mse_weight
 
     def forward(self, prediction, ground_truth):
         """Compute the hybrid loss"""
