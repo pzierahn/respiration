@@ -132,6 +132,7 @@ class HybridLoss(nn.Module):
     pearson_weight: float
     frequency_weight: float
     norm_weight: float
+    mse_weight: float
 
     def __init__(
             self,
@@ -141,6 +142,7 @@ class HybridLoss(nn.Module):
             pearson_weight: float = 0.2,
             frequency_weight: float = 1.0,
             norm_weight: float = 1.0,
+            mse_weight: float = 1.0
     ):
         super(HybridLoss, self).__init__()
 
@@ -162,9 +164,12 @@ class HybridLoss(nn.Module):
         freq_loss = frequency_loss(pred_psd, gt_psd)
         norm_l = norm_kl_loss(pred_psd, gt_psd)
 
+        mse = F.mse_loss(prediction, ground_truth)
+
         # Combine losses
         total_loss = (self.pearson_weight * pearson +
                       self.frequency_weight * freq_loss +
-                      self.norm_weight * norm_l)
+                      self.norm_weight * norm_l +
+                      self.mse_weight * mse)
 
         return total_loss
