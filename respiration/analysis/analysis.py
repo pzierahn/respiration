@@ -57,7 +57,6 @@ class Analysis:
             sample_rate: int,
             lowpass: Optional[float] = 0.08,
             highpass: Optional[float] = 0.6,
-            detrend: bool = False,
             normalize: bool = True,
             filter_signal: bool = True,
             window_size: int = 30,
@@ -68,7 +67,6 @@ class Analysis:
         self.lowpass = lowpass
         self.highpass = highpass
 
-        self.detrend = detrend
         self.normalize = normalize
         self.filter_signal = filter_signal
 
