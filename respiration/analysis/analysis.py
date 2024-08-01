@@ -18,8 +18,9 @@ from .preprocessing import *
 
 class Analysis:
     """
-    Class to perform an analysis of the respiration signals. The analysis includes the following steps:
-    - Preprocess the signals (detrend, normalize, filter)
+    The Analysis class is used to compare the performance of different models in predicting respiration signals. The
+    analysis includes the following steps:
+    - Preprocess the signals (normalize, filter)
     - Compute the metrics for the signals
     - Compute the distances between the signals
     - Rank the models based on the computed metrics
