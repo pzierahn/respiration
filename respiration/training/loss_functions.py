@@ -139,7 +139,7 @@ class HybridLoss(nn.Module):
             sampling_rate: int = 30,
             min_freq: float = 0.08,
             max_freq: float = 0.6,
-            pearson_weight: float = 0.2,
+            pearson_weight: float = 1.0,
             frequency_weight: float = 1.0,
             norm_weight: float = 1.0,
             mse_weight: float = 1.0
