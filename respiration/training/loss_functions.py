@@ -119,7 +119,7 @@ def norm_kl_loss(pred_psd: torch.Tensor, gt_psd: torch.Tensor, std=torch.tensor(
 
 class HybridLoss(nn.Module):
     """
-    Hybrid loss function combining temporal loss (Pearson correlation), frequency loss and norm loss.
+    Hybrid loss function combining temporal loss (Pearson correlation), frequency loss, norm loss and MSE loss.
     """
 
     # Sampling rate of the signal
@@ -129,6 +129,7 @@ class HybridLoss(nn.Module):
     min_freq: float
     max_freq: float
 
+    # Weights for each loss component
     pearson_weight: float
     frequency_weight: float
     norm_weight: float
@@ -174,3 +175,12 @@ class HybridLoss(nn.Module):
                       self.mse_weight * mse)
 
         return total_loss
+
+    def get_weights(self) -> dict[str, float]:
+        """Get the weights of the loss function."""
+        return {
+            'pearson_weight': self.pearson_weight,
+            'frequency_weight': self.frequency_weight,
+            'norm_weight': self.norm_weight,
+            'mse_weight': self.m
+        }
