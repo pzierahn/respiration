@@ -182,5 +182,5 @@ class HybridLoss(nn.Module):
             'pearson_weight': self.pearson_weight,
             'frequency_weight': self.frequency_weight,
             'norm_weight': self.norm_weight,
-            'mse_weight': self.m
+            'mse_weight': self.mse_weight,
         }
