@@ -54,7 +54,7 @@ class Analysis:
 
     def __init__(
             self,
-            sample_rate: int,
+            sample_rate: int = 30,
             lowpass: Optional[float] = 0.08,
             highpass: Optional[float] = 0.6,
             normalize: bool = True,
