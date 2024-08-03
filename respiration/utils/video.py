@@ -212,7 +212,10 @@ def normalize_frames(frames: torch.Tensor) -> torch.Tensor:
     return frames
 
 
-def preprocess_frames(frames: np.ndarray, size=(128, 128), device='cpu') -> torch.Tensor:
+def preprocess_frames(
+        frames: np.ndarray,
+        size: tuple[int, int] = (128, 128),
+        device: torch.device = 'cpu') -> torch.Tensor:
     """
     Preprocess a numpy array of frames. The frames are resized to the target size and converted to a tensor.
     :param frames: numpy array of frames
