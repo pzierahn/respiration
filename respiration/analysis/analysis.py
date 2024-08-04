@@ -33,7 +33,6 @@ class Analysis:
     highpass: Optional[float]
 
     # Preprocessing parameters
-    detrend: bool
     normalize: bool
     filter_signal: bool
 
