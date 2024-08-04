@@ -2,13 +2,21 @@ import numpy as np
 import scipy.signal as signal
 
 
-def find_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, min_frequency=0.08) -> np.ndarray:
+def find_peaks(
+        data: np.ndarray,
+        sample_rate: int,
+        height=None,
+        threshold=None,
+        prominence=0.5,
+        min_frequency=0.08,
+) -> np.ndarray:
     """
     Find peaks in the data.
     :param data: Respiratory signal
     :param sample_rate: Sampling rate
     :param height: Required height of peaks
     :param threshold: Required threshold of peaks
+    :param prominence: Required prominence of peaks
     :param min_frequency: Minimum respiratory rate in Hz
     :return: Peaks
     """
@@ -17,6 +25,7 @@ def find_peaks(data: np.ndarray, sample_rate: int, height=None, threshold=None, 
     peaks, _ = signal.find_peaks(
         data,
         height=height,
+        prominence=prominence,
         threshold=threshold,
         distance=distance)
 
