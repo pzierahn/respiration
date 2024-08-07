@@ -61,6 +61,16 @@ class Analysis:
             window_size: int = 30,
             stride: int = 1
     ):
+        """
+        Initialize the Analysis object.
+        :param sample_rate: The sample rate of the signals.
+        :param lowpass: The lowpass frequency for the bandpass filter.
+        :param highpass: The highpass frequency for the bandpass filter.
+        :param normalize: If the signals should be normalized.
+        :param filter_signal: If the signals should be filtered.
+        :param window_size: The size of the sliding window in seconds.
+        :param stride: The stride of the sliding window in seconds.
+        """
         self.sample_rate = sample_rate
 
         self.lowpass = lowpass
