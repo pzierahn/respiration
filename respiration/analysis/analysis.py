@@ -8,7 +8,6 @@ from .cross_point import (
 )
 from .distance import (
     pearson_correlation,
-    spearman_correlation,
 )
 
 from .peak_counting import frequency_from_peaks
@@ -48,9 +47,6 @@ class Analysis:
     predictions: dict[str, np.ndarray]
     ground_truths: dict[str, np.ndarray]
 
-    # Distances between signals
-    distances: dict[str, dict[str, np.ndarray]]
-
     def __init__(
             self,
             sample_rate: int = 30,
@@ -87,8 +83,6 @@ class Analysis:
 
         self.predictions = {}
         self.ground_truths = {}
-
-        self.distances = {}
 
     def __preprocess(
             self,
@@ -173,10 +167,6 @@ class Analysis:
                 key: np.array([]) for key in metrics.keys()
             }
 
-            self.distances[model] = {
-                'SCC': np.array([]),
-            }
-
         self.predictions[model] = np.append(self.predictions[model], prediction)
         self.ground_truths[model] = np.append(self.ground_truths[model], ground_truth)
 
@@ -194,11 +184,6 @@ class Analysis:
                     self.ground_truth_metrics[model][key],
                     metric(ground_truth_window, self.sample_rate)
                 )
-
-            self.distances[model]['SCC'] = np.append(
-                self.distances[model]['SCC'],
-                spearman_correlation(prediction_window, ground_truth_window)[0]
-            )
 
     def get_metrics(self) -> dict[str, dict[str, dict[str, float]]]:
         """
@@ -251,55 +236,5 @@ class Analysis:
                     row[metric] = metrics[model][method][metric]
 
                 rows.append(row)
-
-        return pd.DataFrame(rows)
-
-    def get_distances(self) -> list[dict]:
-        """
-        Generate a table with the computed distances.
-        :return: A list of dictionaries containing the computed distances.
-        """
-        rows = []
-
-        for model in self.distances:
-            for distance in self.distances[model]:
-                row = {
-                    'model': model,
-                    'distance': distance,
-                    'mean': self.distances[model][distance].mean(),
-                    'std': self.distances[model][distance].std(),
-                }
-                rows.append(row)
-
-        return rows
-
-    def distances_df(self) -> pd.DataFrame:
-        """
-        Generate a table with the computed distances.
-        :return: A list of dictionaries containing the computed distances.
-        """
-        distances = self.get_distances()
-        data = {}
-
-        for entry in distances:
-            model = entry['model']
-            distance = entry['distance']
-
-            if model not in data:
-                data[model] = {}
-
-            data[model][distance] = entry
-
-        rows = []
-        for model in data:
-            row = {
-                'model': model,
-            }
-
-            for distance in data[model]:
-                row[distance] = data[model][distance]['mean']
-                row[f'{distance}_sdt'] = data[model][distance]['std']
-
-            rows.append(row)
 
         return pd.DataFrame(rows)
