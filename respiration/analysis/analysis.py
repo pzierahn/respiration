@@ -185,6 +185,47 @@ class Analysis:
                     metric(ground_truth_window, self.sample_rate)
                 )
 
+    def add_data_without_window(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray):
+        """
+        Add data to the analysis.
+        :param model: The model used to generate the prediction.
+        :param prediction: The predicted signal.
+        :param ground_truth: The ground truth signal.
+        """
+        prediction, ground_truth = self.__preprocess(prediction, ground_truth)
+
+        metrics = {
+            'cp': frequency_from_crossing_point,
+            'nfcp': frequency_from_nfcp,
+            'pk': self.frequency_from_peaks,
+            'psd': self.frequency_from_psd,
+        }
+
+        if model not in self.prediction_metrics:
+            self.predictions[model] = np.array([])
+            self.ground_truths[model] = np.array([])
+
+            self.prediction_metrics[model] = {
+                key: np.array([]) for key in metrics.keys()
+            }
+            self.ground_truth_metrics[model] = {
+                key: np.array([]) for key in metrics.keys()
+            }
+
+        self.predictions[model] = np.append(self.predictions[model], prediction)
+        self.ground_truths[model] = np.append(self.ground_truths[model], ground_truth)
+
+        for key, metric in metrics.items():
+            self.prediction_metrics[model][key] = np.append(
+                self.prediction_metrics[model][key],
+                metric(prediction, self.sample_rate)
+            )
+
+            self.ground_truth_metrics[model][key] = np.append(
+                self.ground_truth_metrics[model][key],
+                metric(ground_truth, self.sample_rate)
+            )
+
     def get_metrics(self) -> dict[str, dict[str, dict[str, float]]]:
         """
         Compute the metrics for the analysis.
