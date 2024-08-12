@@ -108,9 +108,9 @@ def spectral_magnitude_loss(pred_psd: torch.Tensor, gt_psd: torch.Tensor, norm="
     """
 
     if norm == "L1":
-        return torch.nn.L1Loss()(pred_psd - gt_psd)
+        return torch.nn.L1Loss()(pred_psd, gt_psd)
     elif norm == "L2":
-        return torch.nn.MSELoss()(pred_psd - gt_psd)
+        return torch.nn.MSELoss()(pred_psd, gt_psd)
     else:
         raise ValueError(f"Invalid norm type: {norm}")
 
