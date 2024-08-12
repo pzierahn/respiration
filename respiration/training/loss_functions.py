@@ -117,6 +117,19 @@ def norm_kl_loss(pred_psd: torch.Tensor, gt_psd: torch.Tensor, std=torch.tensor(
     return criterion(pred_norm.log(), gt_norm).sum()
 
 
+def spectral_convergence_loss(pred_psd: torch.Tensor, gt_psd: torch.Tensor):
+    """
+    Calculate forward propagation.
+    Source: https://github.com/rishikksh20/UnivNet-pytorch/blob/master/stft_loss.py
+    Args:
+        x_mag (Tensor): Magnitude spectrogram of predicted signal (B, #frames, #freq_bins).
+        y_mag (Tensor): Magnitude spectrogram of groundtruth signal (B, #frames, #freq_bins).
+    Returns:
+        Tensor: Spectral convergence loss value.
+    """
+    return torch.norm(pred_psd - gt_psd, p="fro") / torch.norm(gt_psd, p="fro")
+
+
 class HybridLoss(nn.Module):
     """
     Hybrid loss function combining temporal loss (Pearson correlation), frequency loss, norm loss and MSE loss.
@@ -134,6 +147,7 @@ class HybridLoss(nn.Module):
     frequency_weight: float
     norm_weight: float
     mse_weight: float
+    spectral_convergence_weight: float
 
     def __init__(
             self,
@@ -143,7 +157,8 @@ class HybridLoss(nn.Module):
             pearson_weight: float = 1.0,
             frequency_weight: float = 1.0,
             norm_weight: float = 1.0,
-            mse_weight: float = 1.0
+            mse_weight: float = 1.0,
+            spectral_convergence_weight: float = 1.0,
     ):
         super(HybridLoss, self).__init__()
 
@@ -155,6 +170,7 @@ class HybridLoss(nn.Module):
         self.frequency_weight = frequency_weight
         self.norm_weight = norm_weight
         self.mse_weight = mse_weight
+        self.spectral_convergence_weight = spectral_convergence_weight
 
     def forward(self, prediction, ground_truth):
         """Compute the hybrid loss"""
@@ -168,11 +184,19 @@ class HybridLoss(nn.Module):
 
         mse = F.mse_loss(prediction, ground_truth)
 
+        spectral_convergence = spectral_convergence_loss(pred_psd, gt_psd)
+        print(f'Pearson: {pearson}, '
+              f'Frequency: {freq_loss}, '
+              f'Norm: {norm_l}, '
+              f'MSE: {mse}, '
+              f'Spectral: {spectral_convergence}')
+
         # Combine losses
         total_loss = (self.pearson_weight * pearson +
                       self.frequency_weight * freq_loss +
                       self.norm_weight * norm_l +
-                      self.mse_weight * mse)
+                      self.mse_weight * mse +
+                      self.spectral_convergence_weight * spectral_convergence)
 
         return total_loss
 
@@ -183,4 +207,5 @@ class HybridLoss(nn.Module):
             'frequency_weight': self.frequency_weight,
             'norm_weight': self.norm_weight,
             'mse_weight': self.mse_weight,
+            'spectral_convergence_weight': self.spectral_convergence_weight
         }
