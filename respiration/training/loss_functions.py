@@ -185,11 +185,11 @@ class HybridLoss(nn.Module):
         mse = F.mse_loss(prediction, ground_truth)
 
         spectral_convergence = spectral_convergence_loss(pred_psd, gt_psd)
-        print(f'Pearson: {pearson}, '
-              f'Frequency: {freq_loss}, '
-              f'Norm: {norm_l}, '
-              f'MSE: {mse}, '
-              f'Spectral: {spectral_convergence}')
+        print(f'Pearson: {pearson:.3f}, '
+              f'Frequency: {freq_loss:.3f}, '
+              f'Norm: {norm_l:.3f}, '
+              f'MSE: {mse:.3f}, '
+              f'Spectral: {spectral_convergence:.3f}')
 
         # Combine losses
         total_loss = (self.pearson_weight * pearson +
