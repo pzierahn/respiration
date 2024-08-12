@@ -179,7 +179,7 @@ class HybridLoss(nn.Module):
               f'Frequency: {freq_loss:.3f}, '
               f'MSE: {mse:.3f}, '
               f'Spectral: {spectral_convergence:.3f} '
-              f'Spectral Magnitude: {spectral_magnitude:.3f}')
+              f'Magnitude: {spectral_magnitude:.3f}')
 
         # Combine losses
         total_loss = (self.pearson_weight * pearson +
