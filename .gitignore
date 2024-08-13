@@ -186,3 +186,4 @@ yolov3.weights
 *.zip
 *.gz
 *.npy
+*.mkv
