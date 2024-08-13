@@ -6,7 +6,7 @@ from respiration.utils.video import (
     read_video_rgb,
 )
 
-from respiration.dataset.dataset import VitalCamSet
+from respiration.dataset import VitalCamSet
 
 
 class ScenarioLoader:
