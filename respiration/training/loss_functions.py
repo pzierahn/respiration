@@ -173,8 +173,8 @@ class HybridLoss(nn.Module):
     def __init__(
             self,
             sampling_rate: int = 30,
-            min_freq: float = 0.08,
-            max_freq: float = 0.6,
+            min_freq: float = 0.1,
+            max_freq: float = 0.5,
             pearson_weight: float = 1.0,
             frequency_weight: float = 1.0,
             norm_weight: float = 1.0,
@@ -197,7 +197,7 @@ class HybridLoss(nn.Module):
         self.spectral_magnitude_weight = spectral_magnitude_weight
         self.spectral_magnitude_norm = spectral_magnitude_norm
 
-    def forward(self, prediction, ground_truth):
+    def forward(self, prediction, ground_truth) -> torch.Tensor:
         """Compute the hybrid loss"""
         pearson = pearson_correlation(prediction, ground_truth)
 
