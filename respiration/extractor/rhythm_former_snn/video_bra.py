@@ -5,12 +5,17 @@ Source: https://github.com/zizheng-guo/RhythmFormer/blob/main/neural_methods/mod
 import math
 import torch
 import torch.nn as nn
+import snntorch as snn
 import torch.nn.functional as F
 
+from snntorch import surrogate
 from torch import LongTensor, Tensor
 from timm.models.layers import DropPath
 
 from .rrsda import video_regional_routing_attention_torch
+
+beta = 0.9  # neuron decay rate
+spike_grad = surrogate.fast_sigmoid()  # fast sigmoid surrogate gradient
 
 
 class CDC_T(nn.Module):
@@ -18,12 +23,28 @@ class CDC_T(nn.Module):
     The CDC_T Module is from here: https://github.com/ZitongYu/PhysFormer/model/transformer_layer.py
     """
 
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1,
-                 padding=1, dilation=1, groups=1, bias=False, theta=0.6):
+    def __init__(
+            self,
+            in_channels,
+            out_channels,
+            kernel_size=3,
+            stride=1,
+            padding=1,
+            dilation=1,
+            groups=1,
+            bias=False,
+            theta=0.6):
 
         super(CDC_T, self).__init__()
-        self.conv = nn.Conv3d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding,
-                              dilation=dilation, groups=groups, bias=bias)
+        self.conv = nn.Conv3d(
+            in_channels,
+            out_channels,
+            kernel_size=kernel_size,
+            stride=stride,
+            padding=padding,
+            dilation=dilation,
+            groups=groups,
+            bias=bias)
         self.theta = theta
 
     def forward(self, x):
@@ -113,19 +134,33 @@ class video_BRA(nn.Module):
 
 
 class video_BiFormerBlock(nn.Module):
-    def __init__(self, dim, drop_path=0., num_heads=4, t_patch=1, qk_scale=None, topk=4, mlp_ratio=2, side_dwconv=5):
+    def __init__(
+            self,
+            dim,
+            drop_path=0.0,
+            num_heads=4,
+            t_patch=1,
+            qk_scale=None,
+            topk=4,
+            mlp_ratio=2,
+            side_dwconv=5):
         super().__init__()
         self.t_patch = t_patch
         self.norm1 = nn.BatchNorm3d(dim)
-        self.attn = video_BRA(dim=dim, num_heads=num_heads, t_patch=t_patch, qk_scale=qk_scale, topk=topk,
-                              side_dwconv=side_dwconv)
+        self.attn = video_BRA(
+            dim=dim,
+            num_heads=num_heads,
+            t_patch=t_patch,
+            qk_scale=qk_scale,
+            topk=topk,
+            side_dwconv=side_dwconv)
         self.norm2 = nn.BatchNorm3d(dim)
         self.mlp = nn.Sequential(nn.Conv3d(dim, int(mlp_ratio * dim), kernel_size=1),
                                  nn.BatchNorm3d(int(mlp_ratio * dim)),
-                                 nn.GELU(),
+                                 snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
                                  nn.Conv3d(int(mlp_ratio * dim), int(mlp_ratio * dim), 3, stride=1, padding=1),
                                  nn.BatchNorm3d(int(mlp_ratio * dim)),
-                                 nn.GELU(),
+                                 snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
                                  nn.Conv3d(int(mlp_ratio * dim), dim, kernel_size=1),
                                  nn.BatchNorm3d(dim),
                                  )

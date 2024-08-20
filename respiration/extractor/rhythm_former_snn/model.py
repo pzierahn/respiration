@@ -5,41 +5,42 @@ Source: https://github.com/zizheng-guo/RhythmFormer/blob/main/neural_methods/mod
 """
 import math
 import torch
+import snntorch as snn
 
 from torch import nn
 from typing import Optional
 from typing import Tuple, Union
 from timm.models.layers import trunc_normal_
 
-from .video_bra import video_BiFormerBlock
+from .video_bra import *
 
 
-class Fusion_Stem(nn.Module):
+class FusionStemSNN(nn.Module):
     def __init__(self, apha=0.5, belta=0.5):
-        super(Fusion_Stem, self).__init__()
+        super(FusionStemSNN, self).__init__()
 
         self.stem11 = nn.Sequential(nn.Conv2d(3, 64, kernel_size=5, stride=2, padding=2),
                                     nn.BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
-                                    nn.ReLU(inplace=True),
+                                    snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
                                     nn.MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
                                     )
 
         self.stem12 = nn.Sequential(nn.Conv2d(12, 64, kernel_size=5, stride=2, padding=2),
                                     nn.BatchNorm2d(64),
-                                    nn.ReLU(inplace=True),
+                                    snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
                                     nn.MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
                                     )
 
         self.stem21 = nn.Sequential(
             nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
+            snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
         )
 
         self.stem22 = nn.Sequential(
             nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
+            snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
         )
 
         self.apha = apha
@@ -72,7 +73,7 @@ class Fusion_Stem(nn.Module):
         return x
 
 
-class TPT_Block(nn.Module):
+class TPTBlockSNN(nn.Module):
     def __init__(self, dim, depth, num_heads, t_patch, topk,
                  mlp_ratio=4., drop_path=0., side_dwconv=5):
         super().__init__()
@@ -92,7 +93,7 @@ class TPT_Block(nn.Module):
                 nn.Upsample(scale_factor=(2, 1, 1)),
                 nn.Conv3d(dim, dim, [3, 1, 1], stride=1, padding=(1, 0, 0)),
                 nn.BatchNorm3d(dim),
-                nn.ELU(),
+                snn.Leaky(beta=beta, spike_grad=spike_grad, init_hidden=True),
             )
             self.upsample_layers.append(upsample_layer)
         ######################################################################
@@ -126,7 +127,7 @@ class TPT_Block(nn.Module):
         return x
 
 
-class RhythmFormer(nn.Module):
+class RhythmFormerSNN(nn.Module):
 
     def __init__(
             self,
@@ -151,7 +152,7 @@ class RhythmFormer(nn.Module):
         self.dim = dim
         self.stage_n = stage_n
 
-        self.Fusion_Stem = Fusion_Stem()
+        self.Fusion_Stem = FusionStemSNN()
         self.patch_embedding = nn.Conv3d(in_chans, embed_dim[0], kernel_size=(1, 4, 4), stride=(1, 4, 4))
         self.ConvBlockLast = nn.Conv1d(embed_dim[-1], 1, kernel_size=1, stride=1, padding=0)
 
@@ -160,13 +161,13 @@ class RhythmFormer(nn.Module):
         nheads = [dim // head_dim for dim in embed_dim]
         dp_rates = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depth))]
         for i in range(stage_n):
-            stage = TPT_Block(dim=embed_dim[i],
-                              depth=depth[i],
-                              num_heads=nheads[i],
-                              mlp_ratio=mlp_ratios[i],
-                              drop_path=dp_rates[sum(depth[:i]):sum(depth[:i + 1])],
-                              t_patch=t_patchs[i], topk=topks[i], side_dwconv=side_dwconv
-                              )
+            stage = TPTBlockSNN(dim=embed_dim[i],
+                                depth=depth[i],
+                                num_heads=nheads[i],
+                                mlp_ratio=mlp_ratios[i],
+                                drop_path=dp_rates[sum(depth[:i]):sum(depth[:i + 1])],
+                                t_patch=t_patchs[i], topk=topks[i], side_dwconv=side_dwconv
+                                )
             self.stages.append(stage)
         ##########################################################################
 

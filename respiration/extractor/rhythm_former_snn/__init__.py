@@ -1,1 +1,1 @@
-from .model import RhythmFormer
+from .model import RhythmFormerSNN
