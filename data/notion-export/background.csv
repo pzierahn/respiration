@@ -1,0 +1,427 @@
+﻿ID,Title,Notes,BibTxt
+Schafer2008estimation.pdf,Estimation of breathing rate from respiratory sinus arrhythmia: comparison of various methods,"The paper does not describe a respiratory extraction method based on photoplethysmography (PPG) or motion signals. Rather, the paper evaluates different methods for estimating the mean respiratory rate from heart rate variability (HRV) data, specifically the respiratory sinus arrhythmia (RSA) component of HRV.
+
+The methods investigated in the paper are:
+
+1. Spectral analysis methods:
+- Fourier Transform (Spec-FT)
+- Autoregressive modeling (Spec-AR)
+
+2. Autocorrelation function based methods:
+- Simple method (ACF-max)
+- Advanced method (ACF-adv)
+
+3. Counting methods:
+- Original method (Count-orig)
+- Advanced counting method (Count-adv)
+
+The authors compare the performance of these different methods in estimating the respiratory rate from both respiratory signals and HRV/RSA data. They find that the counting methods, especially the advanced counting method (Count-adv), provide the best estimates of the respiratory rate from the HRV data.
+
+The paper does not involve any respiratory extraction from","@article{Schafer2008estimation,
+title={Estimation of breathing rate from respiratory sinus arrhythmia: comparison of various methods},
+author={Sch{\""a}fer, Axel and Kratky, Karl W},
+journal={Annals of Biomedical Engineering},
+volume={36},
+pages={476--485},
+year={2008},
+publisher={Springer}
+}"
+Yu2019remote.pdf,Remote Photoplethysmograph Signal Measurement from Facial Videos Using Spatio-Temporal Networks,"1. 3D Convolutional Neural Network (3DCNN)
+2. Long Short-Term Memory (LSTM)
+3. Bidirectional LSTM
+4. Convolutional LSTM
+5. Negative Pearson correlation loss function","@misc{Yu2019remote,
+title={Remote Photoplethysmograph Signal Measurement from Facial Videos Using Spatio-Temporal Networks},
+author={Zitong Yu and Xiaobai Li and Guoying Zhao},
+year={2019},
+eprint={1905.02419},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+Liu2022efficientphys.pdf,"EfficientPhys: Enabling Simple, Fast and Accurate Camera-Based Vitals Measurement",,"@misc{Liu2022efficientphys,
+title={EfficientPhys: Enabling Simple, Fast and Accurate Camera-Based Vitals Measurement},
+author={Xin Liu and Brian L. Hill and Ziheng Jiang and Shwetak Patel and Daniel McDuff},
+year={2022},
+eprint={2110.04447},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+Salvador2007toward.pdf,Toward accurate dynamic time warping in linear time and space,,"@article{Salvador2007toward,
+title={Toward accurate dynamic time warping in linear time and space},
+author={Salvador, Stan and Chan, Philip},
+journal={Intelligent Data Analysis},
+volume={11},
+number={5},
+pages={561--580},
+year={2007},
+publisher={IOS Press}
+}"
+Cuturi2018softdtw.pdf,Soft-DTW: a Differentiable Loss Function for Time-Series,,"@misc{Cuturi2018softdtw,
+title={Soft-DTW: a Differentiable Loss Function for Time-Series},
+author={Marco Cuturi and Mathieu Blondel},
+year={2018},
+eprint={1703.01541},
+archivePrefix={arXiv},
+primaryClass={http://stat.ml/}
+}"
+Li2023disagreement.pdf,Disagreement Matters: Exploring Internal Diversification for Redundant Attention in Generic Facial Action Analysis,,"@ARTICLE{Li2023disagreement,
+author={Li, Xiaotian and Zhang, Zheng and Zhang, Xiang and Wang, Taoyue and Li, Zhihua and Yang, Huiyuan and Ciftci, Umur and Ji, Qiang and Cohn, Jeffrey and Yin, Lijun},
+journal={IEEE Transactions on Affective Computing},
+title={Disagreement Matters: Exploring Internal Diversification for Redundant Attention in Generic Facial Action Analysis},
+year={2023},
+volume={},
+number={},
+pages={1-12},
+keywords={Gold;Transformers;Task analysis;Face recognition;Redundancy;Feature extraction;Databases;Facial action unit detection;facial expression recognition;multi-modal feature fusion;attention;transformer;multi-channel;multi-head;diversity;disagreement},
+doi={10.1109/TAFFC.2023.3286838}}"
+Dosovitskiy2021image.pdf,An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale,Vision transformers,"@misc{Dosovitskiy2021image,
+title={An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale},
+author={Alexey Dosovitskiy and Lucas Beyer and Alexander Kolesnikov and Dirk Weissenborn and Xiaohua Zhai and Thomas Unterthiner and Mostafa Dehghani and Matthias Minderer and Georg Heigold and Sylvain Gelly and Jakob Uszkoreit and Neil Houlsby},
+year={2021},
+eprint={2010.11929},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+Vaswani2023attention.pdf,Attention Is All You Need,,"@misc{vaswani2023attention,
+title={Attention Is All You Need},
+author={Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},
+year={2023},
+eprint={1706.03762},
+archivePrefix={arXiv},
+primaryClass={http://cs.cl/}
+}"
+Selva_Johansen_2023.pdf,Video transformers: A survey,,"@article{Selva_Johansen_2023,
+title={Video Transformers: A Survey},
+ISSN={1939-3539},
+url={http://dx.doi.org/10.1109/TPAMI.2023.3243465},
+DOI={10.1109/tpami.2023.3243465},
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+publisher={Institute of Electrical and Electronics Engineers (IEEE)},
+author={Selva, Javier and Johansen, Anders S. and Escalera, Sergio and Nasrollahi, Kamal and Moeslund, Thomas B. and Clapes, Albert},
+year={2023},
+pages={1–20} }"
+Blondel2021differentiable.pdf,Differentiable divergences between time series,,"@misc{Blondel2021differentiable,
+title={Differentiable Divergences Between Time Series},
+author={Mathieu Blondel and Arthur Mensch and Jean-Philippe Vert},
+year={2021},
+eprint={2010.08354},
+archivePrefix={arXiv},
+primaryClass={cs.LG}
+}"
+Raghu2022vision.pdf,Do Vision Transformers See Like Convolutional Neural Networks?,,"@misc{Raghu2022vision,
+title={Do Vision Transformers See Like Convolutional Neural Networks?},
+author={Maithra Raghu and Thomas Unterthiner and Simon Kornblith and Chiyuan Zhang and Alexey Dosovitskiy},
+year={2022},
+eprint={2108.08810},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+Teed2020raft.pdf,RAFT: Recurrent All-Pairs Field Transforms for Optical Flow,,"@misc{Teed2020raft,
+title={RAFT: Recurrent All-Pairs Field Transforms for Optical Flow},
+author={Zachary Teed and Jia Deng},
+year={2020},
+eprint={2003.12039},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+Horn1981determining,Determining Optical Flow,,"@article{Horn1981determining,
+title={Determining optical flow},
+author={Horn, Berthold KP and Schunck, Brian G},
+journal={Artificial intelligence},
+volume={17},
+number={1-3},
+pages={185--203},
+year={1981},
+publisher={Elsevier}
+}"
+Abhimanyu2023unsupervised.pdf,Unsupervised Deformable Image Registration for Respiratory Motion Compensation in Ultrasound Images,Uses RAFT and optical flow for Respiratory Motion Compensation,"@misc{Abhimanyu2023unsupervised,
+title={Unsupervised Deformable Image Registration for Respiratory Motion Compensation in Ultrasound Images},
+author={FNU Abhimanyu and Andrew L. Orekhov and John Galeotti and Howie Choset},
+year={2023},
+eprint={2306.13332},
+archivePrefix={arXiv},
+primaryClass={eess.IV}
+}"
+Charlton2016,Waveform Analysis to Estimate Respiratory Rate,Some background on Waveforms,"@Inbook{Charlton2016,
+author=""Charlton, Peter H.
+and Villarroel, Mauricio
+and Salguiero, Francisco"",
+title=""Waveform Analysis to Estimate Respiratory Rate"",
+bookTitle=""Secondary Analysis of Electronic Health Records"",
+year=""2016"",
+publisher=""Springer International Publishing"",
+address=""Cham"",
+pages=""377--390"",
+abstract=""Several techniques have been developed for estimation of respiratory rate (RR) from physiological waveforms. This case study presents a comparison of exemplary techniques for estimation of RR from the electrocardiogram (ECG) and photoplethysmogram (PPG) waveforms."",
+isbn=""978-3-319-43742-2"",
+doi=""10.1007/978-3-319-43742-2_26"",
+url=""https://doi.org/10.1007/978-3-319-43742-2_26""
+}"
+Vanderplas2018understanding.pdf,Understanding the Lomb–Scargle Periodogram,,"@article{Vanderplas2018understanding,
+title={Understanding the lomb--scargle periodogram},
+author={VanderPlas, Jacob T},
+journal={The Astrophysical Journal Supplement Series},
+volume={236},
+number={1},
+pages={16},
+year={2018},
+publisher={IOP Publishing}
+}"
+Blocher2020kamerabasiertes.pdf,Kamerabasiertes System zur kontaktlosen Messung der momentanen Herzfrequenz für den Einsatz unter realen Umgebungsbedingungen,Delaunay-Triangulation,"@article{blocher2020kamerabasiertes,
+title={Kamerabasiertes System zur kontaktlosen Messung der momentanen Herzfrequenz f{\""u}r den Einsatz unter realen Umgebungsbedingungen},
+author={Bl{\""o}cher, Timon},
+year={2020}
+}"
+Liu2023rppgtoolbox.pdf,rPPG-Toolbox: Deep Remote PPG Toolbox,,"@misc{Liu2023rppgtoolbox,
+title={rPPG-Toolbox: Deep Remote PPG Toolbox},
+author={Xin Liu and Girish Narayanswamy and Akshay Paruchuri and Xiaoyu Zhang and Jiankai Tang and Yuzhe Zhang and Soumyadip Sengupta and Shwetak Patel and Yuntao Wang and Daniel McDuff},
+year={2023},
+eprint={2210.00716},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+Fischer2015flownet.pdf,FlowNet: Learning Optical Flow with Convolutional Networks,,"@misc{Fischer2015flownet,
+      title={FlowNet: Learning Optical Flow with Convolutional Networks}, 
+      author={Philipp Fischer and Alexey Dosovitskiy and Eddy Ilg and Philip Häusser and Caner Hazırbaş and Vladimir Golkov and Patrick van der Smagt and Daniel Cremers and Thomas Brox},
+      year={2015},
+      eprint={1504.06852},
+      archivePrefix={arXiv},
+      primaryClass={id='cs.CV' full_name='Computer Vision and Pattern Recognition' is_active=True alt_name=None in_archive='cs' is_general=False description='Covers image processing, computer vision, pattern recognition, and scene understanding. Roughly includes material in ACM Subject Classes I.2.10, I.4, and I.5.'}
+}"
+Ilg2016flownet.pdf,FlowNet 2.0: Evolution of Optical Flow Estimation with Deep Networks,,"@misc{Ilg2016flownet,
+title={FlowNet 2.0: Evolution of Optical Flow Estimation with Deep Networks},
+author={Eddy Ilg and Nikolaus Mayer and Tonmoy Saikia and Margret Keuper and Alexey Dosovitskiy and Thomas Brox},
+year={2016},
+eprint={1612.01925},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/}
+}"
+AL-Khalidi_Saatchi_2011.pdf,Respiration Rate Monitoring Methods: A Review,,"@article{AL-Khalidi_Saatchi_2011,
+title={Respiration rate monitoring methods: A review},
+author={AL-Khalidi, Farah Q and Saatchi, Reza and Burke, Derek and Elphick, Heather and Tan, Stephen},
+journal={Pediatric pulmonology},
+volume={46},
+number={6},
+pages={523--529},
+year={2011},
+publisher={Wiley Online Library}
+}"
+Kai_Zhou_Dissertation.pdf,"Stress and Emotion Recogniton based on
+Remote Photoplethysmography",,"@phdthesis{Kai_Zhou_Dissertation,
+author       = {Zhou, Kai},
+year         = {2024},
+title        = {Stress and Emotion Recognition based on Remote Photoplethysmography},
+doi          = {10.5445/IR/1000171282},
+publisher    = {{Karlsruher Institut für Technologie (KIT)}},
+pagetotal    = {194},
+school       = {Karlsruher Institut für Technologie (KIT)},
+language     = {english}
+}"
+Bishop1995neural,"Neural Networks for Pattern Recognition ",,"@book{Bishop1995neural,
+title={Neural networks for pattern recognition},
+author={Bishop, Christopher M},
+year={1995},
+publisher={Oxford university press}
+}"
+Goodfellow2016,Deep Learning,,"@book{Goodfellow2016,
+title={Deep Learning},
+author={Ian Goodfellow and Yoshua Bengio and Aaron Courville},
+publisher={MIT Press},
+note={\url{http://www.deeplearningbook.org/}},
+year={2016}
+}"
+Rumelhart1986learning,Learning representations by back-propagating errors,,"@article{Rumelhart1986learning,
+title={Learning representations by back-propagating errors},
+author={Rumelhart, David E and Hinton, Geoffrey E and Williams, Ronald J},
+journal={nature},
+volume={323},
+number={6088},
+pages={533--536},
+year={1986},
+publisher={Nature Publishing Group UK London}
+}"
+Krizhevsky2012imagenet,Imagenet classification with deep convolutional neural networks,,"@article{Krizhevsky2012imagenet,
+title={Imagenet classification with deep convolutional neural networks},
+author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+journal={Advances in neural information processing systems},
+volume={25},
+year={2012}
+}"
+Charlton2016assessment,An assessment of algorithms to estimate respiratory rate from the electrocardiogram and photoplethysmogram,,"@article{Charlton2016assessment,
+title={An assessment of algorithms to estimate respiratory rate from the electrocardiogram and photoplethysmogram},
+author={Charlton, Peter H and Bonnici, Timothy and Tarassenko, Lionel and Clifton, David A and Beale, Richard and Watkinson, Peter J},
+journal={Physiological measurement},
+volume={37},
+number={4},
+pages={610},
+year={2016},
+publisher={IOP Publishing}
+}"
+Pimentel_Johnson_2017,Toward a Robust Estimation of Respiratory Rate From Pulse Oximeters,,"@article{Pimentel_Johnson_2017,
+title={Toward a robust estimation of respiratory rate from pulse oximeters},
+author={Pimentel, Marco AF and Johnson, Alistair EW and Charlton, Peter H and Birrenkott, Drew and Watkinson, Peter J and Tarassenko, Lionel and Clifton, David A},
+journal={IEEE Transactions on Biomedical Engineering},
+volume={64},
+number={8},
+pages={1914--1923},
+year={2016},
+publisher={IEEE}
+}"
+Critical_2016,Secondary Analysis of Electronic Health Records,,"@book{Critical_2016,
+title={Secondary analysis of electronic health records},
+author={Critical Data, MIT},
+year={2016},
+publisher={Springer Nature}
+}"
+Mukhopadhyay_2015,Wearable electronics sensors: For safe and healthy living,,"@book{Mukhopadhyay_2015,
+title={Wearable electronics sensors: For safe and healthy living},
+author={Mukhopadhyay, Subhas C},
+volume={15},
+year={2015},
+publisher={Springer}
+}"
+Chon2009estimation,Estimation of Respiratory Rate From Photoplethysmogram Data Using Time–Frequency Spectral Estimation,,"@article{Chon2009estimation,
+author={Chon, K.H. and Dash, Shishir and Ju, Kihwan},
+journal={IEEE Transactions on Biomedical Engineering},
+title={Estimation of Respiratory Rate From Photoplethysmogram Data Using Time–Frequency Spectral Estimation},
+year={2009},
+volume={56},
+number={8},
+pages={2054-2063},
+keywords={Continuous wavelet transforms;Frequency modulation;Mathematical model;Time frequency analysis;Frequency estimation;Demodulation;Wavelet transforms;Testing;Computational efficiency;MATLAB;FM;pulse oximeter;respiratory sinus arrhythmia;time–frequency analysis},
+doi={10.1109/TBME.2009.2019766}}"
+Lucas-Kanade-1981,An Iterative Image Registration Technique with an Application to Stereo Vision (IJCAI),,"@inproceedings{Lucas-Kanade-1981,
+author = {Lucas, Bruce and Kanade, Takeo},
+year = {1981},
+month = {04},
+pages = {},
+title = {An Iterative Image Registration Technique with an Application to Stereo Vision (IJCAI)},
+volume = {81},
+journal = {[No source information available]}
+}"
+Zou2024rhythmformer,RhythmFormer: Extracting rPPG Signals Based on Hierarchical Temporal Periodic Transformer,,"@misc{Zou2024rhythmformer,
+title={RhythmFormer: Extracting rPPG Signals Based on Hierarchical Temporal Periodic Transformer},
+author={Bochao Zou and Zizheng Guo and Jiansheng Chen and Huimin Ma},
+year={2024},
+eprint={2402.12788},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/},
+url={https://arxiv.org/abs/2402.12788},
+}"
+Beyer2022betterplainvitbaselines,Better plain ViT baselines for ImageNet-1k,SimpleViT,"@misc{Beyer2022betterplainvitbaselines,
+title={Better plain ViT baselines for ImageNet-1k},
+author={Lucas Beyer and Xiaohua Zhai and Alexander Kolesnikov},
+year={2022},
+eprint={2205.01580},
+archivePrefix={arXiv},
+primaryClass={http://cs.cv/},
+url={https://arxiv.org/abs/2205.01580},
+}"
+Estepp2014recovering,Recovering Pulse Rate During Motion Artifact with a Multi-Imager Array for Non-Contact Imaging Photoplethysmography,,"@INPROCEEDINGS{Estepp2014recovering,
+author={Estepp, Justin R. and Blackford, Ethan B. and Meier, Christopher M.},
+booktitle={2014 IEEE International Conference on Systems, Man, and Cybernetics (SMC)},
+title={Recovering pulse rate during motion artifact with a multi-imager array for non-contact imaging photoplethysmography},
+year={2014},
+volume={},
+number={},
+pages={1462-1469},
+keywords={Time series analysis;Arrays;Head;Electrocardiography;Absorption;Photoplethysmography;Pulse measurements;imaging photoplethysmography;pulse rate;blind source separation;independent component analysis;electrocardiography},
+doi={10.1109/SMC.2014.6974121}}"
+Fieselmann1993respiratory,Respiratory rate predicts cardiopulmonary arrest for internal medicine inpatients,A respiratory rate above 27 breaths per minute over a 72-hour period was found to have a sensitivity of 0.54 and specificity of 0.83 in predicting cardiopulmonary arrest in internal medicine patients,"@article{Fieselmann1993respiratory,
+title={Respiratory rate predicts cardiopulmonary arrest for internal medicine inpatients},
+author={Fieselmann, John F and Hendryx, Michael S and Helms, Charles M and Wakefield, Douglas S},
+journal={Journal of general internal medicine},
+volume={8},
+pages={354--360},
+year={1993},
+publisher={Springer}
+}"
+Barthel2013respiratory,Respiratory rate predicts outcome after acute myocardial infarction: a prospective cohort study,,"@article{Barthel2013respiratory,
+    author = {Barthel, Petra and Wensel, Roland and Bauer, Axel and Müller, Alexander and Wolf, Petra and Ulm, Kurt and Huster, Katharina M. and Francis, Darrel P. and Malik, Marek and Schmidt, Georg},
+    title = ""{Respiratory rate predicts outcome after acute myocardial infarction: a prospective cohort study}"",
+    journal = {European Heart Journal},
+    volume = {34},
+    number = {22},
+    pages = {1644-1650},
+    year = {2012},
+    month = {12},
+    issn = {0195-668X},
+    doi = {10.1093/eurheartj/ehs420},
+    url = {https://doi.org/10.1093/eurheartj/ehs420},
+    eprint = {https://academic.oup.com/eurheartj/article-pdf/34/22/1644/17895058/ehs420.pdf},
+}
+
+
+
+"
+Baumert2019mean,Mean nocturnal respiratory rate predicts cardiovascular and all-cause mortality in community-dwelling older men and women,,"@article{Baumert2019mean,
+  title={Mean nocturnal respiratory rate predicts cardiovascular and all-cause mortality in community-dwelling older men and women},
+  author={Baumert, Mathias and Linz, Dominik and Stone, Katie and McEvoy, R Doug and Cummings, Steve and Redline, Susan and Mehra, Reena and Immanuel, Sarah},
+  journal={European Respiratory Journal},
+  volume={54},
+  number={1},
+  year={2019},
+  publisher={Eur Respiratory Soc}
+}"
+Yasuma2004respiratory,Respiratory Sinus Arrhythmia: Why Does the Heartbeat Synchronize With Respiratory Rhythm?,,"@article{Yasuma2004respiratory,
+title = {Respiratory Sinus Arrhythmia: Why Does the Heartbeat Synchronize With Respiratory Rhythm?},
+journal = {Chest},
+volume = {125},
+number = {2},
+pages = {683-690},
+year = {2004},
+issn = {0012-3692},
+doi = {https://doi.org/10.1378/chest.125.2.683},
+url = {https://www.sciencedirect.com/science/article/pii/S001236921531878X},
+author = {Fumihiko Yasuma and Jun-ichiro Hayano},
+keywords = {hypercapnia, hypoxia, pulmonary gas exchange, respiratory-circulatory interactions, respiratory sinus arrhythmia, vagal activity},
+}"
+Arik_2019,Fast Spectrogram Inversion using Multi-head Convolutional Neural Networks,,"@article{Arik_2019,
+   title={Fast Spectrogram Inversion Using Multi-Head Convolutional Neural Networks},
+   volume={26},
+   ISSN={1558-2361},
+   url={http://dx.doi.org/10.1109/LSP.2018.2880284},
+   DOI={10.1109/lsp.2018.2880284},
+   number={1},
+   journal={IEEE Signal Processing Letters},
+   publisher={Institute of Electrical and Electronics Engineers (IEEE)},
+   author={Arik, Sercan O. and Jun, Heewoo and Diamos, Gregory},
+   year={2019},
+   month=jan, pages={94–98} }
+"
+Schwar2023multi,Multi-Scale Spectral Loss Revisited,,"@ARTICLE{Schwar2023multi,
+author={Schwär, Simon and Müller, Meinard},
+journal={IEEE Signal Processing Letters},
+title={Multi-Scale Spectral Loss Revisited},
+year={2023},
+volume={30},
+number={},
+pages={1712-1716},
+keywords={Discrete Fourier transforms;Frequency estimation;Spectrogram;Training;Time-frequency analysis;Convergence;Behavioral sciences;Audio-to-audio distances;audio synthesis;differentiable DSP;loss functions},
+doi={10.1109/LSP.2023.3333205}}"
+Takaki2018stftspectrallosstraining,STFT spectral loss for training a neural speech waveform model,,"@misc{Takaki2018stftspectrallosstraining,
+title={STFT spectral loss for training a neural speech waveform model},
+author={Shinji Takaki and Toru Nakashika and Xin Wang and Junichi Yamagishi},
+year={2018},
+eprint={1810.11945},
+archivePrefix={arXiv},
+primaryClass={http://eess.as/},
+url={https://arxiv.org/abs/1810.11945},
+}"
+Steinmetz2020auraloss,auraloss: {A}udio focused loss functions in {PyTorch},https://github.com/csteinmetz1/auraloss,"@inproceedings{Steinmetz2020auraloss,
+    title={auraloss: {A}udio focused loss functions in {PyTorch}},
+    author={Steinmetz, Christian J. and Reiss, Joshua D.},
+    booktitle={Digital Music Research Network One-day Workshop (DMRN+15)},
+    year={2020}
+}
+"
+Nyquist1949,Communication in the Presence of Noise,Nyquist Theorem,"@ARTICLE{Nyquist1949,
+author={Shannon, C.E.},
+journal={Proceedings of the IRE},
+title={Communication in the Presence of Noise},
+year={1949},
+volume={37},
+number={1},
+pages={10-21},
+keywords={Electron tubes;Voltage;Bandwidth;Circuits;Shape;Klystrons;Frequency measurement;Gain measurement;Communication systems;Telephony},
+doi={10.1109/JRPROC.1949.232969}}"
