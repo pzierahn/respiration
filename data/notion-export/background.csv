@@ -167,7 +167,7 @@ pages={16},
 year={2018},
 publisher={IOP Publishing}
 }"
-Blocher2020kamerabasiertes.pdf,Kamerabasiertes System zur kontaktlosen Messung der momentanen Herzfrequenz für den Einsatz unter realen Umgebungsbedingungen,Delaunay-Triangulation,"@article{Blocher2020kamerabasiertes,
+Blocher2020kamerabasiertes,Kamerabasiertes System zur kontaktlosen Messung der momentanen Herzfrequenz für den Einsatz unter realen Umgebungsbedingungen,Delaunay-Triangulation,"@article{Blocher2020kamerabasiertes,
 title={Kamerabasiertes System zur kontaktlosen Messung der momentanen Herzfrequenz f{\""u}r den Einsatz unter realen Umgebungsbedingungen},
 author={Bl{\""o}cher, Timon},
 year={2020}
@@ -425,3 +425,9 @@ number={1},
 pages={10-21},
 keywords={Electron tubes;Voltage;Bandwidth;Circuits;Shape;Klystrons;Frequency measurement;Gain measurement;Communication systems;Telephony},
 doi={10.1109/JRPROC.1949.232969}}"
+Khare2015fourier,Fourier Optics and Computational Imaging,,"@book{Khare2015fourier,
+title={Fourier optics and computational imaging},
+author={Khare, Kedar and Butola, Mansi and Rajora, Sunaina},
+year={2015},
+publisher={Springer}
+}"
