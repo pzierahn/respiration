@@ -431,3 +431,21 @@ author={Khare, Kedar and Butola, Mansi and Rajora, Sunaina},
 year={2015},
 publisher={Springer}
 }"
+Mcduff2023camera,Camera Measurement of Physiological Vital Signs,,"@article{Mcduff2023camera,
+author = {McDuff, Daniel},
+title = {Camera Measurement of Physiological Vital Signs},
+year = {2023},
+issue_date = {September 2023},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {55},
+number = {9},
+issn = {0360-0300},
+url = {https://doi.org/10.1145/3558518},
+doi = {10.1145/3558518},
+journal = {ACM Comput. Surv.},
+month = {jan},
+articleno = {176},
+numpages = {40},
+keywords = {Physiology, signal processing, machine learning, thermal imaging}
+}"
