@@ -1,3 +1,4 @@
+// Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/channelnorm_package/channelnorm_cuda.cc
 #pragma once
 
 #include <ATen/ATen.h>

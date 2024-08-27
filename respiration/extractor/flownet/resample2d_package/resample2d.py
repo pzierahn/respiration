@@ -1,3 +1,7 @@
+"""
+Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/resample2d_package/resample2d.py
+"""
+
 from torch.nn.modules.module import Module
 from torch.autograd import Function, Variable
 import resample2d_cuda

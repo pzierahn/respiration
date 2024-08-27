@@ -1,3 +1,4 @@
+// Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/correlation_package/correlation_cuda_kernel.cu
 #include <stdio.h>
 
 #include "correlation_cuda_kernel.cuh"

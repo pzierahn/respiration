@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import os
-import torch
+"""
+Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/resample2d_package/resample2d.py
+"""
 
 from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension

@@ -1,3 +1,7 @@
+"""
+Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/models.py
+"""
+
 import torch
 from torch.nn import init
 

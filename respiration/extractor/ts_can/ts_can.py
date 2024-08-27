@@ -2,6 +2,8 @@
 Multi-Task Temporal Shift Attention Networks for On-Device Contactless Vitals Measurement
 NeurIPS, 2020
 Xin Liu, Josh Fromm, Shwetak Patel, Daniel McDuff
+
+Source: https://github.com/ubicomplab/rPPG-Toolbox/blob/main/neural_methods/model/TS_CAN.py
 """
 
 import torch

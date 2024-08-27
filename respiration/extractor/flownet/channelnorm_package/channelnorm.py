@@ -1,3 +1,7 @@
+"""
+Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/channelnorm_package/channelnorm.py
+"""
+
 from torch.autograd import Function, Variable
 from torch.nn.modules.module import Module
 import channelnorm_cuda

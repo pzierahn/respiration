@@ -1,3 +1,5 @@
+// Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/resample2d_package/resample2d_kernel.cu
+
 #include <ATen/ATen.h>
 #include <ATen/Context.h>
 #include <ATen/cuda/CUDAContext.h>

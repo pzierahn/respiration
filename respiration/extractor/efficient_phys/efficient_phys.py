@@ -1,6 +1,9 @@
-"""EfficientPhys: Enabling Simple, Fast and Accurate Camera-Based Vitals Measurement
+"""
+EfficientPhys: Enabling Simple, Fast and Accurate Camera-Based Vitals Measurement
 Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2023)
 Xin Liu, Brial Hill, Ziheng Jiang, Shwetak Patel, Daniel McDuff
+
+Source: https://github.com/ubicomplab/rPPG-Toolbox/blob/main/neural_methods/model/EfficientPhys.py
 """
 
 import torch

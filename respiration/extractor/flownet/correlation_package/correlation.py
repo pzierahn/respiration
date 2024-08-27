@@ -1,3 +1,7 @@
+"""
+Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/correlation_package/correlation.py
+"""
+
 import torch
 from torch.nn.modules.module import Module
 from torch.autograd import Function

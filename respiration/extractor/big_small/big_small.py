@@ -7,7 +7,7 @@ Xin Liu, Daniel McDuff, Shwetak Patel
 
 https://arxiv.org/abs/2303.11573
 
-Source: https://github.com/girishvn/BigSmall/blob/main/code/neural_methods/model/BigSmall_models.py
+Source: https://github.com/ubicomplab/rPPG-Toolbox/blob/main/neural_methods/model/BigSmall.py
 """
 
 import torch

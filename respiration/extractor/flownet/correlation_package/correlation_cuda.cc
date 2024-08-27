@@ -1,3 +1,5 @@
+// Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/correlation_package/correlation_cuda.cc
+
 #include <torch/torch.h>
 #include <ATen/ATen.h>
 #include <ATen/Context.h>

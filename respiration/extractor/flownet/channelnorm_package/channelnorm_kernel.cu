@@ -1,3 +1,4 @@
+// Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/channelnorm_package/channelnorm_cuda.cc
 #include <ATen/ATen.h>
 #include <ATen/Context.h>
 #include <ATen/cuda/CUDAContext.h>

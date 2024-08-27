@@ -1,3 +1,5 @@
+// Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/resample2d_package/resample2d_kernel.cuh
+
 #pragma once
 
 #include <ATen/ATen.h>

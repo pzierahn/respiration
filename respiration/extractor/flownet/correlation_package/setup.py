@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import os
-import torch
-
+"""
+Source: https://github.com/NVIDIA/flownet2-pytorch/blob/master/networks/correlation_package/setup.py
+"""
 from setuptools import setup, find_packages
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 

@@ -6,10 +6,7 @@ from respiration.extractor.mtts_can.models.mtts_can import mtts_can
 
 
 def calculate_cutoff(size: int, frame_depth: int) -> int:
-    """
-    The model expects a number of frames that is a multiple of frame_depth
-    :return:
-    """
+    """The model expects a number of frames that is a multiple of frame_depth"""
     return (size // frame_depth) * frame_depth
 
 
@@ -20,6 +17,7 @@ def load_model(
         nb_filters2: int = 64,
         input_shape: tuple[int, int, int] = (36, 36, 3),
 ) -> Model:
+    """Load the pre-trained model"""
     if model_checkpoint is None:
         model_checkpoint = os.path.join('..', '..', 'data', 'mtts_can', 'mtts_can.hdf5')
 
