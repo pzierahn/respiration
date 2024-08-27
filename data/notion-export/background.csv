@@ -449,3 +449,15 @@ articleno = {176},
 numpages = {40},
 keywords = {Physiology, signal processing, machine learning, thermal imaging}
 }"
+Mateus_Fernandez_2021,A non-contact camera-based method for respiratory rhythm extraction,,"@article{Mateus_Fernandez_2021,
+title = {A non-contact camera-based method for respiratory rhythm extraction},
+journal = {Biomedical Signal Processing and Control},
+volume = {66},
+pages = {102443},
+year = {2021},
+issn = {1746-8094},
+doi = {https://doi.org/10.1016/j.bspc.2021.102443},
+url = {https://www.sciencedirect.com/science/article/pii/S1746809421000409},
+author = {M. Mateu-Mateus and F. Guede-Fernández and N. Rodriguez-Ibáñez and M.A. García-González and J. Ramos-Castro and M. Fernández-Chimeno},
+keywords = {Non-contact, Camera-based, Respiration, Computer vision},
+}"
