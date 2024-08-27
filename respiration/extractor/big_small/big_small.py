@@ -6,6 +6,8 @@ Girish Narayanswamy, Yujia (Nancy) Liu, Yuzhe Yang, Chengqian (Jack) Ma,
 Xin Liu, Daniel McDuff, Shwetak Patel
 
 https://arxiv.org/abs/2303.11573
+
+Source: https://github.com/girishvn/BigSmall/blob/main/code/neural_methods/model/BigSmall_models.py
 """
 
 import torch
