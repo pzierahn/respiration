@@ -461,3 +461,20 @@ url = {https://www.sciencedirect.com/science/article/pii/S1746809421000409},
 author = {M. Mateu-Mateus and F. Guede-Fernández and N. Rodriguez-Ibáñez and M.A. García-González and J. Ramos-Castro and M. Fernández-Chimeno},
 keywords = {Non-contact, Camera-based, Respiration, Computer vision},
 }"
+Tavanaei2019deep,Deep learning in spiking neural networks,,"@article{Tavanaei2019deep,
+author       = {Amirhossein Tavanaei and
+Masoud Ghodrati and
+Saeed Reza Kheradpisheh and
+Timoth{\'{e}}e Masquelier and
+Anthony S. Maida},
+title        = {Deep Learning in Spiking Neural Networks},
+journal      = {CoRR},
+volume       = {abs/1804.08150},
+year         = {2018},
+url          = {http://arxiv.org/abs/1804.08150},
+eprinttype    = {arXiv},
+eprint       = {1804.08150},
+timestamp    = {Mon, 13 Aug 2018 16:46:04 +0200},
+biburl       = {https://dblp.org/rec/journals/corr/abs-1804-08150.bib},
+bibsource    = {dblp computer science bibliography, https://dblp.org/}
+}"
