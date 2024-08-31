@@ -103,26 +103,27 @@ class VitalCamLoader:
     total_frames = 3600
 
     # The number of parts to split the video into
-    parts: int
+    split: int
 
     # The device to use for the tensors
     device: torch.device
 
-    def __init__(self,
-                 scenarios: list[tuple[str, str]],
-                 total_frames: int = 3600,
-                 parts: int = 10,
-                 device: torch.device = torch.device("cpu")):
+    def __init__(
+            self,
+            scenarios: list[tuple[str, str]],
+            total_frames: int = 3600,
+            split: int = 10,
+            device: torch.device = torch.device("cpu")):
         self.scenarios = scenarios
         self.total_frames = total_frames
-        self.parts = parts
+        self.split = split
         self.device = device
 
     def __len__(self) -> int:
         """
         Return the number of items in the data loader. This is the number of scenarios times the number of parts.
         """
-        return len(self.scenarios) * self.parts
+        return len(self.scenarios) * self.split
 
     def __iter__(self):
         """
@@ -149,9 +150,9 @@ class VitalCamLoader:
         if index >= self.__len__():
             raise IndexError("Index out of range")
 
-        subject_index = index // self.parts
-        setting_index = index % self.parts
+        subject_index = index // self.split
+        setting_index = index % self.split
 
         subject, setting = self.scenarios[subject_index]
-        scenario_loader = ScenarioLoader(subject, setting, self.total_frames // self.parts, self.device)
+        scenario_loader = ScenarioLoader(subject, setting, self.total_frames // self.split, self.device)
         return scenario_loader[setting_index]
