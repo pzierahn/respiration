@@ -102,6 +102,7 @@ ln -s /media/hdd2/07_Datenbank_Smarthome/Testaufnahmen/ VitalCamSet;
 
 # Start jupyter notebook
 jupyter notebook --no-browser --port=$JUPYTER_PORT
+nohup jupyter notebook --no-browser --port=$JUPYTER_PORT 1>jupyter.log 2>jupyter.log &
 
 # Docker build a new image
 docker build -f Dockerfile.cuda -t respiration-jupyter .
