@@ -478,3 +478,13 @@ timestamp    = {Mon, 13 Aug 2018 16:46:04 +0200},
 biburl       = {https://dblp.org/rec/journals/corr/abs-1804-08150.bib},
 bibsource    = {dblp computer science bibliography, https://dblp.org/}
 }"
+Selesnick1998generalized,Generalized Digital Butterworth Filter Design,Butterworth Filter,"@ARTICLE{Selesnick1998generalized,
+author={Selesnick, I.W. and Burrus, C.S.},
+journal={IEEE Transactions on Signal Processing},
+title={Generalized digital Butterworth filter design},
+year={1998},
+volume={46},
+number={6},
+pages={1688-1694},
+keywords={Digital filters;IIR filters;Finite impulse response filter;Signal processing;Noise reduction;Quantization;Nonlinear filters;Delay;Speech processing;Poles and zeros},
+doi={10.1109/78.678493}}"
