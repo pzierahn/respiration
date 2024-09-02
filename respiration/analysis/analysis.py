@@ -36,7 +36,6 @@ class Analysis:
     filter_signal: bool
 
     # Parameters for the sliding window analysis
-    window_size: int
     stride: int
 
     # Analysis results: Model Name --> Method --> Results
@@ -54,7 +53,6 @@ class Analysis:
             highpass: Optional[float] = 0.6,
             normalize: bool = True,
             filter_signal: bool = True,
-            window_size: int = 30,
             stride: int = 1
     ):
         """
@@ -64,7 +62,6 @@ class Analysis:
         :param highpass: The highpass frequency for the bandpass filter.
         :param normalize: If the signals should be normalized.
         :param filter_signal: If the signals should be filtered.
-        :param window_size: The size of the sliding window in seconds.
         :param stride: The stride of the sliding window in seconds.
         """
         self.sample_rate = sample_rate
@@ -75,7 +72,6 @@ class Analysis:
         self.normalize = normalize
         self.filter_signal = filter_signal
 
-        self.window_size = window_size
         self.stride = stride
 
         self.prediction_metrics = {}
@@ -145,10 +141,6 @@ class Analysis:
         """
         prediction, ground_truth = self.__preprocess(prediction, ground_truth)
 
-        # Calculate the window size and stride in samples
-        window_size = self.window_size * self.sample_rate
-        stride = self.stride * self.sample_rate
-
         metrics = {
             'cp': frequency_from_crossing_point,
             'nfcp': frequency_from_nfcp,
@@ -170,20 +162,26 @@ class Analysis:
         self.predictions[model] = np.append(self.predictions[model], prediction)
         self.ground_truths[model] = np.append(self.ground_truths[model], ground_truth)
 
-        for inx in range(0, len(prediction) - window_size, stride):
-            prediction_window = prediction[inx:inx + window_size]
-            ground_truth_window = ground_truth[inx:inx + window_size]
+        # Calculate the window size and stride in samples
+        stride = self.stride * self.sample_rate
 
-            for key, metric in metrics.items():
-                self.prediction_metrics[model][key] = np.append(
-                    self.prediction_metrics[model][key],
-                    metric(prediction_window, self.sample_rate)
-                )
+        for size in [30, 40, 50, 60, 70, 80, 90, 100, 110]:
+            window_size = size * self.sample_rate
 
-                self.ground_truth_metrics[model][key] = np.append(
-                    self.ground_truth_metrics[model][key],
-                    metric(ground_truth_window, self.sample_rate)
-                )
+            for inx in range(0, len(prediction) - window_size, stride):
+                prediction_window = prediction[inx:inx + window_size]
+                ground_truth_window = ground_truth[inx:inx + window_size]
+
+                for key, metric in metrics.items():
+                    self.prediction_metrics[model][key] = np.append(
+                        self.prediction_metrics[model][key],
+                        metric(prediction_window, self.sample_rate)
+                    )
+
+                    self.ground_truth_metrics[model][key] = np.append(
+                        self.ground_truth_metrics[model][key],
+                        metric(ground_truth_window, self.sample_rate)
+                    )
 
     def add_data_without_window(self, model: str, prediction: np.ndarray, ground_truth: np.ndarray):
         """
@@ -271,6 +269,7 @@ class Analysis:
                 row = {
                     'model': model,
                     'method': method,
+                    'samples': len(self.prediction_metrics[model][method]),
                 }
 
                 for metric in metrics[model][method]:
