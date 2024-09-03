@@ -104,6 +104,15 @@ class PredictionsReader:
         # Only keep the columns that are needed
         return rhythm_former[['subject', 'setting', 'model', 'signal']]
 
+    def read_efficient_phys(self, file: str = 'efficient_phys_predictions.csv') -> pd.DataFrame:
+        efficient_phys_path = utils.join_paths(self.path, file)
+
+        efficient_phys_predictions = pd.read_csv(efficient_phys_path)
+        efficient_phys_predictions['signal'] = efficient_phys_predictions['signal'].apply(eval).apply(np.array)
+
+        # Only keep the columns that are needed
+        return efficient_phys_predictions[['subject', 'setting', 'model', 'signal']]
+
     def read_all(self) -> pd.DataFrame:
         return pd.concat([
             self.read_raft(),
@@ -115,4 +124,5 @@ class PredictionsReader:
             self.read_simple_vit(),
             self.read_random(),
             self.read_rhythm_former(),
+            self.read_efficient_phys(),
         ])
