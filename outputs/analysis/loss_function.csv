@@ -1,0 +1,28 @@
+model,setting,image_dimension,best_epoch,frequency_weight,mse_weight,norm_weight,pearson_weight,spectral_convergence_weight,spectral_magnitude_weight,split,components
+RF_20240902_094648,101_natural_lighting,128,13,0.0,1.0,0.0,1.0,1.0,1.0,5,"['mse', 'pearson', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240902_123124,101_natural_lighting,128,7,1.0,0.0,1.0,1.0,0.0,0.0,5,"['frequency', 'norm', 'pearson']"
+RF_20240902_152753,101_natural_lighting,128,5,1.0,1.0,1.0,1.0,0.0,0.0,5,"['frequency', 'mse', 'norm', 'pearson']"
+RF_20240902_181443,101_natural_lighting,128,17,0.0,0.0,0.0,1.0,0.0,0.0,5,['pearson']
+RF_20240902_210159,101_natural_lighting,128,10,1.0,0.0,0.0,0.0,0.0,0.0,5,['frequency']
+RF_20240902_234749,101_natural_lighting,128,2,0.0,0.0,1.0,0.0,0.0,0.0,5,['norm']
+RF_20240903_023334,101_natural_lighting,128,15,0.0,1.0,0.0,0.0,0.0,0.0,5,['mse']
+RF_20240903_051739,101_natural_lighting,128,17,0.0,0.0,0.0,0.0,1.0,0.0,5,['spectral_convergence']
+RF_20240903_080307,101_natural_lighting,128,20,0.0,0.0,0.0,0.0,0.0,1.0,5,['spectral_magnitude']
+RF_20240903_104800,101_natural_lighting,128,10,1.0,1.0,1.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'norm', 'pearson', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240903_230906,303_normalized_face,128,6,0.0,0.0,0.0,0.0,1.0,0.0,5,['spectral_convergence']
+RF_20240904_001421,303_normalized_face,128,6,1.0,0.0,1.0,1.0,0.0,0.0,5,"['frequency', 'norm', 'pearson']"
+RF_20240904_011940,303_normalized_face,128,17,0.0,1.0,0.0,0.0,0.0,0.0,5,['mse']
+RF_20240904_022517,303_normalized_face,128,21,1.0,1.0,1.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'norm', 'pearson', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240904_200916,303_normalized_face,128,3,1.0,0.0,0.0,0.0,0.0,0.0,5,['frequency']
+RF_20240904_231209,101_natural_lighting,128,4,1.0,0.0,0.0,1.0,1.0,1.0,5,"['frequency', 'pearson', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240905_094727,101_natural_lighting,128,21,1.0,1.0,0.0,0.0,1.0,1.0,5,"['frequency', 'mse', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240905_134835,101_natural_lighting,128,10,1.0,1.0,0.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'pearson', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240905_163112,303_normalized_face,128,1,1.0,1.0,0.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'pearson', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240905_173644,101_natural_lighting,128,13,0.0,0.0,1.0,0.0,1.0,1.0,5,"['norm', 'spectral_convergence', 'spectral_magnitude']"
+RF_20240905_233757,101_natural_lighting,128,21,1.0,0.0,0.0,0.0,1.0,0.0,5,"['frequency', 'spectral_convergence']"
+RF_20240906_022111,303_normalized_face,128,13,1.0,0.0,0.0,0.0,1.0,0.0,5,"['frequency', 'spectral_convergence']"
+RF_20240906_213402,101_natural_lighting,128,9,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']"
+RF_20240907_001728,303_normalized_face,128,5,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']"
+RF_20240907_190942,101_natural_lighting,128,21,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']"
+RF_20240907_215246,303_normalized_face,128,0,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']"
+RF_20240908_194112,303_normalized_face,128,4,1.0,0.0,0.0,0.0,0.0,0.0,5,['frequency']

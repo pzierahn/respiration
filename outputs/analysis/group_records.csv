@@ -1,0 +1,37 @@
+group1,group2,mae_1,mae_2,t_stat,p_value
+Optical Flow,Optical Flow,2.0,2.0,0.0,1.0
+Optical Flow,R-RhythmFormer,2.0,2.4,-13.809,0.0
+Optical Flow,SimpleViT,2.0,2.4,-13.419,0.0
+Optical Flow,Pretrained Respiration,2.0,4.7,-232.677,0.0
+Optical Flow,Pretrained rPPG,2.0,4.5,-251.32,0.0
+Optical Flow,Random,2.0,5.6,-254.415,0.0
+R-RhythmFormer,Optical Flow,2.4,2.0,13.809,0.0
+R-RhythmFormer,R-RhythmFormer,2.4,2.4,0.0,1.0
+R-RhythmFormer,SimpleViT,2.4,2.4,0.243,0.808
+R-RhythmFormer,Pretrained Respiration,2.4,4.7,-68.696,0.0
+R-RhythmFormer,Pretrained rPPG,2.4,4.5,-63.486,0.0
+R-RhythmFormer,Random,2.4,5.6,-92.542,0.0
+SimpleViT,Optical Flow,2.4,2.0,13.419,0.0
+SimpleViT,R-RhythmFormer,2.4,2.4,-0.243,0.808
+SimpleViT,SimpleViT,2.4,2.4,0.0,1.0
+SimpleViT,Pretrained Respiration,2.4,4.7,-68.732,0.0
+SimpleViT,Pretrained rPPG,2.4,4.5,-63.643,0.0
+SimpleViT,Random,2.4,5.6,-92.241,0.0
+Pretrained Respiration,Optical Flow,4.7,2.0,232.677,0.0
+Pretrained Respiration,R-RhythmFormer,4.7,2.4,68.696,0.0
+Pretrained Respiration,SimpleViT,4.7,2.4,68.732,0.0
+Pretrained Respiration,Pretrained Respiration,4.7,4.7,0.0,1.0
+Pretrained Respiration,Pretrained rPPG,4.7,4.5,11.787,0.0
+Pretrained Respiration,Random,4.7,5.6,-50.123,0.0
+Pretrained rPPG,Optical Flow,4.5,2.0,251.32,0.0
+Pretrained rPPG,R-RhythmFormer,4.5,2.4,63.486,0.0
+Pretrained rPPG,SimpleViT,4.5,2.4,63.643,0.0
+Pretrained rPPG,Pretrained Respiration,4.5,4.7,-11.787,0.0
+Pretrained rPPG,Pretrained rPPG,4.5,4.5,0.0,1.0
+Pretrained rPPG,Random,4.5,5.6,-63.121,0.0
+Random,Optical Flow,5.6,2.0,254.415,0.0
+Random,R-RhythmFormer,5.6,2.4,92.542,0.0
+Random,SimpleViT,5.6,2.4,92.241,0.0
+Random,Pretrained Respiration,5.6,4.7,50.123,0.0
+Random,Pretrained rPPG,5.6,4.5,63.121,0.0
+Random,Random,5.6,5.6,0.0,1.0

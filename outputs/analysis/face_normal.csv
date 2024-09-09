@@ -1,0 +1,18 @@
+model,setting,image_dimension,best_epoch,frequency_weight,mse_weight,norm_weight,pearson_weight,spectral_convergence_weight,spectral_magnitude_weight,split,components,mae,pcc,p,diff_mean,diff_std
+RF_20240902_123124,101_natural_lighting,128,7,1.0,0.0,1.0,1.0,0.0,0.0,5,"['frequency', 'norm', 'pearson']",2.668,0.406,0.0,-0.538,3.687
+RF_20240902_210159,101_natural_lighting,128,10,1.0,0.0,0.0,0.0,0.0,0.0,5,['frequency'],2.364,0.623,0.0,-1.642,3.12
+RF_20240903_023334,101_natural_lighting,128,15,0.0,1.0,0.0,0.0,0.0,0.0,5,['mse'],4.026,0.068,0.0,-0.602,5.245
+RF_20240903_051739,101_natural_lighting,128,17,0.0,0.0,0.0,0.0,1.0,0.0,5,['spectral_convergence'],2.452,0.592,0.0,-1.445,3.279
+RF_20240903_104800,101_natural_lighting,128,10,1.0,1.0,1.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'norm', 'pearson', 'spectral_convergence', 'spectral_magnitude']",2.916,0.353,0.0,-0.819,4.043
+RF_20240903_230906,303_normalized_face,128,6,0.0,0.0,0.0,0.0,1.0,0.0,5,['spectral_convergence'],6.964,0.291,0.0,-4.972,7.315
+RF_20240904_001421,303_normalized_face,128,6,1.0,0.0,1.0,1.0,0.0,0.0,5,"['frequency', 'norm', 'pearson']",3.633,0.291,0.0,-0.371,4.762
+RF_20240904_011940,303_normalized_face,128,17,0.0,1.0,0.0,0.0,0.0,0.0,5,['mse'],4.851,-0.025,0.01,-0.096,6.255
+RF_20240904_022517,303_normalized_face,128,21,1.0,1.0,1.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'norm', 'pearson', 'spectral_convergence', 'spectral_magnitude']",3.843,0.214,0.0,0.004,5.241
+RF_20240905_134835,101_natural_lighting,128,10,1.0,1.0,0.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'pearson', 'spectral_convergence', 'spectral_magnitude']",3.416,0.159,0.0,-0.882,4.771
+RF_20240905_163112,303_normalized_face,128,1,1.0,1.0,0.0,1.0,1.0,1.0,5,"['frequency', 'mse', 'pearson', 'spectral_convergence', 'spectral_magnitude']",4.104,0.321,0.0,2.047,4.694
+RF_20240905_233757,101_natural_lighting,128,21,1.0,0.0,0.0,0.0,1.0,0.0,5,"['frequency', 'spectral_convergence']",3.367,0.34,0.0,-1.628,4.014
+RF_20240906_022111,303_normalized_face,128,13,1.0,0.0,0.0,0.0,1.0,0.0,5,"['frequency', 'spectral_convergence']",4.324,0.417,0.0,-2.025,5.23
+RF_20240906_213402,101_natural_lighting,128,9,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']",3.981,0.163,0.0,-0.892,5.175
+RF_20240907_001728,303_normalized_face,128,5,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']",4.683,-0.082,0.0,-0.401,6.011
+RF_20240907_215246,303_normalized_face,128,0,1.0,0.0,0.0,1.0,0.0,0.0,5,"['frequency', 'pearson']",4.407,0.225,0.0,-1.881,5.984
+RF_20240908_194112,303_normalized_face,128,4,1.0,0.0,0.0,0.0,0.0,0.0,5,['frequency'],4.79,-0.109,0.0,-0.657,6.122
