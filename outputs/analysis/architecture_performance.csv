@@ -1,0 +1,14 @@
+model,mae,pcc,p-value,group
+raft_small,2.31,0.573,0.0,Optical Flow
+FlowNet2CS,1.923,0.674,0.0,Optical Flow
+lucas_kanade,1.641,0.78,0.0,Optical Flow
+pixel_intensity_rgb,2.184,0.625,0.0,Optical Flow
+RF_20240902_210159,2.364,0.623,0.0,R-RhythmFormer
+SimpleViT_20240906_131118,2.355,0.603,0.0,SimpleViT
+mtts_can,4.504,0.275,0.0,Pretrained Respiration
+big_small,4.842,0.218,0.0,Pretrained Respiration
+MMPD_intra_RhythmFormer,4.083,0.252,0.0,Pretrained rPPG
+UBFC-rPPG_EfficientPhys,4.62,0.209,0.0,Pretrained rPPG
+UBFC-rPPG_TSCAN,4.766,0.243,0.0,Pretrained rPPG
+BP4D_PseudoLabel_DeepPhys,4.574,0.198,0.0,Pretrained rPPG
+random,5.639,0.104,0.0,Random
