@@ -488,3 +488,18 @@ number={6},
 pages={1688-1694},
 keywords={Digital filters;IIR filters;Finite impulse response filter;Signal processing;Noise reduction;Quantization;Nonlinear filters;Delay;Speech processing;Poles and zeros},
 doi={10.1109/78.678493}}"
+Benesty2009,Noise Reduction in Speech Processing,Pearson Correlation Coefficient PCC,"@Inbook{Benesty2009,
+author=""Benesty, Jacob
+and Chen, Jingdong
+and Huang, Yiteng
+and Cohen, Israel"",
+title=""Pearson Correlation Coefficient"",
+bookTitle=""Noise Reduction in Speech Processing"",
+year=""2009"",
+publisher=""Springer Berlin Heidelberg"",
+address=""Berlin, Heidelberg"",
+pages=""1--4"",
+isbn=""978-3-642-00296-0"",
+doi=""10.1007/978-3-642-00296-0_5"",
+url=""https://doi.org/10.1007/978-3-642-00296-0_5""
+}"
