@@ -51,7 +51,6 @@ virtualenv .venv;
 source .venv/bin/activate;
 
 # Install the dependencies
-pip install --upgrade pip torch torchvision torchaudio;
 pip install --upgrade -r requirements.txt;
 
 # Start jupyter notebook as a demon
